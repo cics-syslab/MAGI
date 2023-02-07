@@ -1,0 +1,22 @@
+thread_name: "Noneaa"
+thread_func_name: "None"
+thread_states:
+  -
+    id: 0 
+    succ_msg: "None"
+    fail_msg:  "None"
+    draw_resource: 
+      - 0
+    release_resource: 
+      - 0 
+    prerequisite: 
+      - 0 
+    retry_window:  0
+    final_state:  False
+    succ_working_window:  0
+resources:
+  - 
+    id: 0
+    name:  "None"
+    limit:  0
+    use_binary_semaphore: False

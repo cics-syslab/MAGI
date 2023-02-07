@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+cd core
+python grader.py
