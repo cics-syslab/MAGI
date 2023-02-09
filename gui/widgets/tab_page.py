@@ -14,7 +14,7 @@ class TabPage:
         from ttkbootstrap.scrolled import ScrolledFrame
         self.column = ScrolledFrame(self.page)
         # self.column.grid(row=0, column=0, sticky=tk.NSEW)
-        self.column.pack(expand=0, fill=tk.BOTH)
+        self.column.pack(expand=1, fill=tk.BOTH)
         # self.column.bind(
         #     '<Configure>', lambda e: self.column.configure(scrollregion=self.column.bbox("all"))
         # )
