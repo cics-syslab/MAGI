@@ -141,7 +141,7 @@ class ThreadRecord:
                 get_resource_by_id(resource_id).release()
 
 
-def true_or_error_msg(result: bool, comment: str) -> tuple[bool, str]:
+def true_or_error_msg(result: bool, comment: str) -> tuple:
     if result:
         return True, ''
     else:
