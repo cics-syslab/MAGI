@@ -29,6 +29,8 @@ class ListAttribute:
         self.list_obj.clear()
         for i in self.list_record.keys():
             self.list_obj.append(self.list_record[i])
+        self.add_button.grid_forget()
+        self.add_button.grid(pady=10)
 
     def remove(self,index):
         self.remove(index)
@@ -38,13 +40,13 @@ class ListElement:
     def __init__(self,master,element,parent,index) -> None:
         self.master = master
         self.element = element
-        self.frame = ttk.Frame(self.master)
+        self.frame = ttk.Frame(self.master,padding=5)
         self.frame.grid()
-        self.remove_button = tk.Button(self.frame, text="Remove", command=self.remove)
-        self.remove_button.pack()
         self.parent = parent
         self.index = index
         self.attribute = add_attribute(frame=self.frame,attribute_type=type(element),value=self.element,update=self.update)
+        self.remove_button = tk.Button(self.frame, text="Remove", command=self.remove)
+        self.remove_button.pack(side='right')
 
     def remove(self):
         self.frame.pack_forget()
