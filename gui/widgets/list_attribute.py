@@ -1,11 +1,12 @@
-import ttkbootstrap as ttk
 import tkinter as tk
-from dataclasses import is_dataclass
+
+import ttkbootstrap as ttk
+
 from . import *
 
 
 class ListAttribute:
-    def __init__(self,master,list_obj, e_type) -> None:
+    def __init__(self, master, list_obj, e_type) -> None:
         # type = field_info.type.__args__[0]
         self.master = master
         self.add_button = tk.Button(self.master, text="Add", command=self.add)
@@ -21,7 +22,7 @@ class ListAttribute:
 
     def add(self):
         self.list_record[self.index] = self.type()
-        self.element_list.append(ListElement(self.master,self.list_record[self.index],self.list_record,self.index))
+        self.element_list.append(ListElement(self.master, self.list_record[self.index], self.list_record, self.index))
         self.index += 1
         self.update()
 
@@ -32,19 +33,21 @@ class ListAttribute:
         self.add_button.grid_forget()
         self.add_button.grid(pady=10)
 
-    def remove(self,index):
+    def remove(self, index):
         self.remove(index)
         self.update()
 
+
 class ListElement:
-    def __init__(self,master,element,parent,index) -> None:
+    def __init__(self, master, element, parent, index) -> None:
         self.master = master
         self.element = element
-        self.frame = ttk.Frame(self.master,padding=5)
+        self.frame = ttk.Frame(self.master, padding=5)
         self.frame.grid()
         self.parent = parent
         self.index = index
-        self.attribute = add_attribute(frame=self.frame,attribute_type=type(element),value=self.element,update=self.update)
+        self.attribute = add_attribute(frame=self.frame, attribute_type=type(element), value=self.element,
+                                       update=self.update)
         self.remove_button = tk.Button(self.frame, text="Remove", command=self.remove)
         self.remove_button.pack(side='right')
 
@@ -54,6 +57,6 @@ class ListElement:
         self.parent.pop(self.index)
         self.parent.update()
 
-    def update(self,value):
+    def update(self, value):
         self.parent[self.index] = value
         self.parent.update()

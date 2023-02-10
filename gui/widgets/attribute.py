@@ -1,23 +1,24 @@
-from dataclasses import is_dataclass
-from random import random
-import ttkbootstrap as ttk
 import tkinter as tk
+from dataclasses import is_dataclass
+
+import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
-def add_attribute(frame,attribute_type,value,update):
+
+def add_attribute(frame, attribute_type, value, update):
     from . import DataObjectAttribute, ListAttribute
     if is_dataclass(attribute_type):
         return DataObjectAttribute(frame, value)
     if attribute_type is bool:
         return BoolAttribute(master=frame,
-                      cb_update=update, value=value)
+                             cb_update=update, value=value)
     if attribute_type is int:
         return IntAttribute(master=frame,
-                     cb_update=update, value=value)
+                            cb_update=update, value=value)
     if attribute_type is str:
         return StrAttribute(master=frame,
-                     cb_update=update, value=value)
-                     
+                            cb_update=update, value=value)
+
     if '__origin__' in dir(attribute_type):
         if attribute_type.__origin__ == list:
             return ListAttribute(frame, value, attribute_type.__args__[0])
@@ -30,7 +31,7 @@ class Attribute:
         self.entry = None
         self.value = value
         self.cb_update = cb_update
-        
+
     def post_init(self):
         if self.data_var:
             self.data_var.trace_add('write', self.update_data)
@@ -45,7 +46,9 @@ class Attribute:
                 for cb in self.cb_update:
                     cb(self.data_var.get())
             self.cb_update(self.data_var.get())
+
     pass
+
 
 class BoolAttribute(Attribute):
     def __init__(self, **kwargs):
@@ -60,6 +63,7 @@ class BoolAttribute(Attribute):
             bootstyle=(SUCCESS, ROUND, TOGGLE),
             variable=self.data_var)
 
+
 class IntAttribute(Attribute):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -69,6 +73,7 @@ class IntAttribute(Attribute):
     def create_view(self):
         self.data_var = tk.IntVar(value=self.value)
         self.entry = ttk.Entry(master=self.master, textvariable=self.data_var)
+
 
 class StrAttribute(Attribute):
     def __init__(self, **kwargs):

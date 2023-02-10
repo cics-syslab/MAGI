@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 import os.path as op
+from dataclasses import dataclass
 
 
 @dataclass
@@ -10,7 +10,7 @@ class Directories:
     src_path: str = r"C:\Users\kcc\OneDrive\Dev\gsgen"
     # Not needed
     template_dir = op.join(src_path, "assets/GRADESCOPE_TEMPLATE")
-    
+
     core_dir = op.join(src_path, "core")
 
     project_files_dir = op.join(src_path, "project_files")

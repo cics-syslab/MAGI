@@ -1,27 +1,28 @@
+import importlib
+import importlib.util
 import logging
 import os
-import importlib.util
 import os.path as op
-import importlib
-from .setting_manager import SettingManager
 import sys
 
+from .setting_manager import SettingManager
 
-def list_available(sub_dir: str)->dict:
+
+def list_available(sub_dir: str) -> dict:
     # List all available modules/plugins 
     searching_dir = op.join(SettingManager.Directories.src_path, sub_dir)
     dirs = os.listdir(searching_dir)
     available = {}
     if sub_dir not in sys.path:
         sys.path.append(sub_dir)
-    
+
     for _dir in dirs:
         logging.info(f"Loading from {_dir}")
         if not op.exists(op.join(searching_dir, _dir, "__init__.py")):
             logging.debug(f"Module {_dir} does not have __init__.py")
             continue
-        
-        imported = importlib.import_module(_dir,sub_dir)
+
+        imported = importlib.import_module(_dir, sub_dir)
         logging.debug(f"Imported {getattr(imported, 'name', 'None')} from {_dir}")
         available[_dir] = imported
     return available
@@ -50,16 +51,15 @@ class ModuleManager:
             self._name_to_plugins = {plugin.name: plugin for plugin in self._dir_to_plugins.values()}
         return self._name_to_plugins
 
-    
     def init_run(self):
-        enabled_module=SettingManager.BaseSettings.enabled_module
+        enabled_module = SettingManager.BaseSettings.enabled_module
         if enabled_module not in self.available_modules.keys():
-            #logging.fatal
+            # logging.fatal
             pass
         self.enabled_module = self._name_to_modules[enabled_module]
         for enabled_plugin in SettingManager.BaseSettings.enabled_plugins:
             if enabled_plugin not in self.available_plugins_name:
-                #logging.fatal
+                # logging.fatal
                 pass
 
             self.enabled_module[enabled_plugin] = self._name_to_plugins[enabled_plugin]

@@ -1,6 +1,6 @@
-import ttkbootstrap as ttk
 import tkinter as tk
-from ttkbootstrap.constants import *
+
+import ttkbootstrap as ttk
 
 from . import components
 
@@ -14,6 +14,7 @@ def start_app():
     components.PagePreview(tab_control)
     components.PageBaseSettings(tab_control)
     root.mainloop()
+
 
 if __name__ == '__main__':
     start_app()

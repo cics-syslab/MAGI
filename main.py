@@ -1,5 +1,6 @@
 import logging
 import sys
+
 logging.getLogger().setLevel(logging.DEBUG)
 
 handler = logging.StreamHandler(sys.stdout)
@@ -9,9 +10,11 @@ formatter = logging.Formatter(
 handler.setFormatter(formatter)
 logging.getLogger().addHandler(handler)
 
+
 def start_gui():
     from gui.app import start_app
 
     start_app()
+
 
 start_gui()

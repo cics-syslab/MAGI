@@ -30,5 +30,3 @@ def check_submitted_files():
             missed_file.append(submission_file)
 
     return missed_file
-
-

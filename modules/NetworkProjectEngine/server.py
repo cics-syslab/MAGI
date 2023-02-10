@@ -80,15 +80,16 @@ These are just presets and their behavior can be found by invoking
 `python server.py --help` (or reading above)
 """
 
-from os import path as osp
-from os import makedirs
-import socket
+import argparse
+import json
 import select
+import socket
 import time
 from datetime import datetime
-import argparse
 from hashlib import sha256
-import json
+from os import makedirs
+from os import path as osp
+
 import QA
 
 PORT = 27993

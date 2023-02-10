@@ -1,9 +1,10 @@
-import ttkbootstrap as ttk
 import tkinter as tk
 
-from ..widgets import TabPage
-from ..functions.file import show_dir_selector
+import ttkbootstrap as ttk
+
 from core.managers import SettingManager
+from ..functions.file import show_dir_selector
+from ..widgets import TabPage
 
 
 class PagePreview:
@@ -15,20 +16,25 @@ class PagePreview:
         self.init_gui()
 
     def init_gui(self):
-        
-        output_dir_var = tk.StringVar(self.page,value=SettingManager.BaseSettings.output_dir)
+        output_dir_var = tk.StringVar(self.page, value=SettingManager.BaseSettings.output_dir)
+
         def update_dir(var, index, mode):
             SettingManager.BaseSettings.output_dir = output_dir_var.get()
+
         output_dir_var.trace_add('write', update_dir)
         label_frame = ttk.LabelFrame(master=self.page, text="Output Directory", padding=5)
         label_frame.grid(sticky='ew')
 
-        ttk.Entry(master=label_frame, textvariable=output_dir_var, width=20).grid(row=0, column=0, sticky="w", padx=0, pady=5,rowspan=5)
-        ttk.Button(label_frame, text="Select", command=lambda: show_dir_selector([output_dir_var], 0)).grid(row=0, column=1, sticky="e", padx=0, pady=5)
-        
+        ttk.Entry(master=label_frame, textvariable=output_dir_var, width=20).grid(row=0, column=0, sticky="w", padx=0,
+                                                                                  pady=5, rowspan=5)
+        ttk.Button(label_frame, text="Select", command=lambda: show_dir_selector([output_dir_var], 0)).grid(row=0,
+                                                                                                            column=1,
+                                                                                                            sticky="e",
+                                                                                                            padx=0,
+                                                                                                            pady=5)
+
         self.generate_button = ttk.Button(master=self.page, text="Generate", command=self.generate)
         self.generate_button.grid(pady=10)
-        
 
     def generate(self):
         from core.components.generate import generate_output

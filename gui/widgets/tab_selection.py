@@ -1,10 +1,11 @@
-import ttkbootstrap as ttk
 import tkinter as tk
+
+import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
 from core.managers.setting_manager import SettingManager
-from .tab_page import TabPage
 from .selection import Selection
+from .tab_page import TabPage
 
 
 class ModuleTab:
@@ -14,7 +15,7 @@ class ModuleTab:
         self.pointer = pointer
         self.enabled_tab = None
         self.enabled_tab_name = pointer[0][pointer[1]]
-        
+
         self.selection = Selection(master, name, option, default=self.enabled_tab_name, callback_update=self.update)
         self.update(self.enabled_tab_name)
 
@@ -39,7 +40,7 @@ class ModuleTab:
 
 
 class PluginTab:
-    def __init__(self, tab_control,master, option, name, pointer):
+    def __init__(self, tab_control, master, option, name, pointer):
         self.tabs = {}
         self.tab_control = tab_control
         self.value = pointer[0][pointer[1]]
@@ -50,7 +51,6 @@ class PluginTab:
             Option(self.frame, i, self)
         self.update(self.value)
 
-            
     def update(self, value):
         self.pointer[0][self.pointer[1]] = self.value = value
 
@@ -60,32 +60,34 @@ class PluginTab:
                 new_tabpage = TabPage(self.tab_control, tab, data)
                 self.tabs[tab] = new_tabpage.page
                 self.tab_control.add(self.tabs[tab], text=tab)
-        
+
         for tab in self.tabs.keys():
             if tab in value:
                 self.tab_control.tab(self.tabs[tab], state="normal")
             else:
                 self.tab_control.tab(self.tabs[tab], state="hidden")
+
     pass
 
+
 class Option:
-    def __init__(self,master,text,parent):
+    def __init__(self, master, text, parent):
         self.master = master
         self.frame = ttk.Frame(self.master)
         self.frame.grid()
         self.parent = parent
-        self.text=text
+        self.text = text
         self.value = self.text in parent.value
-        
+
         self.data_var = tk.BooleanVar(value=self.value)
 
-        self.entry = ttk.Checkbutton(master=self.master,bootstyle=(SUCCESS, ROUND, TOGGLE), variable=self.data_var)
+        self.entry = ttk.Checkbutton(master=self.master, bootstyle=(SUCCESS, ROUND, TOGGLE), variable=self.data_var)
         self.data_var.trace_add('write', self.update_data)
         self.entry.grid()
         self.text_label = ttk.Label(self.frame, text=text)
-        
+
         self.text_label.grid()
-    
+
     def update_data(self, *args):
         self.value = self.data_var.get()
         if self.value:

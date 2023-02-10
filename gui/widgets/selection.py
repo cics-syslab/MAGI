@@ -1,5 +1,7 @@
-import ttkbootstrap as ttk
 import tkinter as tk
+
+import ttkbootstrap as ttk
+
 
 class Selection:
     def __init__(self, master, name: str = None, options: list = None, default=None, callback_update=None):

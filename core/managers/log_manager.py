@@ -1,4 +1,3 @@
-import logging
 #
 class Logger:
     def __init__(self, name: str):
@@ -19,4 +18,3 @@ class LogManager:
             self.loggers[logger_name] = Logger(logger_name)
 
         return self.loggers[logger_name]
-

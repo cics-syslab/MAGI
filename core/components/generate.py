@@ -38,7 +38,7 @@ def generate_output(output_parent_dir: str) -> None:
         print(enabled_module)
         os.mkdir(op.join(output_dir, "modules"))
         shutil.copytree(op.join(SettingManager.Directories.src_path, "modules", enabled_module),
-                            op.join(output_dir, "modules", enabled_module))
+                        op.join(output_dir, "modules", enabled_module))
     if len(SettingManager.BaseSettings.enabled_plugins) > 0:
         os.mkdir(op.join(output_dir, "plugins"))
         for enabled_plugin in SettingManager.BaseSettings.enabled_plugins:

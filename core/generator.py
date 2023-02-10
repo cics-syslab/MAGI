@@ -1,5 +1,5 @@
 from core.components import generate
-from managers import SettingManager, ModuleManager
+from managers import ModuleManager
 
 
 def main():

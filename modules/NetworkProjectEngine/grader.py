@@ -1,8 +1,7 @@
-import os.path
-import subprocess
 import shlex
+import subprocess
 from time import sleep
-import json
+
 from core.managers import TestManager
 
 

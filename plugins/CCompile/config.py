@@ -1,6 +1,6 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
-from enum import Enum, auto
+from enum import Enum
 
 
 class CompileMethod(Enum):
@@ -18,6 +18,5 @@ class CompileMethod(Enum):
 @dataclass
 class Config:
     # files: dict = field(default_factory=dict)
-    exec_name:str = ""
-    #compile_method: CompileMethod = CompileMethod.student_provided_makefile
-
+    exec_name: str = ""
+    # compile_method: CompileMethod = CompileMethod.student_provided_makefile

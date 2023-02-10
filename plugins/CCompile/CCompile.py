@@ -1,6 +1,9 @@
 import os
+
 from core.managers.setting_manager import Directories
 from .config import Config, CompileMethod
+
+
 # from core.managers import TestManager
 
 
@@ -11,12 +14,14 @@ def compile_with_makefile():
     os.chdir(owd)
     return rtn
 
+
 def auto_compile_with_cmake():
     owd = os.getcwd()
     os.chdir(Directories.project_files_dir)
     rtn = os.system("cmake .")
     os.chdir(owd)
     return rtn
+
 
 def compile_code():
     if Config.compile_method == CompileMethod.cmake:
