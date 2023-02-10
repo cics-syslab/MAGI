@@ -5,7 +5,6 @@ from ttkbootstrap.constants import *
 from core.managers.setting_manager import SettingManager
 from .tab_page import TabPage
 from .selection import Selection
-from .attribute import BoolAttribute
 
 
 class ModuleTab:
@@ -13,25 +12,30 @@ class ModuleTab:
         self.tabs = {}
         self.tab_control = tab_control
         self.pointer = pointer
-        self.enabled_tab = pointer[0][pointer[1]]
-        self.selection = Selection(master, name, option, default="None", callback_update=self.update)
+        self.enabled_tab = None
+        self.enabled_tab_name = pointer[0][pointer[1]]
+        
+        self.selection = Selection(master, name, option, default=self.enabled_tab_name, callback_update=self.update)
+        self.update(self.enabled_tab_name)
 
-    def update(self, value):
-
+    def update(self, new_tab_name):
+        # hide current tab if there is one
         if self.enabled_tab:
             self.tab_control.tab(self.enabled_tab, state="hidden")
-        if not value or value == "None":
+        # if no module is selected, do not enable any tab
+        if not new_tab_name or new_tab_name == "None":
             return
-        self.pointer[0][self.pointer[1]] = value
-        if value not in self.tabs:
+        # set the enabled tab to the new tab 
+        self.pointer[0][self.pointer[1]] = new_tab_name
+        if new_tab_name not in self.tabs:
             print(SettingManager.addon_settings)
-            data = SettingManager.get(value)
-            new_tabpage = TabPage(self.tab_control, value, data)
-            self.tabs[value] = new_tabpage.page
-            self.tab_control.add(self.tabs[value], text=value)
+            data = SettingManager.get(new_tab_name)
+            new_tabpage = TabPage(self.tab_control, new_tab_name, data)
+            self.tabs[new_tab_name] = new_tabpage.page
+            self.tab_control.add(self.tabs[new_tab_name], text=new_tab_name)
         else:
-            self.tab_control.tab(self.tabs[value], state="normal")
-        self.enabled_tab = self.tabs[value]
+            self.tab_control.tab(self.tabs[new_tab_name], state="normal")
+        self.enabled_tab = self.tabs[new_tab_name]
 
 
 class PluginTab:
@@ -40,11 +44,11 @@ class PluginTab:
         self.tab_control = tab_control
         self.value = pointer[0][pointer[1]]
         self.pointer = pointer
-        self.frame = ttk.Labelframe(master=master, text=name, borderwidth=0)
+        self.frame = ttk.Labelframe(master=master, text=name)
         self.frame.pack()
         for i in option:
             Option(self.frame, i, self)
-            
+        self.update(self.value)
 
             
     def update(self, value):
