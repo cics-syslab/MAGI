@@ -1,20 +1,38 @@
-import logging
+from core.managers.log_manager import LogManager
 import sys
-
-logging.getLogger().setLevel(logging.DEBUG)
-
-handler = logging.StreamHandler(sys.stdout)
-handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-logging.getLogger().addHandler(handler)
+import argparse
 
 
+
+# GUI will only be started for development purposes
 def start_gui():
     from gui.app import start_app
-
     start_app()
 
 
-start_gui()
+def setup():
+    pass
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s","--setup", action="store_true")
+    parser.add_argument("-t","--test", action="store_true", help="Run self tests")
+    parser.add_argument("-a","--autograder", action="store_true")
+    parser.add_argument("-m","--mock", action="store_true")
+    args = parser.parse_args()
+
+    if args.setup:
+        setup()
+    elif args.test:
+        pass
+    elif args.autograder:
+        pass
+    elif args.mock:
+        pass
+    else:
+        start_gui()
+
+
+if __name__ == '__main__':
+    main()
