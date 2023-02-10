@@ -6,16 +6,14 @@
 ln -fs /usr/share/zoneinfo/America/New_York /etc/localtime
 apt-get update
 # Install python
-apt-get install -y python python3 python3.7 python3-pip python3-dev python3-setuptools jq zip
+apt-get install -y python3.8 python3-pip python3-dev python3-setuptools jq zip
 # Upgrade pip
-python3.7 -m pip install -U --force-reinstall pip
-# Install gspack dependencies
-python3.7 -m pip install subprocess32 numpy scipy matplotlib
+python3.8 -m pip install -U --force-reinstall pip
 
 apt-get install libgtest-dev cmake
 cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib
-python3.7 -m pip install PyYAML
+python3.8 -m pip install PyYAML
 # Install solution script dependencies
 if [[ -f "/autograder/source/requirements.txt" ]]; then
-    python3.7 -m pip install -r /autograder/source/requirements.txt
+    python3.8 -m pip install -r /autograder/source/requirements.txt
 fi

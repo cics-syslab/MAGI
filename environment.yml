@@ -1,10 +1,9 @@
 name: gsgen
 
 dependencies:
-  - python=3.7
-  - tk=8.6
-  - numpy
+  - python=3.8
   - pip 
-  - pillow 
   - pip:
     - ttkbootstrap
+    - dataconf
+    - numpy
