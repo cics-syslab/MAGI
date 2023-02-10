@@ -21,7 +21,6 @@ class SettingManager:
 
         file_calling = inspect.stack()[1].filename
         print(file_calling)
-        print(file_calling)
         
         if filepath is None:
             filepath = cls.__name__ + ".json"
@@ -41,6 +40,3 @@ class SettingManager:
 
     def get(name):
         return SettingManager.addon_settings[name]
-
-def register(cls):
-    print("register")
