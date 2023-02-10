@@ -1,7 +1,7 @@
 import random
 
 def generate_question() -> str:
-    pass
+    
     rand1 = random.randint(1, 26)
     ALPHABETS = [chr(val) for val in range(65, 91)]
     encrypted_message = "".join(random.choices(ALPHABETS, 50))
@@ -15,7 +15,7 @@ def generate_question() -> str:
 
 
 def solve_question(question: str) -> str:
-    pass
+    
     parsed = question.split()
     rand1 = int(parsed[0])
     encrypted_message = parsed[1]
