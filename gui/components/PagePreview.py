@@ -21,17 +21,14 @@ class PagePreview:
             SettingManager.BaseSettings.output_dir = output_dir_var.get()
         output_dir_var.trace_add('write', update_dir)
         label_frame = ttk.LabelFrame(master=self.page, text="Output Directory", padding=5)
-        label_frame.grid()
+        label_frame.grid(sticky='ew')
 
-        ttk.Entry(master=label_frame, textvariable=output_dir_var, width=20).grid()
-        ttk.Button(label_frame, text="Select", command=lambda: show_dir_selector([output_dir_var], 0)).grid()
+        ttk.Entry(master=label_frame, textvariable=output_dir_var, width=20).grid(row=0, column=0, sticky="w", padx=0, pady=5,rowspan=5)
+        ttk.Button(label_frame, text="Select", command=lambda: show_dir_selector([output_dir_var], 0)).grid(row=0, column=1, sticky="e", padx=0, pady=5)
         
         self.generate_button = ttk.Button(master=self.page, text="Generate", command=self.generate)
-        self.generate_button.grid(sticky=tk.SW)
-        from ttkbootstrap.scrolled import ScrolledText
-        txt = ScrolledText(master=self.page, height=5, width=50, autohide=True)
-        txt.insert('end',"def Question():\n \ndef Answer():")
-        txt.grid()
+        self.generate_button.grid(pady=10)
+        
 
     def generate(self):
         from core.components.generate import generate_output
