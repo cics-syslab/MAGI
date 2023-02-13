@@ -33,6 +33,7 @@ def generate_output(output_parent_dir: str) -> None:
     output_dir = op.join(output_dir, "autograder")
     shutil.copytree(SettingManager.Directories.template_dir, output_dir)
     shutil.copytree(SettingManager.Directories.core_dir, op.join(output_dir, "core"))
+    shutil.copy(op.join(SettingManager.Directories.src_path, "main.py"), output_dir)
     if SettingManager.BaseSettings.enabled_module:
         enabled_module = SettingManager.BaseSettings.enabled_module
         print(enabled_module)
