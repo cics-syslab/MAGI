@@ -33,6 +33,8 @@ def main():
         pass
     else:
         start_gui()
+        from core.managers.setting_manager import SettingManager
+        SettingManager.save_settings()
 
 
 if __name__ == '__main__':

@@ -8,9 +8,22 @@ from ..base_settings import BaseSettings
 import logging as lg
 logging = lg.getLogger('SettingManager')
 
+def load_or_create(filepath, cls):
+    try:
+        instance = dataconf.load(filepath, cls)
+        logging.info(f"Setting file loaded from {filepath}: {instance}")
+    except FileNotFoundError:
+        logging.warning(f"Setting file not exists, created at {filepath}")
+        instance = cls()
+        dataconf.dump(filepath, instance, "json")
+    return instance
+
+
 class SettingManager:
-    BaseSettings = BaseSettings()
+    
     addon_settings = {}
+    addon_settings_file = {}
+    BaseSettings = load_or_create(op.join("core","BaseSettings.json"), BaseSettings)
 
     @staticmethod
     def register(cls, filepath=None):
@@ -25,13 +38,9 @@ class SettingManager:
             filepath = cls.__name__ + ".json"
         name = op.split(file_calling)[0].split(op.sep)[-1]
         abs_path = op.join(op.split(file_calling)[0], filepath)
-
-        try:
-            instance = dataconf.load(abs_path, cls)
-        except FileNotFoundError:
-            logging.warning(f"Setting file not exists, created at {abs_path}")
-            instance = cls()
-            dataconf.dump(abs_path, instance, "json")
+        SettingManager.addon_settings_file[name] = abs_path
+        
+        instance = load_or_create(abs_path, cls)
 
         # setattr(SettingManager, cls.__name__, instance)
         SettingManager.addon_settings[name] = instance
@@ -39,3 +48,8 @@ class SettingManager:
 
     def get(name):
         return SettingManager.addon_settings[name]
+    
+    def save_settings():
+        dataconf.dump(op.join("core","BaseSettings.json"),SettingManager.BaseSettings, "json")
+        for name, instance in SettingManager.addon_settings.items():
+            dataconf.dump(SettingManager.addon_settings_file[name], instance, "json")
