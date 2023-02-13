@@ -16,25 +16,25 @@ class ListAttribute:
         self.list_record = {}
         self.element_list = []
         self.index = 0
-        for i in range(len(self.list_obj)):
-            self.list_record[i] = list_obj[i]
-            self.index += 1
+        for i in self.list_obj:
+            self.add(i)
 
-    def add(self):
-        self.list_record[self.index] = self.type()
-        self.element_list.append(ListElement(self.master, self.list_record[self.index], self.list_record, self.index))
+    def add(self,value =None):
+        if value is None:
+            value = self.type()
+        self.list_record[self.index] = value
+        self.element_list.append(ListElement(self.master, self.list_record[self.index], self, self.index))
         self.index += 1
         self.update()
 
     def update(self):
         self.list_obj.clear()
-        for i in self.list_record.keys():
-            self.list_obj.append(self.list_record[i])
+        for i in self.list_record.values():
+            self.list_obj.append(i)
         self.add_button.grid_forget()
         self.add_button.grid(pady=10)
 
     def remove(self, index):
-        self.remove(index)
         self.update()
 
 
@@ -54,9 +54,9 @@ class ListElement:
     def remove(self):
         self.frame.pack_forget()
         self.frame.destroy()
-        self.parent.pop(self.index)
+        self.parent.list_record.pop(self.index)
         self.parent.update()
 
     def update(self, value):
-        self.parent[self.index] = value
+        self.parent.list_record[self.index] = value
         self.parent.update()
