@@ -1,4 +1,4 @@
-from .module_manager import ModuleManager as _ModuleManager
+from .addon_manager import ModuleManager as _ModuleManager
 from .setting_manager import SettingManager as _SettingManager
 from .test_manager import TestManager as _TestManager
 

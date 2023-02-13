@@ -11,9 +11,8 @@ class Directories:
     template_dir = op.join(src_path, "assets/GRADESCOPE_TEMPLATE")
 
     core_dir = op.join(src_path, "core")
-
     project_files_dir = op.join(src_path, "project_files")
-
+    logs_dir = op.join(src_path, "logs")
     # /autograder
     autograder_root = op.join(src_path, "assets/mock_autograder")
     if op.exists("/autograder"):

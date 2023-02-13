@@ -58,8 +58,8 @@ class ModuleManager:
         if not enabled_module_name:
             logging.debug("No enabled module")
             return None
-        if enabled_module_name not in self._name_to_modules.keys():
-            logging.debug(f"Module {enabled_module_name} not found")
+        if enabled_module_name not in self.available_modules.keys():
+            logging.error(f"Module {enabled_module_name} not found")
             return None
         return self._name_to_modules[enabled_module_name]
 
@@ -71,8 +71,8 @@ class ModuleManager:
             return []
         enabled_plugins = []
         for plugin_name in enabled_plugins_names:
-            if plugin_name not in self._name_to_plugins.keys():
-                logging.debug(f"Plugin {plugin_name} not found")
+            if plugin_name not in self.available_plugins.keys():
+                logging.error(f"Plugin {plugin_name} not found")
                 continue
             enabled_plugins.append(self._name_to_plugins[plugin_name])
         return enabled_plugins
@@ -80,7 +80,7 @@ class ModuleManager:
     def run_attr_for_all(self, attr):
         all_addon = [self.enabled_module] + self.enabled_plugins
         for addon in all_addon:
-            func = getattr(addon, attr)
+            func = getattr(addon, attr, None)
             if func:
                 logging.info(f"Running {attr} for {addon.name}")
                 func()

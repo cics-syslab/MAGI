@@ -1,8 +1,10 @@
 {
-  "project_name": "",
-  "project_desc": "",
+  "project_name": "Network",
+  "project_desc": "nope",
   "output_dir": "output",
-  "enabled_module": "",
-  "enabled_plugins": [],
+  "enabled_module": "NetworkProjectEngine",
+  "enabled_plugins": [
+    "CCompile"
+  ],
   "submission_files": []
 }
