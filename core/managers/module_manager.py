@@ -7,11 +7,11 @@ import os.path as op
 import sys
 
 from .setting_manager import SettingManager
-
+from ..info.directories import Directories
 
 def list_available(sub_dir: str) -> dict:
     # List all available modules/plugins 
-    searching_dir = op.join(SettingManager.Directories.src_path, sub_dir)
+    searching_dir = op.join(Directories.src_path, sub_dir)
     dirs = os.listdir(searching_dir)
     available = {}
     if sub_dir not in sys.path:

@@ -25,7 +25,7 @@ class TestCase:
     number: str = ""
     tags: list = field(default_factory=list)
     extra_data: dict = field(default_factory=dict)
-
+    
 
 class TestManager:
     score: int = 0

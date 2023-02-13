@@ -5,13 +5,11 @@ from dataclasses import is_dataclass
 import dataconf
 
 from ..base_settings import BaseSettings
-from ..info.directories import Directories
 import logging as lg
 logging = lg.getLogger('SettingManager')
 
 class SettingManager:
     BaseSettings = BaseSettings()
-    Directories = Directories()
     addon_settings = {}
 
     @staticmethod

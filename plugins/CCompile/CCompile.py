@@ -1,6 +1,6 @@
 import os
 
-from core.managers.setting_manager import Directories
+from core.info.directories import Directories
 from .config import Config, CompileMethod
 
 

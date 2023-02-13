@@ -19,4 +19,4 @@ class CompileMethod(Enum):
 class Config:
     # files: dict = field(default_factory=dict)
     exec_name: str = ""
-    # compile_method: CompileMethod = CompileMethod.student_provided_makefile
+    #compile_method: CompileMethod = CompileMethod.student_provided_makefile
