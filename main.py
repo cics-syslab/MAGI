@@ -27,8 +27,8 @@ def main():
     elif args.test:
         pass
     elif args.autograder:
-        from core.grader import grade
-        grade()
+        from core.grader import grade_submission
+        grade_submission()
     elif args.mock:
         pass
     else:
