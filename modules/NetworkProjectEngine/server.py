@@ -116,7 +116,6 @@ class Client:
         self.json = {
             "output": "",
             "stdout_visibility": "visible",
-            "extra_data": {},
             "tests": []
         } if create_json else None
 

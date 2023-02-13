@@ -4,7 +4,7 @@ import random
 def generate_question() -> str:
     rand1 = random.randint(1, 26)
     ALPHABETS = [chr(val) for val in range(65, 91)]
-    encrypted_message = "".join(random.choices(ALPHABETS, 50))
+    encrypted_message = "".join(random.choices(ALPHABETS, k=50))
 
     rand1 = random.randint(1, 1000)
     rand2 = random.randint(1, 1000)

@@ -18,5 +18,5 @@ cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib
 if [[ -f "/autograder/source/requirements.txt" ]]; then
     python3.8 -m pip install -r /autograder/source/requirements.txt
 fi
-
-python3.8 /autograder/source/main.py --setup
+cd /autograder/source
+python3.8 main.py --setup

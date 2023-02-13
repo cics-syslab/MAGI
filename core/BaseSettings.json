@@ -3,8 +3,8 @@
   "project_desc": "nope",
   "output_dir": "output",
   "enabled_module": "NetworkProjectEngine",
-  "enabled_plugins": [
-    "CCompile"
-  ],
-  "submission_files": []
+  "enabled_plugins": [],
+  "submission_files": [
+    "client.c"
+  ]
 }

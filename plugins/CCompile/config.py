@@ -8,11 +8,6 @@ class CompileMethod(Enum):
     instructor_provided_makefile = "instructor provided makefile"
     cmake = "cmake"
 
-    def __str__(self):
-        return self.name
-
-    def __repr__(self):
-        return f"'{self.name}'"
 
 
 @dataclass

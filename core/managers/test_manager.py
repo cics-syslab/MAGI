@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from typing import Optional
 import logging as lg
 logging = lg.getLogger("TestManager")
 
@@ -11,14 +12,14 @@ class Visibility:
 
 @dataclass
 class TestCase:
-    name: str = ""
+    name: Optional[str] = None
     score: float = 0
     max_score: float = 0
     visibility: str = Visibility.after_published
     output: str = ""
-    number: str = ""
-    tags: list = field(default_factory=list)
-    extra_data: dict = field(default_factory=dict)
+    number: Optional[str] = ""
+    #tags: list = field(default_factory=list)
+    extra_data:str = ""
 
     def fail_test(self, msg: str):
         self.output += "\n" + msg
@@ -43,16 +44,17 @@ class TestManager:
         self.output += "\n" + msg
 
     def add_test(self, test_case: TestCase):
-        if TestCase is None:
-            self.add_test(TestCase())
+        if test_case is None:
+            test_case = TestCase()
         self.test_cases.append(test_case)
         if test_case.name:
             if test_case.name in self.test_cases_by_name:
                 logging.warning(f"Test case with name {test_case.name} already exists")
             self.test_cases_by_name[test_case.name] = test_case
-    
+        return test_case
+
     def new_test(self,*args, **kwargs):
-        self.add_test(TestCase(*args, **kwargs))
+        return self.add_test(TestCase(*args, **kwargs))
 
     def fail_all(self, msg: str):
         self.append_output(msg)
