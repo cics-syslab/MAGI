@@ -91,7 +91,7 @@ class Option:
     def update_data(self, *args):
         self.value = self.data_var.get()
         if self.value:
-            self.parent.value.add(self.text)
+            self.parent.value.append(self.text)
         else:
             self.parent.value.remove(self.text)
         self.parent.update(self.parent.value)
