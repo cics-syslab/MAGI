@@ -12,14 +12,14 @@ class Visibility:
 
 @dataclass
 class TestCase:
-    name: Optional[str] = None
+    #name: Optional[str] 
+    #number: Optional[str]
     score: float = 0
     max_score: float = 0
     visibility: str = Visibility.after_published
     output: str = ""
-    number: Optional[str] = ""
     #tags: list = field(default_factory=list)
-    extra_data:str = ""
+    #extra_data:str = ""
 
     def fail_test(self, msg: str):
         self.output += "\n" + msg
@@ -47,10 +47,10 @@ class TestManager:
         if test_case is None:
             test_case = TestCase()
         self.test_cases.append(test_case)
-        if test_case.name:
-            if test_case.name in self.test_cases_by_name:
-                logging.warning(f"Test case with name {test_case.name} already exists")
-            self.test_cases_by_name[test_case.name] = test_case
+        # if test_case.name:
+        #     if test_case.name in self.test_cases_by_name:
+        #         logging.warning(f"Test case with name {test_case.name} already exists")
+        #     self.test_cases_by_name[test_case.name] = test_case
         return test_case
 
     def new_test(self,*args, **kwargs):

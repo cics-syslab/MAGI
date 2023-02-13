@@ -17,7 +17,7 @@ result = Result()
 def output_result():
     from core.managers.test_manager import TestManager
     result.output+=TestManager.output
-    result.extra_data = {"test":[1,2,3]}
+    result.extra_data = {"testing":[1,2,3]}
     for test in TestManager.test_cases:
         result.tests.append(test)
     dataconf.dump(Directories.result_path, result,"json")
