@@ -1,6 +1,7 @@
 import importlib
 import importlib.util
-import logging
+import logging as lg
+logging = lg.getLogger('ModuleManager')
 import os
 import os.path as op
 import sys
@@ -21,10 +22,13 @@ def list_available(sub_dir: str) -> dict:
         if not op.exists(op.join(searching_dir, _dir, "__init__.py")):
             logging.debug(f"Module {_dir} does not have __init__.py")
             continue
+        try:
+            imported = importlib.import_module(_dir, sub_dir)
+            logging.debug(f"Imported {getattr(imported, 'name', 'None')} from {_dir}")
+            available[_dir] = imported
+        except Exception as e:
+            logging.error(f"Error importing {_dir}: {e}")
 
-        imported = importlib.import_module(_dir, sub_dir)
-        logging.debug(f"Imported {getattr(imported, 'name', 'None')} from {_dir}")
-        available[_dir] = imported
     return available
 
 
@@ -33,9 +37,6 @@ class ModuleManager:
     _dir_to_plugins = {}
     _name_to_modules = {}
     _name_to_plugins = {}
-
-    enabled_module = None
-    enabled_plugins = []
 
     @property
     def available_modules(self):
@@ -51,28 +52,40 @@ class ModuleManager:
             self._name_to_plugins = {plugin.name: plugin for plugin in self._dir_to_plugins.values()}
         return self._name_to_plugins
 
-    def init_run(self):
-        enabled_module = SettingManager.BaseSettings.enabled_module
-        if enabled_module not in self.available_modules.keys():
-            # logging.fatal
-            pass
-        self.enabled_module = self._name_to_modules[enabled_module]
-        for enabled_plugin in SettingManager.BaseSettings.enabled_plugins:
-            if enabled_plugin not in self.available_plugins_name:
-                # logging.fatal
-                pass
+    @property
+    def enabled_module(self)->object:
+        enabled_module_name = SettingManager.BaseSettings.enabled_module
+        if not enabled_module_name:
+            logging.debug("No enabled module")
+            return None
+        if enabled_module_name not in self._name_to_modules.keys():
+            logging.debug(f"Module {enabled_module_name} not found")
+            return None
+        return self._name_to_modules[enabled_module_name]
 
-            self.enabled_module[enabled_plugin] = self._name_to_plugins[enabled_plugin]
-
+    @property
+    def enabled_plugins(self)->list:
+        enabled_plugins_names = SettingManager.BaseSettings.enabled_plugins
+        if not enabled_plugins_names:
+            logging.debug("No enabled plugins")
+            return []
+        enabled_plugins = []
+        for plugin_name in enabled_plugins_names:
+            if plugin_name not in self._name_to_plugins.keys():
+                logging.debug(f"Plugin {plugin_name} not found")
+                continue
+            enabled_plugins.append(self._name_to_plugins[plugin_name])
+        return enabled_plugins
+    
     def run_attr_for_all(self, attr):
-        for module in self.enabled_module:
-            func = getattr(module, attr)
+        all_addon = [self.enabled_module] + self.enabled_plugins
+        for addon in all_addon:
+            func = getattr(addon, attr)
             if func:
+                logging.info(f"Running {attr} for {addon.name}")
                 func()
-        for plugin in self.enabled_plugins:
-            func = getattr(plugin, attr)
-            if func:
-                func()
+            else:
+                logging.debug(f"Addon {addon.name} does not have {attr},skipped")
 
     def setup(self):
         pass
@@ -82,5 +95,5 @@ class ModuleManager:
 
     def grade(self):
         self.run_attr_for_all("before_grading")
-        self.run_attr_for_all("grading")
+        self.run_attr_for_all("grade")
         self.run_attr_for_all("after_grading")
