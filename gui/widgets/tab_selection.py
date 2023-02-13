@@ -29,7 +29,7 @@ class ModuleTab:
         # set the enabled tab to the new tab 
         self.pointer[0][self.pointer[1]] = new_tab_name
         if new_tab_name not in self.tabs:
-            print(SettingManager.addon_settings)
+            # print(SettingManager.addon_settings)
             data = SettingManager.get(new_tab_name)
             new_tabpage = TabPage(self.tab_control, new_tab_name, data)
             self.tabs[new_tab_name] = new_tabpage.page

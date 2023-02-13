@@ -1,5 +1,6 @@
 import logging as lg
 logging = lg.getLogger('gui')
+from .attribute import add_attribute
 from dataclasses import fields, is_dataclass, Field
 
 import ttkbootstrap as ttk

@@ -18,13 +18,13 @@ def list_available(sub_dir: str) -> dict:
         sys.path.append(sub_dir)
 
     for _dir in dirs:
-        logging.info(f"Loading from {_dir}")
+        logging.debug(f"Loading from {_dir}")
         if not op.exists(op.join(searching_dir, _dir, "__init__.py")):
-            logging.debug(f"Module {_dir} does not have __init__.py")
+            logging.warning(f"Module {_dir} does not have __init__.py")
             continue
         try:
             imported = importlib.import_module(_dir, sub_dir)
-            logging.debug(f"Imported {getattr(imported, 'name', 'None')} from {_dir}")
+            logging.info(f"Imported {getattr(imported, 'name', 'None')} from {_dir}")
             available[_dir] = imported
         except Exception as e:
             logging.error(f"Error importing {_dir}: {e}")

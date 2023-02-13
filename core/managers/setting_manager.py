@@ -6,7 +6,8 @@ import dataconf
 
 from ..base_settings import BaseSettings
 from ..info.directories import Directories
-
+import logging as lg
+logging = lg.getLogger('SettingManager')
 
 class SettingManager:
     BaseSettings = BaseSettings()
@@ -20,7 +21,7 @@ class SettingManager:
             raise TypeError("Only dataclasses can be registered as settings")
 
         file_calling = inspect.stack()[1].filename
-        print(file_calling)
+        logging.debug(f"Registering {cls.__name__} from {file_calling} (filepath: {filepath}")
 
         if filepath is None:
             filepath = cls.__name__ + ".json"
@@ -30,7 +31,7 @@ class SettingManager:
         try:
             instance = dataconf.load(abs_path, cls)
         except FileNotFoundError:
-            print(f"Setting file not exists, created at {abs_path}")
+            logging.warning(f"Setting file not exists, created at {abs_path}")
             instance = cls()
             dataconf.dump(abs_path, instance, "json")
 

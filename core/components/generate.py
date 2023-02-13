@@ -4,7 +4,7 @@ import os.path as op
 import shutil
 
 from ..managers import SettingManager
-
+import logging
 
 def create_output_dir(output_parent_dir: str) -> str:
     if not output_parent_dir:
@@ -14,7 +14,7 @@ def create_output_dir(output_parent_dir: str) -> str:
     if os.path.isdir(output_dir):
         output_dir = output_dir + "-" + datetime.datetime.now().strftime('%Y%m%d-%H-%M-%S')
 
-    print(f'Files will be produced to: {output_dir}')
+    logging.critical(f'Files will be produced to: {output_dir}')
     os.mkdir(output_dir)
     return output_dir
 
@@ -36,7 +36,6 @@ def generate_output(output_parent_dir: str) -> None:
     shutil.copy(op.join(SettingManager.Directories.src_path, "main.py"), output_dir)
     if SettingManager.BaseSettings.enabled_module:
         enabled_module = SettingManager.BaseSettings.enabled_module
-        print(enabled_module)
         os.mkdir(op.join(output_dir, "modules"))
         shutil.copytree(op.join(SettingManager.Directories.src_path, "modules", enabled_module),
                         op.join(output_dir, "modules", enabled_module))
