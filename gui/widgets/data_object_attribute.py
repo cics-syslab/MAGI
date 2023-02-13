@@ -1,10 +1,9 @@
-import logging
-
+import logging as lg
+logging = lg.getLogger('gui')
 from dataclasses import fields, is_dataclass, Field
 
 import ttkbootstrap as ttk
 
-from . import *
 
 
 # convert snake_case to Camel Case
