@@ -1,4 +1,5 @@
 import logging
+
 from dataclasses import fields, is_dataclass, Field
 
 import ttkbootstrap as ttk
@@ -13,7 +14,7 @@ def attribute_name_convention(field_info: Field) -> str:
     return field_info.name.replace("_", " ").title()
 
 
-# Given a dataclass and a tkinter frame, create a form with the dataclass fields
+# create a form with the dataclass fields inside frame
 class DataObjectAttribute:
     def __init__(self, master, data_object):
         self.master = master
