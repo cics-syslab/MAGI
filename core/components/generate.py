@@ -29,6 +29,9 @@ def pack_autograder(autograder_dir: str) -> None:
 
 
 def generate_output(output_parent_dir: str) -> None:
+    from ..managers.setting_manager import SettingManager
+    SettingManager.save_settings()
+    
     output_dir = create_output_dir(output_parent_dir)
     output_dir = op.join(output_dir, "autograder")
     shutil.copytree(SettingManager.Directories.template_dir, output_dir)
