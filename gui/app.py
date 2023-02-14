@@ -14,6 +14,7 @@ def start_app():
     components.PagePreview(tab_control)
     components.PageBaseSettings(tab_control)
     root.geometry('800x600')
+    root.title('gsgen')
     root.mainloop()
 
 
