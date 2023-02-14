@@ -1,9 +1,9 @@
-from .addon_manager import ModuleManager as _ModuleManager
+from .addon_manager import AddonManager as _AddonManager
 from .setting_manager import SettingManager as _SettingManager
 from .test_manager import TestManager as _TestManager
 
 TestManager:_TestManager = _TestManager()
 SettingManager:_SettingManager = _SettingManager()
-ModuleManager:_ModuleManager = _ModuleManager()
+AddonManager:_AddonManager = _AddonManager()
 
-__all__ = ['TestManager', 'SettingManager', 'ModuleManager']
+__all__ = ['TestManager', 'SettingManager', 'AddonManager']

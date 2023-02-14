@@ -1,8 +1,8 @@
-from .managers import ModuleManager
+from .managers import AddonManager
 
 
 def setup_grader():
-    ModuleManager.setup()
+    AddonManager.setup()
     pass
 
 

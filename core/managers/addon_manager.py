@@ -32,7 +32,7 @@ def list_available(sub_dir: str) -> dict:
     return available
 
 
-class ModuleManager:
+class AddonManager:
     _dir_to_modules = {}
     _dir_to_plugins = {}
     _name_to_modules = {}
