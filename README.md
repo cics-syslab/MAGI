@@ -27,8 +27,27 @@ To start the Graphical User Interface, simply do ```python main.py```
 The interface is divided by tabs. By default, you have two tabs, `Preview` and `BasicSettings`. After enabling different modules or plugins, their settings (if they have) will be shown in the new tab created. 
 
 ### Preview 
-On the preview page, you can select where to generate the project files and generate it. (more features to come)
+On the preview page, you can choose where to generate the project files and generate it. (more features to come)
 
+The files will be generated to the path and in the folder with the name as the project name. If the folder already exists, the new folder will be concated with current time. 
+
+#### File Structure
+The file structure emulates the gradescope environment under the subdirectory. 
+- autograder.zip
+    
+    This is the file to choose when uploading to gradescope.
+
+- source/
+
+    Has the same contents as `autograder.zip`
+
+- documents.md (not implemented yet)
+
+    A document file that provides the instructions for student
+
+- starter.zip (not implemented yet)
+
+    starter code that needs to be provided to student
 ### Basic Settings
 This page includes the generic information about the assignment and overall settings. The attributes are listed below,
 
