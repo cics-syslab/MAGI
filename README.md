@@ -51,15 +51,20 @@ The file structure emulates the gradescope environment under the subdirectory.
 ### Basic Settings
 This page includes the generic information about the assignment and overall settings. The attributes are listed below,
 
-    - Project Name: The title for the project and also the name shown on the generated material such as the documentation.
+    - Project Name: 
+    The title for the project and also the name shown on the generated material such as the documentation.
 
-    - Project Desc: Optional. A paragraph long brief description for the project. Could be a scenario or something related.
+    - Project Desc: 
+    Optional. A paragraph long brief description for the project. Could be a scenario or something related.
 
-    - Submission Files: A list of file required for submission. In case of the student's submission doesn't include one or more files in the list, the autograder will not run or produce the test result but throws an error message to notify the student.
+    - Submission Files: 
+    A list of file required for submission. In case of the student's submission doesn't include one or more files in the list, the autograder will not run or produce the test result but throws an error message to notify the student.
 
-    - Enabled Module: The module to use. Since the modules are mutually exclusive, you can only enable one module at a time.
+    - Enabled Module: 
+    The module to use. Since the modules are mutually exclusive, you can only enable one module at a time.
 
-    - Enabled Plugins: The plugins to use. Multiple plugins could be enabled.
+    - Enabled Plugins: 
+    The plugins to use. Multiple plugins could be enabled.
 
 ## Modules
 Currently, following modules are available:
