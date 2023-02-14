@@ -1,10 +1,10 @@
 from core.components import generate
-from managers import ModuleManager
+from managers import AddonManager
 
 
 def main():
     generate.generate_output()
-    ModuleManager.generate()
+    AddonManager.generate()
 
 
 if __name__ == "__main__":
