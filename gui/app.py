@@ -13,6 +13,7 @@ def start_app():
     tab_control.pack(expand=1, fill=tk.BOTH)
     components.PagePreview(tab_control)
     components.PageBaseSettings(tab_control)
+    root.geometry('800x600')
     root.mainloop()
 
 
