@@ -3,14 +3,14 @@ import re
 import sys
 from subprocess import Popen, PIPE
 
-import test_config
-from test_config import ThreadState
+from . import config
+from .project_config import ThreadState
 
 min_resource_limit = float('inf')
 
 
 def get_thread_state_by_id(thread_state_id: int) -> ThreadState:
-    for state in test_config.thread_states:
+    for state in config.thread_states:
         if state.id == thread_state_id:
             return state
     return None
@@ -22,7 +22,7 @@ class Msg:
         self.state = -1
         self.msg_type = -1
 
-        for state in test_config.thread_states:
+        for state in config.thread_states:
             state_msg = [state.fail_msg.split(), state.succ_msg.split()]
             for msg_type in [0, 1]:
                 if len(state_msg[msg_type]) != len(msg_str.split()):
@@ -63,7 +63,7 @@ class ResourceRecord:
         global min_resource_limit
 
         fail_detectable = False
-        for state in test_config.thread_states:
+        for state in config.thread_states:
             if self.id in state.draw_resource and state.fail_msg:
                 fail_detectable = True
                 break
@@ -166,15 +166,16 @@ class ThreadTest:
 
         global resource_records
         resource_records = []
-        for resource in test_config.config_json['resource']:
+        for resource in config.config_json['resource']:
             resource_records.append(ResourceRecord(resource))
 
-        exec_name = sys.path[0] + '/../' + test_config.config_json['exec_name']
+        from core.info.directories import Directories
+        exec_name = config.exec_name
         # TODO: Check return code so we could know the program has some problem(in case no output)
         # so the pipe will read in real-time instead of all lines at once
         unbuffered = ["stdbuf", "-i0", "-o0", "-e0"]
         p = Popen(unbuffered + [exec_name, str(self.thread_num)], bufsize=0, stdout=PIPE,
-                  universal_newlines=True)
+                  universal_newlines=True,cwd=Directories.project_files_dir)
 
         # This probably works with Python3.10+
         # p = Popen([exec_name, str(self.thread_num)], bufsize=0,stdout=PIPE,universal_newlines=True,pipesize =0)
@@ -198,7 +199,7 @@ class ThreadTest:
         self.msg_orders = []
         self.run()
 
-    def test_all_thread_is_final(self) -> tuple():
+    def test_all_thread_is_final(self) -> tuple:
         failed_threads = []
         for i in range(self.thread_num):
             # not presented
@@ -211,7 +212,7 @@ class ThreadTest:
 
         return true_or_error_msg(len(failed_threads) == 0, str(len(failed_threads)) + " thread(s) are not finished.")
 
-    def test_all_thread_presented(self) -> tuple():
+    def test_all_thread_presented(self) -> tuple:
         absent_threads = []
         for i in range(self.thread_num):
             if (self.thread_records[i].num_success == 0) & (self.thread_records[i].num_failed == 0):
@@ -220,7 +221,7 @@ class ThreadTest:
         return true_or_error_msg(len(absent_threads) == 0, str(len(
             absent_threads)) + " thread(s) never show up, check race condition when assign id.")
 
-    def test_all_thread_blocked_once(self) -> tuple():
+    def test_all_thread_blocked_once(self) -> tuple:
         direct_passed_threads = []
         for i in range(self.thread_num):
             if (self.thread_records[i].num_failed == 0):
@@ -233,7 +234,7 @@ class ThreadTest:
         return true_or_error_msg(num_thread_exceed_limit <= 0,
                                  str(num_thread_exceed_limit) + ' more thread(s) never got blocked.')
 
-    def test_all_thread_not_skip_state(self) -> tuple():
+    def test_all_thread_not_skip_state(self) -> tuple:
         thread_skip_state = []
         for i in range(self.thread_num):
             if (self.thread_records[i].skip_state):
@@ -241,7 +242,7 @@ class ThreadTest:
         return true_or_error_msg(len(thread_skip_state) == 0,
                                  str(len(thread_skip_state)) + " thread(s) skiped one or more states.")
 
-    def test_all_thread_not_revisit_state(self) -> tuple():
+    def test_all_thread_not_revisit_state(self) -> tuple:
         thread_revisit_state = []
         for i in range(self.thread_num):
             if (self.thread_records[i].revisit_state):
@@ -250,7 +251,7 @@ class ThreadTest:
                                  str(len(thread_revisit_state)) + " thread(s) revisited one or more states.")
 
     # no lock on wait
-    def test_all_failure_retried_on_time(self) -> tuple():
+    def test_all_failure_retried_on_time(self) -> tuple:
         thread_lazy = []
         for i in range(self.thread_num):
             if (self.thread_records[i].exceed_retry_window):
@@ -258,7 +259,7 @@ class ThreadTest:
         return true_or_error_msg(len(thread_lazy) == 0, str(len(
             thread_lazy)) + " thread(s) didn't retry on time, maybe wait() is included in semaphore.")
 
-    def test_all_resource_filled(self) -> tuple():
+    def test_all_resource_filled(self) -> tuple:
         unfilled_resources = []
         global resource_records
         for resource in resource_records:
@@ -268,7 +269,7 @@ class ThreadTest:
         return true_or_error_msg(len(unfilled_resources) == 0,
                                  str(len(unfilled_resources)) + ' resource(s) are not well used.')
 
-    def test_all_resource_not_overflow(self) -> tuple():
+    def test_all_resource_not_overflow(self) -> tuple:
         overflow_resources = []
         global resource_records
         for resource in resource_records:
@@ -278,7 +279,7 @@ class ThreadTest:
         return true_or_error_msg(len(overflow_resources) == 0,
                                  str(len(overflow_resources)) + ' resource(s) got overflowed.')
 
-    def test_all_resource_not_underflow(self) -> tuple():
+    def test_all_resource_not_underflow(self) -> tuple:
         underflow_resources = []
         global resource_records
         for resource in resource_records:
@@ -288,7 +289,7 @@ class ThreadTest:
         return true_or_error_msg(len(underflow_resources) == 0,
                                  str(len(underflow_resources)) + ' resource(s) got underflowed.')
 
-    def test_order_not_fixed(self) -> tuple():
+    def test_order_not_fixed(self) -> tuple:
         num_iteration = 3
         for _ in range(num_iteration - 1):
             self.run()
