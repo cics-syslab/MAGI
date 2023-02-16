@@ -1,8 +1,4 @@
-﻿# <center> COMPSCI 230 Computer Systems Principles
-
-# <center>Math Bot
-
-# **Overview**
+﻿# **Overview**
 This assignment will give you the opportunity to write a computer networking client that will connect to a remote server and interact with it. You will be writing this assignment in the C programming language. To summarize, the skills that you will build are:
 
 - **Network System Calls:** You will be using system calls in order to communicate to the network. These are special functions that act as an API to the kernel and the operating system. You should take a look at this [post](http://linasm.sourceforge.net/docs/syscalls/network.php) to see a list of network system calls that are used in building networked applications. Note, you will not be using all of these, but rather a subset of them. In addition, along with these system calls you will need to become acquainted with the various [structures](https://www.tutorialspoint.com/unix_sockets/socket_structures.htm) that are used as parameters and return values for these system calls.

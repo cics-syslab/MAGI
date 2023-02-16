@@ -50,6 +50,9 @@ def generate_output(output_parent_dir: str) -> None:
                             op.join(output_source_dir, "plugins", enabled_plugin))
     pack_autograder(output_source_dir)
 
+    from .documentation import generate_documentation
+    generate_documentation(op.join(output_dir, "documentation.md"))
+
     # Open the output directory if on Windows
     try:
         os.startfile(output_dir)

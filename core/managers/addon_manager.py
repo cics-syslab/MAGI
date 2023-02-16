@@ -1,7 +1,7 @@
 import importlib
 import importlib.util
 import logging as lg
-logging = lg.getLogger('ModuleManager')
+logging = lg.getLogger('AddonManager')
 import os
 import os.path as op
 import sys
@@ -79,14 +79,18 @@ class AddonManager:
     
     def run_attr_for_all(self, attr):
         all_addon = [self.enabled_module] + self.enabled_plugins
+        rtn = []
         for addon in all_addon:
+            if not addon:
+                continue
             func = getattr(addon, attr, None)
             if func:
                 logging.info(f"Running {attr} for {addon.name}")
-                func()
+                rtn.append(func())
             else:
                 logging.debug(f"Addon {addon.name} does not have {attr},skipped")
-
+        return rtn
+    
     def setup(self):
         pass
 
@@ -97,3 +101,6 @@ class AddonManager:
         self.run_attr_for_all("before_grading")
         self.run_attr_for_all("grade")
         self.run_attr_for_all("after_grading")
+
+    def generate_documentation(self):
+        return self.run_attr_for_all("generate_documentation")

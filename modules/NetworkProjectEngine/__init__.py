@@ -9,3 +9,4 @@ from .config import Config as _Config
 
 config = SettingManager.register(_Config)
 from .grader import grade
+from .gen_doc import generate_documentation
