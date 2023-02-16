@@ -68,11 +68,11 @@ This page includes the generic information about the assignment and overall sett
 
 ## Modules
 Currently, following modules are available:
-1. [Network Project Engine]()
+1. [Network Project Engine](https://github.com/nightdawnex/gsgen/tree/main/modules/NetworkProjectEngine)
     
     some description
 
-2. [Thread Project Engine]()
+2. [Thread Project Engine](https://github.com/nightdawnex/gsgen/tree/main/modules/ThreadingProjectEngine)
 
     some description
 
