@@ -35,13 +35,13 @@ The files will be generated to the path and in the folder with the name as the p
 The file structure emulates the gradescope environment under the subdirectory. 
 - autograder.zip
     
-    This is the file to choose when uploading to gradescope.
+    This is the file to choose when uploading to gradescope. When selecting Base Image, please choose Ubuntu 20.04.
 
 - source/
 
     Has the same contents as `autograder.zip`
 
-- documents.md (not implemented yet)
+- documents.md
 
     A document file that provides the instructions for student
 
