@@ -5,4 +5,4 @@ output/
 logs/
 settings/
 venv/
-venv-gui/
+venv-min/
