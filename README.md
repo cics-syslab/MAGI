@@ -1,35 +1,26 @@
-# MAGI
+# MAGI - Modular Assignment Generator & Inspector
 
-## Modular Assignment Generator & Inspector
+A python framework for generating programming assignments and autograders for Gradescope, with extensible modules and plugins.
 
-An automatic project generating framework with gradescope autograder support.
+## Setup
 
-## Usage
-
-### Upload the autograder to Gradescope
-
-In gradescope, you need to select Ubuntu 22.04
-
-## Developer Setup
-
-1. Clone the repo
-   `git clone https://github.com/nightdawnex/gsgen.git`
+1. Clone this repo
+   `git clone https://github.com/cics-syslab/MAGI.git`
 2. Setup the environment
-
-   Not using conda anymore. You can configure conda yourself with the requirement file
-
-    b. Aternatively, you can install all the dependencies with `pip`. However, you python version must be >=3.8
-
-    ```
-    pip install -r requirements.txt
-    ```
+   - Install the requirements with pip, the python version should be 3.10 or above. 
+     ```
+     pip install -r requirements.txt
+     ```
 
 ## Usage
-
 To start the Graphical User Interface, simply do ```python main.py```
 
 The interface is divided by tabs. By default, you have two tabs, `Preview` and `BasicSettings`. After enabling different
 modules or plugins, their settings (if they have) will be shown in the new tab created.
+
+### Upload the autograder to Gradescope
+
+In gradescope, you need to select Ubuntu 22.04
 
 ### Preview
 
