@@ -12,7 +12,7 @@ Please see the documentation in the example output for the rest details.
 ## Configuration
 
 
-- ```QUESTION_FORMAT``` The format of the question strings shown to stuents.
+- ```QUESTION_FORMAT``` The format of the question strings shown to students.
 
 
 ### QA.py 
@@ -23,4 +23,4 @@ This function need to randomly generate questions for the client to solve.
 This function will be the solver for the question. It needs to parse generated string from generateQuestion() and solve it. The returned answer from the client has to match the string returned in this function for tests to pass.
 
 ## TODO
-- Replace the project name in the documentation, such as the occurance of ```math bot```
+- Replace the project name in the documentation, such as the occurrence of ```math bot```

@@ -1,6 +1,8 @@
 .idea/
 *.code-workspace
 *__pycache__*
-output/*
-logs/*
-*.json
+output/
+logs/
+settings/
+venv/
+venv-gui/

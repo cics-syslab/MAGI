@@ -1,18 +1,22 @@
-# gsgen
-An automatic project generating framework with gradescope autograder support
- 
+# MAGI
+## Modular Assignment Generator & Inspector
+An automatic project generating framework with gradescope autograder support.
+
+## Usage
+
+### Upload the autograder to Gradescope
+In gradescope, you need to select Ubuntu 22.04 
+
+
+
 ## Developer Setup
 
 1. Clone the repo
     `git clone https://github.com/nightdawnex/gsgen.git`
 2. Setup the environment
 
-    You can set up the environment in two ways. I recommend to use conda.
+    Not using conda anymore. You can configure conda yourself with the requirement file 
 
-    a. You may create a conda env with the file.
-    ```
-    conda env create -f ./environment.yml
-    ```
     
     b. Aternatively, you can install all the dependencies with `pip`. However, you python version must be >=3.8
 

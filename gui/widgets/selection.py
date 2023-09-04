@@ -24,5 +24,5 @@ class Selection:
 
     def update(self, *args):
         if self.callback:
-            self.callback(self.selected.get())
+            self.callback(self.selected.get_settings())
         pass

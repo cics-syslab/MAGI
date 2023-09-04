@@ -9,7 +9,7 @@ class PageBaseSettings:
         self.tab_page = widgets.TabPage(tab_control, "Base Settings", self.base_settings)
         self.page = self.tab_page.column
 
-        ModuleTab(tab_control, self.page, ["None"] + list(AddonManager.available_modules.keys()), "Enabled Module",
+        ModuleTab(tab_control, self.page, ["None"] + AddonManager.available_module_names, "Enabled Module",
                   (self.base_settings.__dict__, "enabled_module"))
-        PluginTab(tab_control, self.page, AddonManager.available_plugins.keys(), "Enabled Plugins",
+        PluginTab(tab_control, self.page, AddonManager.available_plugin_names, "Enabled Plugins",
                   (self.base_settings.__dict__, "enabled_plugins"))

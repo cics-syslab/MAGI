@@ -1,2 +1,2 @@
-from .directories import Directories
-from .metadata import Metadata
+from .directories import _instance as Directories
+from .metadata import _instance as Metadata

@@ -1,9 +1,0 @@
-name: gsgen
-
-dependencies:
-  - python=3.8
-  - pip 
-  - pip:
-    - ttkbootstrap
-    - dataconf
-    - numpy

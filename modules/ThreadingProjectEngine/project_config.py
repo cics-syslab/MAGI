@@ -22,23 +22,24 @@ class Resource:
     limit: int = 0
     use_binary_semaphore: bool = False
 
+
 @dataclass
 class ThreadTestCase:
-    name: Optional[str] 
+    name: Optional[str]
     thread_num: int = 1
     max_score: int = 10
     visibility: str = "visible"
-    methods: List[str] = field(default_factory=list,metadata={"options":[ 
-            "test_all_thread_is_final",
-            "test_all_thread_presented",
-            "test_all_resource_not_underflow",
-            "test_all_resource_not_overflow",
-            "test_all_resource_filled",
-            "test_all_failure_retried_on_time",
-            "test_all_thread_not_revisit_state",
-            "test_all_thread_not_skip_state",
-            "test_all_thread_blocked_once",
-            "test_order_not_fixed"]})
+    methods: List[str] = field(default_factory=list, metadata={"options": [
+        "test_all_thread_is_final",
+        "test_all_thread_presented",
+        "test_all_resource_not_underflow",
+        "test_all_resource_not_overflow",
+        "test_all_resource_filled",
+        "test_all_failure_retried_on_time",
+        "test_all_thread_not_revisit_state",
+        "test_all_thread_not_skip_state",
+        "test_all_thread_blocked_once",
+        "test_order_not_fixed"]})
 
 
 @dataclass
@@ -49,4 +50,3 @@ class ProjectConfig:
     thread_states: List[ThreadState] = field(default_factory=list)
     resources: List[Resource] = field(default_factory=list)
     tests: List[ThreadTestCase] = field(default_factory=list)
-

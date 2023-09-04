@@ -1,4 +1,4 @@
-from .managers import AddonManager
+from core.managers import AddonManager
 
 
 def setup_grader():

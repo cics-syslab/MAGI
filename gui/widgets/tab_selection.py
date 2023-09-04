@@ -28,9 +28,12 @@ class ModuleTab:
             return
         # set the enabled tab to the new tab 
         self.pointer[0][self.pointer[1]] = new_tab_name
+        from core.managers import AddonManager
+        AddonManager.enabled_module
+
         if new_tab_name not in self.tabs:
             # print(SettingManager.addon_settings)
-            data = SettingManager.get(new_tab_name)
+            data = SettingManager.get_settings(new_tab_name)
             new_tabpage = TabPage(self.tab_control, new_tab_name, data)
             self.tabs[new_tab_name] = new_tabpage.page
             self.tab_control.add(self.tabs[new_tab_name], text=new_tab_name)
@@ -53,10 +56,11 @@ class PluginTab:
 
     def update(self, value):
         self.pointer[0][self.pointer[1]] = self.value = value
-
+        from core.managers import AddonManager
+        AddonManager.enabled_plugins
         for tab in value:
             if tab not in self.tabs.keys():
-                data = SettingManager.get(tab)
+                data = SettingManager.get_settings(tab)
                 new_tabpage = TabPage(self.tab_control, tab, data)
                 self.tabs[tab] = new_tabpage.page
                 self.tab_control.add(self.tabs[tab], text=tab)

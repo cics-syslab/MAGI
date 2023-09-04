@@ -7,7 +7,8 @@ from . import config
 from .thread_test import ThreadTest 
 from .project_config import ThreadTestCase
 from core.managers import TestManager
-from core.managers.test_manager import TestCase
+from core.common.gradescope import TestCase
+
 
 def run_test_case(test_case: ThreadTestCase):
     test_obj = ThreadTest(test_case.thread_num)

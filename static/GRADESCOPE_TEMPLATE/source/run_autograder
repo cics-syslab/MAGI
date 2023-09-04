@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 cd /autograder/source
-python3.8 main.py --autograder
+python3 main.py --autograder
 
 # keep an empty line

@@ -40,12 +40,12 @@ class Attribute:
             self.entry.pack()
 
     def update_data(self, *args):
-        self.value = self.data_var.get()
+        self.value = self.data_var.get_settings()
         if self.cb_update:
             if type(self.cb_update) is list:
                 for cb in self.cb_update:
-                    cb(self.data_var.get())
-            self.cb_update(self.data_var.get())
+                    cb(self.data_var.get_settings())
+            self.cb_update(self.data_var.get_settings())
 
     pass
 
