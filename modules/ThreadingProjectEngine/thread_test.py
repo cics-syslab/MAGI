@@ -175,7 +175,7 @@ class ThreadTest:
         # so the pipe will read in real-time instead of all lines at once
         unbuffered = ["stdbuf", "-i0", "-o0", "-e0"]
         p = Popen(unbuffered + [exec_name, str(self.thread_num)], bufsize=0, stdout=PIPE,
-                  universal_newlines=True,cwd=Directories.project_files_dir)
+                  universal_newlines=True, cwd=Directories.project_files_dir)
 
         # This probably works with Python3.10+
         # p = Popen([exec_name, str(self.thread_num)], bufsize=0,stdout=PIPE,universal_newlines=True,pipesize =0)

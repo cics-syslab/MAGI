@@ -35,7 +35,7 @@ def list_available_addons(subdirectory: str) -> list:
         except Exception as e:
             # print original traceback
             logging.error(f"Error importing {sub_dir}: {e}", exc_info=True)
-            #logging.error(f"Error importing {sub_dir}", exc_info=True)
+            # logging.error(f"Error importing {sub_dir}", exc_info=True)
 
     return available
 

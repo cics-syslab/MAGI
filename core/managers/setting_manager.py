@@ -25,7 +25,7 @@ def load_or_create(filepath: str, cls):
         instance = cls()
         dataconf.dump(filepath, instance, "json")
     except Exception as e:
-        logging.error("",exc_info=True)
+        logging.error("", exc_info=True)
         logging.error(f"Error loading setting file from {filepath}: {e}"
                       "created a new instance, the old file is renamed to "
                       "{filepath}.old")

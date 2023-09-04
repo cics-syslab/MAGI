@@ -29,5 +29,4 @@ class Directories:
     result_file_path = op.join(autograder_root, "results", "results.json")
 
 
-
 _instance = Directories()

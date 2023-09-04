@@ -19,7 +19,7 @@ class ListAttribute:
         for i in self.list_obj:
             self.add(i)
 
-    def add(self,value =None):
+    def add(self, value=None):
         if value is None:
             value = self.type()
         self.list_record[self.index] = value

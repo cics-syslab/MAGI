@@ -9,14 +9,12 @@ def send_email(subject: str = "", email_body: str = ""):
     message["From"] = Config.sender_email
     message["To"] = Config.receiver_email
 
-    message["Subject"] = "Email Notification" if subject is None or len(subject)==0 else subject
+    message["Subject"] = "Email Notification" if subject is None or len(subject) == 0 else subject
 
     email_body = "This is a sample email notification from Python."
     message.attach(MIMEText(email_body, "plain"))
 
     # collect student information
-
-
 
     try:
         server = smtplib.SMTP(Config.smtp_server, Config.smtp_port)

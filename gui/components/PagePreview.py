@@ -34,7 +34,8 @@ class PagePreview:
                                                                                                             pady=5)
 
         self.generate_button = ttk.Button(master=self.page, text="Generate", command=self.generate)
-        self.generate_button.pack(pady=10,fill='x')
+        self.generate_button.pack(pady=10, fill='x')
+
     def generate(self):
         from core.components.generator import generate_output
         generate_output(SettingManager.BaseSettings.output_dir)

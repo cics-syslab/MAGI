@@ -3,7 +3,9 @@ import os.path as op
 import shutil
 
 import logging
+
 logging = logging.getLogger("Grader")
+
 
 def remove_existing_submission_files(submission_files: list, project_files_dir: str):
     """
@@ -34,6 +36,7 @@ def check_submitted_files(submission_files: list, submission_dir: str):
             missed_file.append(submission_file)
 
     return missed_file
+
 
 def move_submission_files(submission_files: list, project_files_dir: str, submission_dir: str):
     """
@@ -72,7 +75,7 @@ def grade_submission():
     if missing_file:
         TestManager.fail_all(f"Missing file(s): {', '.join(missing_file)}")
         return
-    
+
     move_submission_files(submission_files, project_files_dir, submission_dir)
     logging.debug("Finished moving submission files, starting grading")
 
@@ -81,7 +84,7 @@ def grade_submission():
     logging.debug("Finished grading, outputting result")
     from core.managers import ResultManager
     ResultManager.output_result(Directories.result_file_path)
-    
+
 
 if __name__ == "__main__":
     grade_submission()
