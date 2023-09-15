@@ -35,7 +35,7 @@ The file structure emulates the gradescope environment under the subdirectory.
 
 - autograder.zip
 
-  This is the file to choose when uploading to gradescope. When selecting Base Image, please choose Ubuntu 20.04.
+  This is the file to choose when uploading to gradescope. When selecting Base Image, please choose Ubuntu 22.04.
 
 - source/
 
