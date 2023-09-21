@@ -17,6 +17,7 @@ def setup():
 def main():
     log_format = '%(asctime)s - %(name)s - %(levelname)s: %(message)s - %(pathname)s[line:%(lineno)d]'
     logging.basicConfig(format=log_format, level=logging.DEBUG)
+    # TODO: log file path should be configured
     th = handlers.TimedRotatingFileHandler(filename=f"logs/log-{time.strftime('%m%d%H%M')}.txt", encoding='utf-8')
     formatter = logging.Formatter(log_format)
     th.setFormatter(formatter)

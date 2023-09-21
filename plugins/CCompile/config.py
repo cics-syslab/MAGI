@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from core.managers.setting_manager import SettingManager
 
 
-class CompileMethod():
+class CompileMethod:
     student_provided_makefile = "student provided makefile"
     instructor_provided_makefile = "instructor provided makefile"
     cmake = "cmake"

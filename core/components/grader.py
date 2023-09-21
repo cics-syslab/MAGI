@@ -70,7 +70,8 @@ def grade_submission():
     # Remove existing submission files
     remove_existing_submission_files(submission_files, project_files_dir)
 
-    # The student must submit all the files specified in the submission_files setting or the submission will be rejected.
+    # The student must submit all the files specified in the submission_files setting or the submission will be
+    # rejected.
     missing_file = check_submitted_files(submission_files, submission_dir)
     if missing_file:
         TestManager.fail_all(f"Missing file(s): {', '.join(missing_file)}")
