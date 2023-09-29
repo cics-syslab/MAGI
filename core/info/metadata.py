@@ -32,7 +32,7 @@ class Assignment:
 class Metadata:
     id: int = 0
     created_at: str = ""
-    assignment: Assignment = Assignment()
+    assignment: Assignment = field(default_factory=Assignment)
     submission_method: str = ""
     users: list[User] = field(default_factory=list)
 
