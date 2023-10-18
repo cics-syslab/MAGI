@@ -1,14 +1,14 @@
 import os.path as op
+import random
 import shlex
 import subprocess
+import threading
 from time import sleep
 
-import threading
-import random
 from core.info.directories import Directories
 from core.managers import TestManager
-from .server import Server
 from . import Config
+from .server import Server
 
 
 def compile_student_code():

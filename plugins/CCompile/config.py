@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+
 from core.managers.setting_manager import SettingManager
 
 

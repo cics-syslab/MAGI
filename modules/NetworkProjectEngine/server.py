@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-import select
 import socket
 import time
 from datetime import datetime
 from hashlib import sha256
-from os import path as osp
 
-from . import QA
+import select
+
 from core.managers import TestManager
+from . import QA
 
 
 class Client:

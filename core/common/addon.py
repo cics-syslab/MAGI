@@ -1,12 +1,10 @@
 import importlib
-from importlib import reload
 import logging
 import os.path as op
-import yaml
-from dataclasses import dataclass,field
+from dataclasses import dataclass, field
+
 import dataconf
 
-from core.info.directories import Directories
 
 @dataclass
 class AddonInfo:
@@ -41,7 +39,7 @@ class Addon:
         logging.info(f"{self.name} has info.yaml with path {op.join(self.root_dir, 'info.yaml')}"
                      f"Loading from {op.join(self.root_dir, 'info.yaml')}")
         try:
-            self.info = dataconf.load(op.join(self.root_dir, "info.yaml"), AddonInfo, ignore_unexpected=True)           
+            self.info = dataconf.load(op.join(self.root_dir, "info.yaml"), AddonInfo, ignore_unexpected=True)
 
         except Exception as e:
             logging.error(f"Error loading info.yaml for {self.name}: {e}")

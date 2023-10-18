@@ -1,10 +1,10 @@
 import inspect
+import logging
 import os
 import os.path as op
 from dataclasses import is_dataclass, dataclass
-import dataconf
 
-import logging
+import dataconf
 
 logging = logging.getLogger('SettingManager')
 

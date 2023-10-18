@@ -1,7 +1,7 @@
 import argparse
 import logging
-from logging import handlers
 import time
+from logging import handlers
 
 
 # GUI will only be started for development purposes

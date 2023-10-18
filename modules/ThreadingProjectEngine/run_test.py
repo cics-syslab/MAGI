@@ -1,13 +1,7 @@
-import json
-import os
-import shutil
-import sys
-
-from . import config
-from .thread_test import ThreadTest
-from .project_config import ThreadTestCase
-from core.managers import TestManager
 from core.common.gradescope import TestCase
+from core.managers import TestManager
+from .project_config import ThreadTestCase
+from .thread_test import ThreadTest
 
 
 def run_test_case(test_case: ThreadTestCase):
