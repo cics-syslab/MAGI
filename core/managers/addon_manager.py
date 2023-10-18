@@ -113,6 +113,7 @@ class AddonManager:
                 logging.debug(f"Addon {addon.name} does not have {attr},skipped")
         return rtn
 
+    # TODO: implement setup for each addon
     def setup(self):
         pass
 
