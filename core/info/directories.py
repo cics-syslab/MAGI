@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Directories:
-    # .../MAGI
+    # .../MAGI/
     src_path: str = pathlib.Path(__file__).parent.parent.parent.resolve()
 
     template_dir = op.join(src_path, "static", "GRADESCOPE_TEMPLATE")

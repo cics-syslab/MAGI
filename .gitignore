@@ -6,3 +6,7 @@ logs/
 settings/
 venv/
 venv-min/
+**.DS_Store**
+
+
+.vscode/settings.json

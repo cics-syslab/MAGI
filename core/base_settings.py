@@ -8,5 +8,5 @@ class BaseSettings:
     project_desc: str = ""
     output_dir: str = "output"
     enabled_module: str = field(default_factory=str, metadata={"excluded_from_ui": True})
-    enabled_plugins: List[str] = field(default_factory=set, metadata={"excluded_from_ui": True})
+    enabled_plugins: List[str] = field(default_factory=list, metadata={"excluded_from_ui": True})
     submission_files: List[str] = field(default_factory=list)

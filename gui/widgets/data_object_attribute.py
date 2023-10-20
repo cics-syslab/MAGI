@@ -1,7 +1,7 @@
-import ttkbootstrap as ttk
+import logging
 from dataclasses import fields, is_dataclass, Field
 
-import logging
+import ttkbootstrap as ttk
 
 logging = logging.getLogger('gui')
 

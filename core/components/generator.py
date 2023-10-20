@@ -1,11 +1,11 @@
 import datetime
+import logging
 import os
 import os.path as op
 import shutil
 
-from core.managers import SettingManager
 from core.info import Directories
-import logging
+from core.managers import SettingManager
 
 logging = logging.getLogger("Generator")
 

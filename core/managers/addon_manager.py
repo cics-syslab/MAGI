@@ -1,9 +1,6 @@
-import importlib
-import importlib.util
+import logging
 import os
 import os.path as op
-import sys
-import logging
 from typing import Any
 
 from core.common.addon import Addon
@@ -113,6 +110,7 @@ class AddonManager:
                 logging.debug(f"Addon {addon.name} does not have {attr},skipped")
         return rtn
 
+    # TODO: implement setup for each addon
     def setup(self):
         pass
 

@@ -1,8 +1,7 @@
+import logging
 import os
 import os.path as op
 import shutil
-
-import logging
 
 logging = logging.getLogger("Grader")
 
