@@ -2,16 +2,17 @@ import importlib
 import logging
 import os.path as op
 from dataclasses import dataclass, field
-
-import dataconf
+from typing import Optional
+import yaml
 
 
 @dataclass
 class AddonInfo:
-    display_name: str = ""
+    name: str = ""
     documentation: str = ""
-    dependencies: list = field(default_factory=list)
-    version: str = ""
+    # TODO: Implement dependencies
+    #dependencies: list = field(default_factory=list)
+    version: str|float|int = ""
     description: str = ""
     author: str = ""
     author_email: str = ""
@@ -31,15 +32,16 @@ class Addon:
         self.module = None
         self.errored = False
         self.load_information()
-        self.load_documentation()
+        # self.load_documentation()
 
+    # TODO: load with some library instead, dataconf has too many issues
     def load_information(self) -> bool:
         if not op.isfile(op.join(self.root_dir, "info.yaml")):
             return False
         logging.info(f"{self.name} has info.yaml with path {op.join(self.root_dir, 'info.yaml')}"
                      f"Loading from {op.join(self.root_dir, 'info.yaml')}")
         try:
-            self.info = dataconf.load(op.join(self.root_dir, "info.yaml"), AddonInfo, ignore_unexpected=True)
+            self.info = AddonInfo(**yaml.load(open(op.join(self.root_dir, "info.yaml"), "r", encoding="utf-8"), Loader=yaml.FullLoader))
 
         except Exception as e:
             logging.error(f"Error loading info.yaml for {self.name}: {e}")
@@ -69,16 +71,17 @@ class Addon:
         logging.debug(f"Loaded addon {self.name} from {self.root_dir}")
         return self.loaded
 
-    def load_documentation(self):
-        if self.documentation == "" or self.documentation is None:
-            return
-        if not op.isfile(op.join(self.root_dir, self.documentation)):
-            return
-        logging.info(f"{self.name} has documentation with path {self.documentation}"
-                     f"Loading from {op.join(self.root_dir, self.documentation)}")
-        try:
-            with open(op.join(self.root_dir, self.documentation), "r", encoding="utf-8") as f:
-                self.documentation = f.read()
-        except Exception as e:
-            logging.error(f"Error loading documentation for {self.name}: {e}")
-            self.documentation = ""
+    # Do not load documentation content for now 
+    # def load_documentation(self):
+    #     if self.documentation == "" or self.documentation is None:
+    #         return
+    #     if not op.isfile(op.join(self.root_dir, self.documentation)):
+    #         return
+    #     logging.info(f"{self.name} has documentation with path {self.documentation}"
+    #                  f"Loading from {op.join(self.root_dir, self.documentation)}")
+    #     try:
+    #         with open(op.join(self.root_dir, self.documentation), "r", encoding="utf-8") as f:
+    #             self.documentation = f.read()
+    #     except Exception as e:
+    #         logging.error(f"Error loading documentation for {self.name}: {e}")
+    #         self.documentation = ""
