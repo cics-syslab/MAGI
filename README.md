@@ -100,13 +100,13 @@ We welcome contributions! Please check out our [CONTRIBUTING.md](link-to-contrib
 
 ## Support & Feedback
 
-For support or to provide feedback, please raise an issue on our [GitHub repository](https://github.com/YourUsername/NetGuardian).
+For support or to provide feedback, please raise an issue on our [GitHub repository](https://github.com/cics-syslab/MAGI).
 
 ---
 
 ## License
 
-NetGuardian is released under the [MIT License](link-to-license-file.md).
+NetGuardian is released under the [MIT License](LICENSE).
 
 ---
 
