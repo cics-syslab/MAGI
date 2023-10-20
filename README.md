@@ -1,89 +1,127 @@
 # MAGI - Modular Assignment Generator & Inspector
 
-A python framework for generating programming assignments and autograders for Gradescope, with extensible modules and plugins.
+## Description
 
-## Setup
+MAGI is a python framework for generating programming assignments and autograders for Gradescope, with extensible modules and plugins.
 
-1. Clone this repo
-   `git clone https://github.com/cics-syslab/MAGI.git`
-2. Setup the environment
-   - Install the requirements with pip, the python version should be 3.10 or above. 
-     ```
-     pip install -r requirements.txt
-     ```
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.10+
+
+### Installation
+  
+1. Download the release and unzip it
+
+    ```bash
+    wget https://github.com/cics-syslab/MAGI/releases/tag/{version}
+    unzip {version}.zip
+    ```
+
+1. Navigate to the directory
+
+    ```bash
+    cd MAGI
+    ```
+
+1. Install Dependencies
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+1. Start the Program
+
+    ```bash
+    python main.py 
+    # python3 main.py in some unix os
+    ```
 
 ## Usage
-To start the Graphical User Interface, simply do ```python main.py```
 
-The interface is divided by tabs. By default, you have two tabs, `Preview` and `BasicSettings`. After enabling different
-modules or plugins, their settings (if they have) will be shown in the new tab created.
+Start the gui
 
-### Upload the autograder to Gradescope
+```bash
+python main.py 
+# python3 main.py in some unix os
+```
 
-In gradescope, you need to select Ubuntu 22.04
+The interface is organized into tabs, with two default tabs: Preview and Basic Settings. When you enable different modules or plugins, their respective settings (if available) will appear in newly created tabs.
 
-### Preview
 
-On the preview page, you can choose where to generate the project files and generate it. (more features to come)
-
-The files will be generated to the path and in the folder with the name as the project name. If the folder already
-exists, the new folder will be concated with current time.
-
-#### File Structure
-
-The file structure emulates the gradescope environment under the subdirectory.
-
-- autograder.zip
-
-  This is the file to choose when uploading to gradescope. When selecting Base Image, please choose Ubuntu 22.04.
-
-- source/
-
-  Has the same contents as `autograder.zip`
-
-- documents.md
-
-  A document file that provides the instructions for student
-
-- starter.zip (not implemented yet)
-
-  starter code that needs to be provided to student
 
 ### Basic Settings
 
 This page includes the generic information about the assignment and overall settings. The attributes are listed below,
+  
+- Project Name: 
+The title for the project and also the name shown on the generated material such as the documentation.
 
-    - Project Name: 
-    The title for the project and also the name shown on the generated material such as the documentation.
+- Project Desc: 
+Optional. A paragraph long brief description for the project. Could be a scenario or something related.
 
-    - Project Desc: 
-    Optional. A paragraph long brief description for the project. Could be a scenario or something related.
+- Submission Files: 
+A list of file required for submission. In case of the student's submission doesn't include one or more files in the list, the autograder will not run or produce the test result but throws an error message to notify the student.
 
-    - Submission Files: 
-    A list of file required for submission. In case of the student's submission doesn't include one or more files in the list, the autograder will not run or produce the test result but throws an error message to notify the student.
+- Enabled Module: 
+Choose the module you wish to use. Please note that modules are mutually exclusive, allowing only one module to be enabled at a time.
 
-    - Enabled Module: 
-    The module to use. Since the modules are mutually exclusive, you can only enable one module at a time.
+  List of modules currently available:
+  - [Network Project Engine](https://github.com/nightdawnex/gsgen/tree/main/modules/NetworkProjectEngine)
+  
+<!-- - [Thread Project Engine](https://github.com/nightdawnex/gsgen/tree/main/modules/ThreadingProjectEngine) -->
 
-    - Enabled Plugins: 
-    The plugins to use. Multiple plugins could be enabled.
+- Enabled Plugins: 
+Select the plugins you want to use. You can enable multiple plugins simultaneously.
 
-## Modules
+  List of Plugins currently available:
 
-Currently, following modules are available:
+### Preview
 
-1. [Network Project Engine](https://github.com/nightdawnex/gsgen/tree/main/modules/NetworkProjectEngine)
+On the preview page, you can choose where to generate the output project files.
 
-   some description
+The files will be generated in a folder named after the project. If the folder already exists, it will be appended with the current time.
 
-2. [Thread Project Engine](https://github.com/nightdawnex/gsgen/tree/main/modules/ThreadingProjectEngine)
+### Upload the autograder to Gradescope
 
-   some description
+In gradescope, select Ubuntu-22.04 as base image and upload the generated zip file.
 
-## Plugins
+<!-- For more detailed usage instructions, please refer to the [User Guide](link-to-user-guide.md). -->
+<!-- ---
 
-Currently, following plugins are available:
+## Contributing
 
-1. None
+We welcome contributions! Please check out our [CONTRIBUTING.md](link-to-contributing-guide.md) for guidelines. -->
 
-   some description
+---
+
+## Support & Feedback
+
+For support or to provide feedback, please raise an issue on our [GitHub repository](https://github.com/YourUsername/NetGuardian).
+
+---
+
+## License
+
+NetGuardian is released under the [MIT License](link-to-license-file.md).
+
+---
+
+## Acknowledgments
+
+Special thanks to the community and everyone who contributed to making this project possible.
+
+---
+
+## Changelog
+
+- **1.0:** Fix issues with some upstream updates.
+
+- **0.5:** Initial release.
+
+<!-- For a detailed changelog, refer to the [CHANGELOG.md](link-to-changelog.md). -->
+
+---
