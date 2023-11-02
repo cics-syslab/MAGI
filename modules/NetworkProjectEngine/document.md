@@ -92,31 +92,31 @@ This string must be **exactly** as we describe above - network protocols are ver
 with your UMass **NetID**. By sending the identification string it will initiate the math bot server to start sending
 you math problems. You will immediately receive a "status" message with the following format:
 
-cs230 STATUS {_QUESTION_FORMAT_}\n
+`cs230 STATUS {_QUESTION_FORMAT_}\n`
 
 This status message includes a simple arithmetic operation. An example of an actual message is:
 
-cs230 STATUS {_EXAMPLE_QUESTION_}\n
+`cs230 STATUS {_EXAMPLE_QUESTION_}\n`
 
 You will need to implement functionality in your client that will compute the math problem provided in the server's
 status message. After you do that you need to send a response back to the math bot server that is formatted like this:
 
-cs230 <ANSWER>\n
+`cs230 <ANSWER>\n`
 
 You must replace <ANSWER> with the answer to the math problem. Here is an example:
 
-cs230 {_EXAMPLE_ANSWER_}\n
+`cs230 {_EXAMPLE_ANSWER_}\n`
 
 With your response back to the server, the server will then repeatedly send you hundreds of math problems that your
 client must solve. Your client will need to solve each of the status math problems until you receive the response with
 the flag:
 
-cs230 <FLAG> BYE\n
+`cs230 <FLAG> BYE\n`
 
 The <FLAG> is a long hash value. Here is an example of the final message you will receive from the server before it
 disconnects from your client:
 
-cs230 7c5ee45183d657f5148fd4bbabb6615128ec32699164980be7b8b451fd9ac0c3 BYE\n
+`cs230 7c5ee45183d657f5148fd4bbabb6615128ec32699164980be7b8b451fd9ac0c3 BYE\n`
 
 If you are able to "capture the flag" you have completed this assignment successfully. You still need to submit it to
 Gradescope though.
@@ -135,7 +135,7 @@ address are as they are defined by the socket API.
 We will be running a test server at address 128.119.243.147 on port 27993. You are welcome to test your client by
 running it like so:
 
-$ ./client netid@umass.edu 27993 128.119.243.147
+`$ ./client netid@umass.edu 27993 128.119.243.147`
 
 And see if you can capture your flag! **Note:** it took 22 seconds for our solution client to complete over a 5 Mbps
 connection. If it seems to take a while, it may not be wrong. If it never ends you should then add debugging output to
