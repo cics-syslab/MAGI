@@ -18,8 +18,8 @@ apt-get install -y libgtest-dev cmake
 cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib
 
 # Install solution script dependencies
-if [[ -f "/autograder/source/requirements-min.txt" ]]; then
-    pip install -r /autograder/source/requirements-min.txt
+if [[ -f "/autograder/source/requirements.txt" ]]; then
+    pip install -r /autograder/source/requirements.txt
 fi
 cd /autograder/source
 python3 main.py --setup
