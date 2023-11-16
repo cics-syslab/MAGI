@@ -3,7 +3,7 @@
 # author = "Ethan Kemper"
 # author_email = "ekemper@umass.edu"
 
-from .config import ProjectConfig as config
+from .config import Config
 
 
 # # Use the decorator to register the settings

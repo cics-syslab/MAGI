@@ -1,10 +1,20 @@
+# from core.managers import SettingManager
+import sys
+import os
+
+# Add the path to the root directory (MAGI) to sys.path so that the 
+# 'core' module can be found.
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.abspath(os.path.join(current_dir, "..", ".."))
+sys.path.append(root_dir)
+
 from dataclasses import dataclass, field
 from core.managers import SettingManager
 
 @SettingManager.register
 @dataclass
 class Config:
-    # Source code default fields
+    # Source code default fields, these are changed depending on user's choice
     container_name: str = "Container" # The container name you are storing your items in
     container_type: str = "Container Type" # The struct type your container is named
     item_name: str = "Item" # The name of the item you are working with (i.e. file, animal, etc)
@@ -16,3 +26,4 @@ class Config:
     item_1: str = "Item1" # The name of your first item
     item_2: str = "Item2" # The name of your second item
     item_3: str = "Item3" # The name of your third item
+    project_name: str = "Project Name"
