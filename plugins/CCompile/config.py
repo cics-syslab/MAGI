@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from core.managers.setting_manager import SettingManager
+from core.managers import SettingManager
 
 
 class CompileMethod:

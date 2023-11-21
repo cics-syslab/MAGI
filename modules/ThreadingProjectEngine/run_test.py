@@ -1,5 +1,5 @@
 from core.common.gradescope import TestCase
-from core.managers import TestManager
+from core.managers import test_manager
 from .project_config import ThreadTestCase
 from .thread_test import ThreadTest
 

@@ -1,8 +1,7 @@
 import importlib
 import logging
 import os.path as op
-from dataclasses import dataclass, field
-from typing import Optional
+from dataclasses import dataclass
 import yaml
 
 
@@ -64,7 +63,7 @@ class Addon:
             self.loaded = True
             assert (self.module is not None)
         except Exception as e:
-            logging.error(f"Error importing {self.name}: {e}")
+            logging.error(f"Error importing {self.name}: {e}", exc_info=True)
             self.loaded = False
             self.errored = True
             return None

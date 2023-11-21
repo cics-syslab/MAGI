@@ -3,7 +3,7 @@ import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
-from core.managers.setting_manager import SettingManager
+from core.managers import SettingManager
 from .selection import Selection
 from .tab_page import TabPage
 

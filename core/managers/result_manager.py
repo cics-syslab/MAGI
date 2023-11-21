@@ -1,14 +1,15 @@
 import dataconf
 
+from core._private.singleton import lazy_singleton
 from core.common.gradescope import Result
 
 
+@lazy_singleton
 class ResultManager:
-    def __init__(self) -> None:
+    def __init__(self):
         self._result = Result()
-        pass
 
-    def output_result(self, result_path: str):
+    def output_result(self, result_path: str) -> None:
         """
         Write the result to the result file
 
@@ -22,6 +23,3 @@ class ResultManager:
         for test in TestManager.test_cases:
             self._result.tests.append(test)
         dataconf.dump(result_path, self._result, "json")
-
-
-_instance = ResultManager()

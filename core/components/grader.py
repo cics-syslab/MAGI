@@ -60,11 +60,11 @@ def grade_submission():
     """
     from core.managers import SettingManager
     from core.info.directories import Directories
-    from core.managers import AddonManager, TestManager
+    from core.managers import AddonManager, test_manager
 
-    project_files_dir = Directories.project_files_dir
+    project_files_dir = Directories.WORK_DIR
     submission_files = SettingManager.BaseSettings.submission_files
-    submission_dir = Directories.submission_dir
+    submission_dir = Directories.SUBMISSION_DIR
 
     # Remove existing submission files
     remove_existing_submission_files(submission_files, project_files_dir)
@@ -83,7 +83,7 @@ def grade_submission():
 
     logging.debug("Finished grading, outputting result")
     from core.managers import ResultManager
-    ResultManager.output_result(Directories.result_file_path)
+    ResultManager.output_result(Directories.RESULT_JSON_PATH)
 
 
 if __name__ == "__main__":

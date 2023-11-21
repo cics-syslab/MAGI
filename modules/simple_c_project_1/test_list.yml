@@ -1,0 +1,19 @@
+tests:
+  -
+    name: causality_holds
+    file: EXECNAME_test
+    class: EXECNAME_test
+    visible: True
+    points: 1
+  -
+    name: test_sum_positive
+    file: EXECNAME_test
+    class: EXECNAME_test
+    visible: True
+    points: 2
+  -
+    name: test_sum_negative
+    file: EXECNAME_test
+    class: EXECNAME_test
+    visible: False
+    points: 3

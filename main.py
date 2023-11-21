@@ -41,7 +41,7 @@ def main():
         pass
     else:
         start_gui()
-        from core.managers.setting_manager import SettingManager
+        from core.managers import SettingManager
         SettingManager.save_settings()
 
 

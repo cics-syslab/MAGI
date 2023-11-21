@@ -1,0 +1,1 @@
+# we will start with a basic c project

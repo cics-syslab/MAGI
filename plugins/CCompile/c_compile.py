@@ -6,10 +6,10 @@ from .config import Config, CompileMethod
 
 # from core.managers import TestManager
 
-
+# need chdir back or we will have a problem
 def compile_with_makefile():
     owd = os.getcwd()
-    os.chdir(Directories.project_files_dir)
+    os.chdir(Directories.WORK_DIR)
     rtn = os.system("make")
     os.chdir(owd)
     return rtn
@@ -17,7 +17,7 @@ def compile_with_makefile():
 
 def auto_compile_with_cmake():
     owd = os.getcwd()
-    os.chdir(Directories.project_files_dir)
+    os.chdir(Directories.WORK_DIR)
     rtn = os.system("cmake .")
     os.chdir(owd)
     return rtn

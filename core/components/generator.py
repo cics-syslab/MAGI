@@ -55,21 +55,21 @@ def generate_autograder(output_dir: str) -> None:
     : return: None
     """
     # Since the autograder depends on the framework, copy the framework core, enabled module, and enabled plugins to it.
-    shutil.copytree(Directories.template_dir, output_dir)
+    shutil.copytree(Directories.TEMPLATE_DIR, output_dir)
     output_source_dir = op.join(output_dir, "source")
-    shutil.copytree(Directories.core_dir, op.join(output_source_dir, "core"))
-    shutil.copytree(Directories.logs_dir, op.join(output_source_dir, "logs"))
-    shutil.copy(op.join(Directories.src_path, "main.py"), output_source_dir)
-    shutil.copytree(Directories.settings_dir, op.join(output_source_dir, "settings"))
+    shutil.copytree(Directories.CORE_DIR, op.join(output_source_dir, "core"))
+    shutil.copytree(Directories.LOGS_DIR, op.join(output_source_dir, "logs"))
+    shutil.copy(op.join(Directories.SRC_PATH, "main.py"), output_source_dir)
+    shutil.copytree(Directories.SETTINGS_DIR, op.join(output_source_dir, "settings"))
     if SettingManager.BaseSettings.enabled_module:
         enabled_module = SettingManager.BaseSettings.enabled_module
         os.mkdir(op.join(output_source_dir, "modules"))
-        shutil.copytree(op.join(Directories.src_path, "modules", enabled_module),
+        shutil.copytree(op.join(Directories.SRC_PATH, "modules", enabled_module),
                         op.join(output_source_dir, "modules", enabled_module))
     if len(SettingManager.BaseSettings.enabled_plugins) > 0:
         os.mkdir(op.join(output_source_dir, "plugins"))
         for enabled_plugin in SettingManager.BaseSettings.enabled_plugins:
-            shutil.copytree(op.join(Directories.src_path, "plugins", enabled_plugin),
+            shutil.copytree(op.join(Directories.SRC_PATH, "plugins", enabled_plugin),
                             op.join(output_source_dir, "plugins", enabled_plugin))
     pack_autograder(output_source_dir)
     logging.info(f'Autograder successfully generated to {output_dir}')

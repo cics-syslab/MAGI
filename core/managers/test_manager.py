@@ -1,10 +1,12 @@
 import logging
 
+from core._private.singleton import lazy_singleton
 from core.common.gradescope import TestCase
 
 logging = logging.getLogger("TestManager")
 
 
+@lazy_singleton
 class TestManager:
     score: float = 0
     execution_time: float = 0
@@ -50,5 +52,3 @@ class TestManager:
         _dict = {}
         return str(_dict)
 
-
-_instance = TestManager()

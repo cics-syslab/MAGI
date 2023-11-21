@@ -7,6 +7,7 @@ from dataclasses import is_dataclass, dataclass
 import dataconf
 
 logging = logging.getLogger('SettingManager')
+from core._private.singleton import lazy_singleton
 
 
 def load_or_create(filepath: str, cls):
@@ -35,16 +36,18 @@ def load_or_create(filepath: str, cls):
     return instance
 
 
+@lazy_singleton
 class SettingManager:
-    from core.base_settings import BaseSettings
-    addon_settings = {}
-    addon_settings_file = {}
-    if not op.isdir("settings"):
-        os.mkdir("settings")
-    BaseSettings = load_or_create(op.join("settings", "BaseSettings.json"), BaseSettings)
+    def __init__(self):
 
-    @staticmethod
-    def register(cls, filepath=None):
+        from core._private.base_settings import BaseSettings
+        self.addon_settings = {}
+        self.addon_settings_file = {}
+        if not op.isdir("settings"):
+            os.mkdir("settings")
+        self.BaseSettings = load_or_create(op.join("settings", "BaseSettings.json"), BaseSettings)
+
+    def register(self, cls, filepath=None):
 
         if not is_dataclass(cls):
             # convert to dataclass
@@ -89,4 +92,3 @@ class SettingManager:
             dataconf.dump(SettingManager.addon_settings_file[name], instance, "json")
 
 
-_instance = SettingManager()

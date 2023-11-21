@@ -15,7 +15,7 @@ apt-get update
 
 # This is needed for c only
 apt-get install -y libgtest-dev cmake 
-cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib
+cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib || true
 
 # Install solution script dependencies
 if [[ -f "/autograder/source/requirements.txt" ]]; then

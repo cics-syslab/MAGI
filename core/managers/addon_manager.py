@@ -3,6 +3,7 @@ import os
 import os.path as op
 from typing import Any
 
+from core._private.singleton import lazy_singleton
 from core.common.addon import Addon
 from core.info.directories import Directories
 
@@ -16,7 +17,7 @@ def list_available_addons(subdirectory: str) -> list:
     :param subdirectory: The subdirectory to search for addons, either "modules" or "plugins"
     :return: A list of Addon objects
     """
-    searching_dir = op.join(Directories.src_path, subdirectory)
+    searching_dir = op.join(Directories.SRC_PATH, subdirectory)
     dirs = os.listdir(searching_dir)
     available = []
 
@@ -32,11 +33,11 @@ def list_available_addons(subdirectory: str) -> list:
         except Exception as e:
             # print original traceback
             logging.error(f"Error importing {sub_dir}: {e}", exc_info=True)
-            # logging.error(f"Error importing {sub_dir}", exc_info=True)
 
     return available
 
 
+@lazy_singleton
 class AddonManager:
     def __init__(self):
         self.available_modules = list_available_addons("modules")
@@ -124,6 +125,3 @@ class AddonManager:
 
     def generate_documentation(self):
         return self.run_attr_for_all("generate_documentation")
-
-
-_instance = AddonManager()

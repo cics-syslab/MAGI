@@ -1,4 +1,4 @@
-from core.managers.setting_manager import SettingManager
+from core.managers import SettingManager
 
 
 @SettingManager.register

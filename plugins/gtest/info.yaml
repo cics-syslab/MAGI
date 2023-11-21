@@ -1,0 +1,8 @@
+name: gtest
+version: 1.0
+author: Calvin
+author_email: dev@kchai.me
+description: ""
+documentation: ""
+
+## two ways to use. one is to use default file, another is to use the file given the api

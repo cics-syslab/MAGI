@@ -1,0 +1,18 @@
+# Compiled objects
+*.o
+
+# Log file
+*.log
+
+# ignore dist directory
+dist
+
+# ignore generated bin directory
+bin
+
+# ignore generated binary and test files
+*_app
+*_test
+
+# ignore the generated submission zip
+submission.zip

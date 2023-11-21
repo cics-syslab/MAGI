@@ -1,3 +1,3 @@
-from .directories import _instance as Directories
-from .env import _instance as Env
+from .directories import Directories
+from .env import Env
 from .metadata import _instance as Metadata

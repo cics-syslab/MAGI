@@ -7,7 +7,7 @@ from hashlib import sha256
 
 import select
 
-from core.managers import TestManager
+from core.managers import test_manager
 from . import QA
 
 
@@ -322,3 +322,5 @@ class Server:
                 if t - client.last_active > self.timeout:
                     self.info("Client timeout: {} > {}".format(t - client.last_active, self.timeout))
                     self.disconnect(sock)
+
+
