@@ -17,7 +17,7 @@ class ResultManager:
         :return: None
         """
 
-        from core.managers.test_manager import TestManager
+        from core.managers import TestManager
         self._result.output += TestManager.output
         # self._result.extra_data = {"testing": [1, 2, 3]}
         for test in TestManager.test_cases:

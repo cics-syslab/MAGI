@@ -7,7 +7,7 @@ from xml.dom import minidom
 
 import yaml
 
-from core.managers import test_manager
+from core.managers import TestManager
 from core.utils.code_runner import run
 
 
@@ -67,7 +67,7 @@ class TestSuite:
 
 class GTest:
     def __init__():
-        self.
+        pass
 
 
 def write_failed_test(fname: str, testname: str, points: str) -> None:

@@ -6,7 +6,7 @@ import threading
 from time import sleep
 
 from core.info.directories import Directories
-from core.managers import test_manager
+from core.managers import TestManager
 from . import Config
 from .server import Server
 
@@ -14,7 +14,7 @@ from .server import Server
 def compile_student_code():
     cmd = shlex.split('gcc client.c -o client')
     gcc = subprocess.Popen(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE,
-                           cwd=op.join(Directories.SRC_PATH, "project_files"))
+                           cwd=Directories.WORK_DIR)
     out, err = gcc.communicate()
     return gcc.returncode, out, err
 
@@ -32,7 +32,7 @@ def run_test(port, rounds, points_for_hello=0,
 
     # Start student's client
     cmd = ["./client", "richards@cs.umass.edu", str(port), "127.0.0.1"]
-    cli = subprocess.Popen(cmd, cwd=op.join(Directories.SRC_PATH, "project_files"))
+    cli = subprocess.Popen(cmd, cwd=Directories.WORK_DIR)
     try:
         out, err = cli.communicate(timeout=15)
         server.terminated = True

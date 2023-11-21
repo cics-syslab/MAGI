@@ -60,14 +60,13 @@ def grade_submission():
     """
     from core.managers import SettingManager
     from core.info.directories import Directories
-    from core.managers import AddonManager, test_manager
+    from core.managers import AddonManager, TestManager
 
-    project_files_dir = Directories.WORK_DIR
     submission_files = SettingManager.BaseSettings.submission_files
     submission_dir = Directories.SUBMISSION_DIR
-
+    os.makedirs(Directories.WORK_DIR, exist_ok=True)
     # Remove existing submission files
-    remove_existing_submission_files(submission_files, project_files_dir)
+    remove_existing_submission_files(submission_files, Directories.WORK_DIR)
 
     # The student must submit all the files specified in the submission_files setting or the submission will be
     # rejected.
@@ -76,7 +75,7 @@ def grade_submission():
         TestManager.fail_all(f"Missing file(s): {', '.join(missing_file)}")
         return
 
-    move_submission_files(submission_files, project_files_dir, submission_dir)
+    move_submission_files(submission_files, Directories.WORK_DIR, submission_dir)
     logging.debug("Finished moving submission files, starting grading")
 
     AddonManager.grade()

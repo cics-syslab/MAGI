@@ -7,7 +7,7 @@ from hashlib import sha256
 
 import select
 
-from core.managers import test_manager
+from core.managers import TestManager
 from . import QA
 
 
