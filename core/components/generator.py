@@ -66,6 +66,7 @@ def generate_autograder(output_dir: str) -> None:
         os.mkdir(op.join(output_source_dir, "modules"))
         shutil.copytree(op.join(Directories.SRC_PATH, "modules", enabled_module),
                         op.join(output_source_dir, "modules", enabled_module))
+    os.makedirs(op.join(output_source_dir, "plugins"), exist_ok=True)
     if len(SettingManager.BaseSettings.enabled_plugins) > 0:
         os.mkdir(op.join(output_source_dir, "plugins"))
         for enabled_plugin in SettingManager.BaseSettings.enabled_plugins:
