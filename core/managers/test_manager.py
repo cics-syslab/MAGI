@@ -39,6 +39,9 @@ class TestManager:
 
     def fail_all(self, msg: str):
         self.append_output(msg)
+        for test_case in self.test_cases:
+            test_case.score = 0
+            test_case.status = "failed"
         self.score = 0
         pass
 
