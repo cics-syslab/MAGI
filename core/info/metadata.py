@@ -57,7 +57,7 @@ def load_metadata(metadata_path: str) -> Metadata:
         return Metadata()
 
 
-_instance = load_metadata(op.join(Directories.AUTOGRADER_ROOT, "submission_metadata.json"))
+# _instance = load_metadata(op.join(Directories.AUTOGRADER_ROOT, "submission_metadata.json"))
 
 """
 {
