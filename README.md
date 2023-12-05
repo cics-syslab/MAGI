@@ -68,16 +68,16 @@ The interface is organized into tabs, with two default tabs: Preview and Basic S
 
 This page includes the generic information about the assignment and overall settings. The attributes are listed below,
   
-- Project Name: 
+- Project Name:
 The title for the project and also the name shown on the generated material such as the documentation.
 
-- Project Desc: 
+- Project Desc:
 Optional. A paragraph long brief description for the project. Could be a scenario or something related.
 
-- Submission Files: 
+- Submission Files:
 A list of file required for submission. In case of the student's submission doesn't include one or more files in the list, the autograder will not run or produce the test result but throws an error message to notify the student.
 
-- Enabled Module: 
+- Enabled Module:
 Choose the module you wish to use. Please note that modules are mutually exclusive, allowing only one module to be enabled at a time.
 
   List of modules currently available:
@@ -85,7 +85,7 @@ Choose the module you wish to use. Please note that modules are mutually exclusi
   
 <!-- - [Thread Project Engine](https://github.com/nightdawnex/gsgen/tree/main/modules/ThreadingProjectEngine) -->
 
-- Enabled Plugins: 
+- Enabled Plugins:
 Select the plugins you want to use. You can enable multiple plugins simultaneously.
 
   List of Plugins currently available:
