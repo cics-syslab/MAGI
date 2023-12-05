@@ -74,6 +74,7 @@ def lazy_singleton(cls):
 
         def __call__(self, *args, **kwargs):
             self.__ensure_initialized()
+            # TODO: this probably needd to be changed to return self._inner_instance 
             return self._inner_instance(*args, **kwargs)
 
     return Wrapper()
