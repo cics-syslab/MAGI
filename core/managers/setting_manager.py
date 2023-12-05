@@ -43,12 +43,10 @@ class SettingManager:
         from core._private.base_settings import BaseSettings
         self.addon_settings = {}
         self.addon_settings_file = {}
-        if not op.isdir("settings"):
-            os.mkdir("settings")
+        os.makedirs("settings", exist_ok=True)
         self.BaseSettings = load_or_create(op.join("settings", "BaseSettings.json"), BaseSettings)
 
     def register(self, cls, filepath=None):
-
         if not is_dataclass(cls):
             # convert to dataclass
             logging.warning(f"{cls.__name__} is not a dataclass, converting to dataclass.")
@@ -72,23 +70,19 @@ class SettingManager:
         if not op.isdir(op.join("settings", name)):
             os.mkdir(op.join("settings", name))
         abs_path = op.join("settings", name, filepath)
-        SettingManager.addon_settings_file[name] = abs_path
+        self.addon_settings_file[name] = abs_path
 
         instance = load_or_create(abs_path, cls)
 
-        SettingManager.addon_settings[name] = instance
+        self.addon_settings[name] = instance
         return instance
-
 
     def get_settings(self, addon_name: str):
         if addon_name not in SettingManager.addon_settings.keys():
             raise ValueError(f"Addon {addon_name} not registered")
-        return SettingManager.addon_settings[addon_name]
-
+        return self.addon_settings[addon_name]
 
     def save_settings(self) -> None:
-        dataconf.dump(op.join("settings", "BaseSettings.json"), SettingManager.BaseSettings, "json")
-        for name, instance in SettingManager.addon_settings.items():
-            dataconf.dump(SettingManager.addon_settings_file[name], instance, "json")
-
-
+        dataconf.dump(op.join("settings", "BaseSettings.json"), self.BaseSettings, "json")
+        for name, instance in self.addon_settings.items():
+            dataconf.dump(self.addon_settings_file[name], instance, "json")
