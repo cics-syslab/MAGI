@@ -105,7 +105,7 @@ class AddonManager:
                 try:
                     rtn.append(func())
                 except Exception as e:
-                    logging.error(f"Error running {attr} for {addon.name}: {e}")
+                    logging.error(f"Error running {attr} for {addon.name}: {e}", exc_info=True)
 
             else:
                 logging.debug(f"Addon {addon.name} does not have {attr},skipped")
