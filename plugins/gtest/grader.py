@@ -134,12 +134,16 @@ def grade_all(test_file_name: str) -> None:
         # Run the individual gtest using the following console command (subprocess is how you can run system commands from python)
 
         gtest_filter = test['class'] + "." + test['name']
-        gtest_output = "xml:" + out_name.as_posix()
-        p = Popen(["./" + test['file'], f"--gtest_output={gtest_output}", f"--gtest_filter={gtest_filter}"],
-                  stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        gtest_output = "xml:" + str(out_name)
+        try:
 
-        # Get stdout and stderr
-        out, err = p.communicate()
+            p = Popen(["./" + test['file'], f"--gtest_output={gtest_output}", f"--gtest_filter={gtest_filter}"],
+                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=Directories.WORK_DIR)
+            # Get stdout and stderr
+            out, err = p.communicate()
+        except Exception as e:
+            logging.error(f"Error running test {test['name']}: {e}", exc_info=True)
+
         # gtest outputs 0 if test succeeds, 1 otherwise, 124 if timeout
         logging.debug(f"Test {test['name']} returned {p.returncode}")
         if p.returncode != 0:
@@ -150,18 +154,18 @@ def grade_all(test_file_name: str) -> None:
             logging.warning(f"Test {test['name']} failed to execute")
             # Write a generic failed XML file so that we can treat it the same as other tests with one function
             write_failed_test(out_name, test['name'], test['points'])
-        xml_test_suite = XmlTestSuite(out_name)
+        xml_test_suite = XmlTestSuite(str(out_name))
         xml_test_cases = xml_test_suite.gather_data()
 
         for xml_test_case in xml_test_cases:
             test_case = TestCase(name=xml_test_case.name, max_score=test['points'])
-            test_case.visibility = gradescope.Visibility.visible if test[
+            test_case.visibility = gradescope.Visibility.visible if 'visible' not in test or test[
                 'visible'] else gradescope.Visibility.after_published
-            if xml_test_case.status == "passed":
-                test_case.pass_test(xml_test_case.failed_msg)
-            else:
+            if xml_test_case.status == "error":
                 test_case.fail_test(xml_test_case.failed_msg)
-            TestManager().add_test(test_case)
+            else:
+                test_case.pass_test(xml_test_case.failed_msg)
+            TestManager.add_test(test_case)
 
 
 def grade():
