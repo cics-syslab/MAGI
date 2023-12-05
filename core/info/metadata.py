@@ -56,7 +56,8 @@ def load_metadata(metadata_path: str) -> Metadata:
         logger.error(f"Error loading metadata file {metadata_path}: {e}", exc_info=True)
         return Metadata()
 
-
+# TODO: fix 
+# not loading metadata for now, too many bugs 
 # _instance = load_metadata(op.join(Directories.AUTOGRADER_ROOT, "submission_metadata.json"))
 
 """
