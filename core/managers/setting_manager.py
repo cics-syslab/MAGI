@@ -79,14 +79,14 @@ class SettingManager:
         SettingManager.addon_settings[name] = instance
         return instance
 
-    @staticmethod
-    def get_settings(addon_name: str):
+
+    def get_settings(self, addon_name: str):
         if addon_name not in SettingManager.addon_settings.keys():
             raise ValueError(f"Addon {addon_name} not registered")
         return SettingManager.addon_settings[addon_name]
 
-    @staticmethod
-    def save_settings() -> None:
+
+    def save_settings(self) -> None:
         dataconf.dump(op.join("settings", "BaseSettings.json"), SettingManager.BaseSettings, "json")
         for name, instance in SettingManager.addon_settings.items():
             dataconf.dump(SettingManager.addon_settings_file[name], instance, "json")
