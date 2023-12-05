@@ -4,6 +4,19 @@
 
 MAGI is a python framework for generating programming assignments and autograders for Gradescope, with extensible modules and plugins.
 
+![Windows Badge](https://img.shields.io/badge/Windows-Supported-green)
+![macOS Badge](https://img.shields.io/badge/macOS-Supported-green)
+![Linux Badge](https://img.shields.io/badge/Linux-Supported-green)
+![x86 Badge](https://img.shields.io/badge/x86-Supported-green)
+![x64 Badge](https://img.shields.io/badge/x64-Supported-green)
+| Platform/Architecture | Status        |
+|-----------------------|---------------|
+| Windows               | Supported     |
+| macOS                 | Supported     |
+| Linux                 | Supported     |
+| x86                   | Supported     |
+| x64                   | Supported     |
+| ARM                   | Not Supported |
 ---
 
 ## Getting Started
@@ -50,8 +63,6 @@ python main.py
 ```
 
 The interface is organized into tabs, with two default tabs: Preview and Basic Settings. When you enable different modules or plugins, their respective settings (if available) will appear in newly created tabs.
-
-
 
 ### Basic Settings
 
