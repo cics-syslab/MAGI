@@ -7,6 +7,6 @@ settings/
 venv/
 venv-min/
 **.DS_Store**
-
+workdir/
 
 .vscode/settings.json
