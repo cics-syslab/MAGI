@@ -17,4 +17,4 @@ class Config:
     # TODO: select with a dropdown
     compile_method: str = CompileMethod.student_provided_makefile
     makefile: str = field(default_factory=str,
-                          metadata={"excluded_from_ui": True, "file_editor": "plugins/CCompile/project_files/Makefile"})
+                          metadata={"excluded_from_ui": True, "file_editor": "plugins/CCompile/Makefile"})
