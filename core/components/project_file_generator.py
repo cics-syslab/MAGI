@@ -23,7 +23,7 @@ REGEX_PATTERNS = {
 }
 
 
-def process_distribution_version(input_str, version, keep_public=True):
+def process_distribution_version(input_str, version, keep_public=True)-> str:
     if version not in BLOCK_TYPES:
         raise ValueError("version_type should be either 'public' or 'private'.")
 
