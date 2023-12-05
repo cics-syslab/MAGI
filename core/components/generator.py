@@ -3,6 +3,7 @@ import logging
 import os
 import os.path as op
 import shutil
+from pathlib import Path
 
 from core.info import Directories
 from core.managers import SettingManager
@@ -24,14 +25,14 @@ def create_output_dir(output_parent_dir: str) -> str:
     output_dir = op.join(output_parent_dir, SettingManager.BaseSettings.project_name)
     if os.path.isdir(output_dir):
         logging.warning(f'Output directory {output_dir} already exists, will be renamed with current date and time.')
-        output_dir = output_dir + "-" + datetime.datetime.now().strftime('%Y%m%d-%H-%M-%S')
+        output_dir = output_dir + "-" + datetime.datetime.now().strftime('%y%m%d%H%M%S')
 
     logging.critical(f'Files will be produced to: {output_dir}')
 
     return output_dir
 
 
-def pack_autograder(autograder_dir: str) -> None:
+def pack_autograder(autograder_dir: str | Path) -> None:
     """
     Pack the autograder directory into a zip file for uploading to Gradescope.
 
@@ -42,36 +43,54 @@ def pack_autograder(autograder_dir: str) -> None:
         raise Exception("No directory provided to make zip file")
     if not op.isdir(autograder_dir):
         raise NotADirectoryError()
-    shutil.make_archive(op.join(autograder_dir, "..", "autograder"), 'zip', autograder_dir)
+    if not isinstance(autograder_dir, Path):
+        autograder_dir = Path(autograder_dir)
+    zip_name = autograder_dir.parent.name + "_autograder"
+    shutil.make_archive(str(autograder_dir.parent/zip_name), 'zip', autograder_dir)
 
     logging.debug(f'Autograder packed to {op.join(autograder_dir, "..", "autograder.zip")}')
 
 
-def generate_autograder(output_dir: str) -> None:
+def generate_autograder(output_dir: str | Path) -> None:
     """
     Generate the autograder files for the project under the given output directory.
 
     : param output_dir: The output directory to generate the autograder files under.
     : return: None
     """
+    if output_dir is None:
+        logging.error("No output directory provided")
+        return
+
+    if not isinstance(output_dir, Path):
+        output_dir = Path(output_dir)
+
     # Since the autograder depends on the framework, copy the framework core, enabled module, and enabled plugins to it.
     shutil.copytree(Directories.TEMPLATE_DIR, output_dir)
-    output_source_dir = op.join(output_dir, "source")
-    shutil.copytree(Directories.CORE_DIR, op.join(output_source_dir, "core"))
-    shutil.copytree(Directories.LOGS_DIR, op.join(output_source_dir, "logs"))
-    shutil.copy(op.join(Directories.SRC_PATH, "main.py"), output_source_dir)
-    shutil.copytree(Directories.SETTINGS_DIR, op.join(output_source_dir, "settings"))
-    if SettingManager.BaseSettings.enabled_module:
+    output_source_dir = output_dir / "source"
+
+    empty_dirs = ['logs', 'modules', 'plugins', ]
+    for empty_dir in empty_dirs:
+        os.makedirs(output_source_dir / empty_dir, exist_ok=True)
+        Path.touch(output_source_dir / empty_dir / '.gitkeep', exist_ok=True)
+
+    clone_dirs = ['core', 'settings', 'workdir']
+    for clone_dir in clone_dirs:
+        shutil.copytree(Directories.SRC_PATH / clone_dir, output_source_dir / clone_dir)
+
+    clone_files = ['main.py']
+    for clone_file in clone_files:
+        shutil.copy(Directories.SRC_PATH / clone_file, output_source_dir)
+
+    if SettingManager.BaseSettings.enabled_module and SettingManager.BaseSettings.enabled_module != "None":
         enabled_module = SettingManager.BaseSettings.enabled_module
-        os.mkdir(op.join(output_source_dir, "modules"))
         shutil.copytree(op.join(Directories.SRC_PATH, "modules", enabled_module),
                         op.join(output_source_dir, "modules", enabled_module))
-    os.makedirs(op.join(output_source_dir, "plugins"), exist_ok=True)
+
     if len(SettingManager.BaseSettings.enabled_plugins) > 0:
-        os.mkdir(op.join(output_source_dir, "plugins"))
         for enabled_plugin in SettingManager.BaseSettings.enabled_plugins:
-            shutil.copytree(op.join(Directories.SRC_PATH, "plugins", enabled_plugin),
-                            op.join(output_source_dir, "plugins", enabled_plugin))
+            shutil.copytree(Directories.SRC_PATH / "plugins" / enabled_plugin,
+                            output_source_dir / "plugins" / enabled_plugin)
     pack_autograder(output_source_dir)
     logging.info(f'Autograder successfully generated to {output_dir}')
 
@@ -91,6 +110,8 @@ def generate_output(output_parent_dir: str = None) -> None:
 
     output_dir = create_output_dir(output_parent_dir)
 
+    from core.managers import AddonManager
+    AddonManager.generate()
     generate_autograder(output_dir)
 
     from .doc_generator import generate_documentation
@@ -103,3 +124,4 @@ def generate_output(output_parent_dir: str = None) -> None:
         pass
     # TODO: add support for other OS
     # TODO: add option to skip opening the output directory
+    # TODO: Pop window to notify user that output is generated

@@ -2,26 +2,27 @@ import logging
 import os
 import os.path as op
 import shutil
+from pathlib import Path
 
 logging = logging.getLogger("Grader")
 
 
-def remove_existing_submission_files(submission_files: list, project_files_dir: str):
+def remove_existing_submission_files(submission_files: list, workdir: str | Path):
     """
     Remove existing submission files in the project files directory
 
     :param submission_files: The list of files for students to submit
-    :param project_files_dir: The directory to the project files
+    :param workdir: The directory to the project files
     """
     for submission_file in submission_files:
-        submission_file_path = op.join(project_files_dir, submission_file)
+        submission_file_path = op.join(workdir, submission_file)
 
         if op.exists(submission_file_path):
             os.remove(submission_file_path)
             logging.debug(f"Removed existing file {submission_file_path} for grading")
 
 
-def check_submitted_files(submission_files: list, submission_dir: str):
+def check_submitted_files(submission_files: list, submission_dir: str | Path):
     """
     Check if all submission presents in the submission, returns a list of missing files
 
@@ -37,21 +38,21 @@ def check_submitted_files(submission_files: list, submission_dir: str):
     return missed_file
 
 
-def move_submission_files(submission_files: list, project_files_dir: str, submission_dir: str):
+def move_submission_files(submission_files: list, workdir: str | Path, submission_dir: str | Path):
     """
     Move the submitted files to the project files directory
 
     :param submission_files: The list of files for students to submit
-    :param project_files_dir: The directory to the project files
+    :param workdir: The directory to the project files
     :param submission_dir: The directory contains the files submitted by students
     """
     for submission_file in submission_files:
-        submission_file_path = op.join(project_files_dir, submission_file)
+        submission_file_path = op.join(workdir, submission_file)
         submitted_file_path = op.join(submission_dir, submission_file)
         shutil.copy2(submitted_file_path, submission_file_path)
     # TODO: add moving of unmentioned files, add tweaks to allow such files, add tweaks to disallow specific files, add basic filter to skip files such as .git
 
-    logging.debug(f"Moved submitted files to {project_files_dir}")
+    logging.debug(f"Moved submitted files to {workdir}")
 
 
 def grade_submission():

@@ -16,7 +16,7 @@ class Directories:
     LOGS_DIR: Path = SRC_PATH / "logs"
     SETTINGS_DIR: Path = SRC_PATH / "settings"
 
-    WORK_DIR: Path = SRC_PATH / "work_dir"  # the directory contains the project files for the project to
+    WORK_DIR: Path = SRC_PATH / "workdir"  # the directory contains the project files for the project to
     # compile, run, and test
 
     # if this path exist, assume we are in gradescope/a container
@@ -30,4 +30,5 @@ class Directories:
 
     # the directory contains the files submitted by students
     SUBMISSION_DIR: Path = AUTOGRADER_ROOT / "submission"
-    RESULT_JSON_PATH: Path = AUTOGRADER_ROOT / "results" / "results.json"
+    RESULTS_DIR: Path = AUTOGRADER_ROOT / "results"
+    RESULT_JSON_PATH: Path = RESULTS_DIR / "results.json"

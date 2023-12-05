@@ -45,7 +45,7 @@ class TestManager:
         self.score = 0
         pass
 
-    def get_test_cae_by_name(self, name: str):
+    def get_testcae_by_name(self, name: str):
         return self.test_cases_by_name.get(name)
 
     def print_results(self):
