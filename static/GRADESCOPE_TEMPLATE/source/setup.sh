@@ -26,7 +26,7 @@ check_and_set_python
 
 install_and_setup_gtest() {
     # Install libgtest-dev and cmake
-    sudo apt-get install -y libgtest-dev cmake || { echo "Error installing libgtest-dev and cmake"; exit 1; }
+    apt-get install -y libgtest-dev cmake || { echo "Error installing libgtest-dev and cmake"; exit 1; }
 
     # Go to the gtest source directory and build gtest
     cd /usr/src/gtest || { echo "Error navigating to /usr/src/gtest"; exit 1; }
@@ -36,7 +36,7 @@ install_and_setup_gtest() {
     shopt -s nullglob
     files=(*.a)
     if [[ ${#files[@]} -gt 0 ]]; then
-        sudo cp *.a /usr/lib || { echo "Error copying .a files to /usr/lib"; exit 1; }
+        cp *.a /usr/lib || { echo "Error copying .a files to /usr/lib"; exit 1; }
     else
         echo "No .a files to copy."
     fi
@@ -45,7 +45,7 @@ install_and_setup_gtest() {
 
 install_and_setup_gtest
 
-# Install solution script dependencies
+# Install MAGI dependencies
 if [[ -f "/autograder/source/requirements.txt" ]]; then
     pip install -r /autograder/source/requirements.txt
 else
@@ -53,5 +53,5 @@ else
     exit 1
 fi
 
-
+cd /autograder/source
 python3 /autograder/source/main.py --setup
