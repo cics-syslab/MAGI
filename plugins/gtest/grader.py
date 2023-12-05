@@ -141,13 +141,12 @@ def grade_all(test_file_name: str) -> None:
                       stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=Directories.WORK_DIR)
             # Get stdout and stderr
             out, err = p.communicate()
+            # gtest outputs 0 if test succeeds, 1 otherwise, 124 if timeout
+            logging.debug(f"Test {test['name']} returned {p.returncode}")
+            if p.returncode != 0:
+                logging.warning(f"Test {test['name']} returned {p.returncode}")
         except Exception as e:
             logging.error(f"Error running test {test['name']}: {e}", exc_info=True)
-
-        # gtest outputs 0 if test succeeds, 1 otherwise, 124 if timeout
-        logging.debug(f"Test {test['name']} returned {p.returncode}")
-        if p.returncode != 0:
-            logging.warning(f"Test {test['name']} returned {p.returncode}")
 
         # If the xml fails to generate, the test fails to execute (possibly due to segfault)
         if not os.path.exists(out_name):
