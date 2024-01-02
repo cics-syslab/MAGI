@@ -8,5 +8,6 @@ venv/
 venv-min/
 **.DS_Store**
 workdir/
+scratch/
 
 .vscode/settings.json
