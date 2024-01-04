@@ -1,135 +1,135 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <{_PROJECT_NAME_}.h>
+#include <{{ project_name }}.h>
 
 int main() {
-  char* names[5] = {"{_DESCRIPTOR1_}", "{_DESCRIPTOR2_}", "{_ITEM1_}", "{_ITEM2_}", "{_ITEM3_}"};
-  {_CONTAINER_} {_PROJECT_NAME_}[2];
-  {_CONTAINER_TYPE_} {_ITEM_}s[4];
-  {_PROJECT_NAME_}[0].name = (char*)malloc(4); // however, note that the malloc arguments are different, 
+  char* names[5] = {"{{ descriptor1 }}", "{{ descriptor2 }}", "{{ item1 }}", "{{ item2 }}", "{{ item3 }}"};
+  {{ container_name }} {{ project_name }}[2];
+  {{ container_type }} {{ item_name }}s[4];
+  {{ project_name }}[0].name = (char*)malloc(4); // however, note that the malloc arguments are different, 
   // ... so use string length (strlen(name) + 1)
-  strcpy({_PROJECT_NAME_}[0].name, names[0]);
-  {_PROJECT_NAME_}[0].list = NULL;
-  {_PROJECT_NAME_}[1].name = (char*)malloc(5);
-  strcpy({_PROJECT_NAME_}[1].name, names[1]);
-  {_PROJECT_NAME_}[1].list = NULL;
+  strcpy({{ project_name }}[0].name, names[0]);
+  {{ project_name }}[0].list = NULL;
+  {{ project_name }}[1].name = (char*)malloc(5);
+  strcpy({{ project_name }}[1].name, names[1]);
+  {{ project_name }}[1].list = NULL;
 
-  {_ITEM_}s[0].{_CONTAINER_} = (char*)malloc(4);
-  {_ITEM_}s[0].{_ITEM_}_name = (char*)malloc(5);
-  strcpy({_ITEM_}s[0].{_CONTAINER_}, names[0]);
-  strcpy({_ITEM_}s[0].{_ITEM_}_name, names[2]);
-  {_ITEM_}s[1].{_CONTAINER_} = (char*)malloc(4);
-  {_ITEM_}s[1].{_ITEM_}_name = (char*)malloc(4);
-  strcpy({_ITEM_}s[1].{_CONTAINER_}, names[0]);
-  strcpy({_ITEM_}s[1].{_ITEM_}_name, names[3]);
-  {_ITEM_}s[2].{_CONTAINER_} = (char*)malloc(5);
-  {_ITEM_}s[2].{_ITEM_}_name = (char*)malloc(4);
-  strcpy({_ITEM_}s[2].{_CONTAINER_}, names[1]);
-  strcpy({_ITEM_}s[2].{_ITEM_}_name, names[3]);
-  {_ITEM_}s[3].{_CONTAINER_} = (char*)malloc(5);
-  {_ITEM_}s[3].{_ITEM_}_name = (char*)malloc(7);
-  strcpy({_ITEM_}s[3].{_CONTAINER_}, names[1]);
-  strcpy({_ITEM_}s[3].{_ITEM_}_name, names[4]);
+  {{ item_name }}s[0].{{ container_name }} = (char*)malloc(4);
+  {{ item_name }}s[0].{{ item_name }}_name = (char*)malloc(5);
+  strcpy({{ item_name }}s[0].{{ container_name }}, names[0]);
+  strcpy({{ item_name }}s[0].{{ item_name }}_name, names[2]);
+  {{ item_name }}s[1].{{ container_name }} = (char*)malloc(4);
+  {{ item_name }}s[1].{{ item_name }}_name = (char*)malloc(4);
+  strcpy({{ item_name }}s[1].{{ container_name }}, names[0]);
+  strcpy({{ item_name }}s[1].{{ item_name }}_name, names[3]);
+  {{ item_name }}s[2].{{ container_name }} = (char*)malloc(5);
+  {{ item_name }}s[2].{{ item_name }}_name = (char*)malloc(4);
+  strcpy({{ item_name }}s[2].{{ container_name }}, names[1]);
+  strcpy({{ item_name }}s[2].{{ item_name }}_name, names[3]);
+  {{ item_name }}s[3].{{ container_name }} = (char*)malloc(5);
+  {{ item_name }}s[3].{{ item_name }}_name = (char*)malloc(7);
+  strcpy({{ item_name }}s[3].{{ container_name }}, names[1]);
+  strcpy({{ item_name }}s[3].{{ item_name }}_name, names[4]);
 
   int result;
-  printf("\n=======  Test {_CONTAINER_}_add  ========\n\n");
-  result = {_CONTAINER_}_add({_PROJECT_NAME_}, 2, {_ITEM_}s, 4, "{_ITEM1_}");
+  printf("\n=======  Test {{ container_name }}_add  ========\n\n");
+  result = {{ container_name }}_add({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}");
   printf("The result should be 1 and your result is %i\n", result);
   printf(
-      "The first item in {_CONTAINER_} '{_DESCRIPTOR1_}' is {_ITEM1_}. In your {_PROJECT_NAME_}, it is %s.\n",
-      ({_PROJECT_NAME_}[0].list)->{_ITEM_}->{_ITEM_}_name);
+      "The first item in {{ container_name }} '{{ descriptor1 }}' is {{ item1 }}. In your {{ project_name }}, it is %s.\n",
+      ({{ project_name }}[0].list)->{{ item_name }}->{{ item_name }}_name);
 
-  result = {_CONTAINER_}_add({_PROJECT_NAME_}, 2, {_ITEM_}s, 4, "Apple");
+  result = {{ container_name }}_add({{ project_name }}, 2, {{ item_name }}s, 4, "Apple");
   printf("The result should be 0 and your result is %i\n", result);
 
-  result = {_CONTAINER_}_add({_PROJECT_NAME_}, 2, {_ITEM_}s, 4, "{_ITEM2_}");
+  result = {{ container_name }}_add({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item2 }}");
   printf("The result should be 1 and your result is %i\n", result);
   printf(
-      "The Second item in {_CONTAINER_} '{_DESCRIPTOR1_}' is {_ITEM2_}. In your {_PROJECT_NAME_}, it is %s.\n",
-      ({_PROJECT_NAME_}[0].list)->next->{_ITEM_}->{_ITEM_}_name);
+      "The Second item in {{ container_name }} '{{ descriptor1 }}' is {{ item2 }}. In your {{ project_name }}, it is %s.\n",
+      ({{ project_name }}[0].list)->next->{{ item_name }}->{{ item_name }}_name);
   printf(
-      "The first item in {_CONTAINER_} '{_DESCRIPTOR2_}' is {_ITEM2_}. In your {_PROJECT_NAME_}, it is %s.\n",
-      ({_PROJECT_NAME_}[1].list)->{_ITEM_}->{_ITEM_}_name);
+      "The first item in {{ container_name }} '{{ descriptor2 }}' is {{ item2 }}. In your {{ project_name }}, it is %s.\n",
+      ({{ project_name }}[1].list)->{{ item_name }}->{{ item_name }}_name);
 
-  printf("\n=======  Test {_CONTAINER_}_remove  ========\n\n");
+  printf("\n=======  Test {{ container_name }}_remove  ========\n\n");
 
-  {_CONTAINER_TYPE_}* result_{_ITEM_} = {_CONTAINER_}_remove({_PROJECT_NAME_}, 2, "{_DESCRIPTOR1_}", "{_ITEM2_}");
-  int comparison_result = (result_{_ITEM_} == &{_ITEM_}s[1]);
+  {{ container_type }}* result_{{ item_name }} = {{ container_name }}_remove({{ project_name }}, 2, "{{ descriptor1 }}", "{{ item2 }}");
+  int comparison_result = (result_{{ item_name }} == &{{ item_name }}s[1]);
   printf(
-      "The comparison result should be 1 because the returned {_ITEM_} should be "
-      "the second {_ITEM_} in the {_ITEM_} list. Your result is %i.\n",
+      "The comparison result should be 1 because the returned {{ item_name }} should be "
+      "the second {{ item_name }} in the {{ item_name }} list. Your result is %i.\n",
       comparison_result);
 
-  result_{_ITEM_} = {_CONTAINER_}_remove({_PROJECT_NAME_}, 2, "{_DESCRIPTOR1_}", "{_ITEM2_}");
+  result_{{ item_name }} = {{ container_name }}_remove({{ project_name }}, 2, "{{ descriptor1 }}", "{{ item2 }}");
   printf(
-      "The returned result of removing {_DESCRIPTOR1_} {_ITEM2_} again should be NULL(nil). Your "
+      "The returned result of removing {{ descriptor1 }} {{ item2 }} again should be NULL(nil). Your "
       "result is %p.\n",
-      result_{_ITEM_});
+      result_{{ item_name }});
 
-  result_{_ITEM_} = {_CONTAINER_}_remove({_PROJECT_NAME_}, 2, "{_DESCRIPTOR2_}", "{_ITEM2_}");
-  comparison_result = (result_{_ITEM_} == &{_ITEM_}s[2]);
+  result_{{ item_name }} = {{ container_name }}_remove({{ project_name }}, 2, "{{ descriptor2 }}", "{{ item2 }}");
+  comparison_result = (result_{{ item_name }} == &{{ item_name }}s[2]);
   printf(
-      "The comparison result should be 1 because the returned {_ITEM_} should be "
-      "the third {_ITEM_} in the {_ITEM_} list. Your result is %i.\n",
+      "The comparison result should be 1 because the returned {{ item_name }} should be "
+      "the third {{ item_name }} in the {{ item_name }} list. Your result is %i.\n",
       comparison_result);
   printf(
-      "The {_PROJECT_NAME_}[1].list should be NULL(nil) because the {_CONTAINER_} {_DESCRIPTOR2_} has "
+      "The {{ project_name }}[1].list should be NULL(nil) because the {{ container_name }} {{ descriptor2 }} has "
       "no item. Your result is %p.\n",
-      {_PROJECT_NAME_}[1].list);
+      {{ project_name }}[1].list);
 
-  printf("\n=======  Test {_CONTAINER_}_change  ========\n\n");
+  printf("\n=======  Test {{ container_name }}_change  ========\n\n");
 
-  result_{_ITEM_} = {_CONTAINER_}_change({_PROJECT_NAME_}, 2, {_ITEM_}s, 4, "{_ITEM1_}", "{_DESCRIPTOR2_}", "{_DESCRIPTOR1_}");
-  comparison_result = (result_{_ITEM_} == &{_ITEM_}s[3]);
+  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ descriptor2 }}", "{{ descriptor1 }}");
+  comparison_result = (result_{{ item_name }} == &{{ item_name }}s[3]);
   printf(
-      "The comparison result should be 1 because the returned {_ITEM_} should be "
-      "the forth {_ITEM_} in the {_ITEM_} list. Your result is %i.\n",
+      "The comparison result should be 1 because the returned {{ item_name }} should be "
+      "the forth {{ item_name }} in the {{ item_name }} list. Your result is %i.\n",
       comparison_result);
   printf(
-      "The {_CONTAINER_} of {_ITEM1_} should be changed to '{_DESCRIPTOR1_}', and your {_ITEM1_}'s "
-      "{_CONTAINER_} is '%s'.\n",
-      {_ITEM_}s[3].{_CONTAINER_});
+      "The {{ container_name }} of {{ item1 }} should be changed to '{{ descriptor1 }}', and your {{ item1 }}'s "
+      "{{ container_name }} is '%s'.\n",
+      {{ item_name }}s[3].{{ container_name }});
 
-  result_{_ITEM_} = {_CONTAINER_}_change({_PROJECT_NAME_}, 2, {_ITEM_}s, 4, "{_ITEM1_}", "{_DESCRIPTOR2_}", "{_DESCRIPTOR1_}");
+  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ descriptor2 }}", "{{ descriptor1 }}");
   printf(
-      "The returned result of changing {_ITEM1_} from '{_DESCRIPTOR2_}' to '{_DESCRIPTOR1_}' should be "
+      "The returned result of changing {{ item1 }} from '{{ descriptor2 }}' to '{{ descriptor1 }}' should be "
       "NULL(nil). Your result is %p.\n",
-      result_{_ITEM_});
+      result_{{ item_name }});
 
-  result_{_ITEM_} = {_CONTAINER_}_change({_PROJECT_NAME_}, 2, {_ITEM_}s, 4, "{_ITEM1_}", "{_DESCRIPTOR1_}", "Old");
+  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ descriptor1 }}", "Old");
   printf(
-      "The returned result of changing {_ITEM1_} from '{_DESCRIPTOR2_}' to 'Old' should be "
-      "NULL(nil) because there is no {_CONTAINER_} Old in the {_PROJECT_NAME_}. Your result "
+      "The returned result of changing {{ item1 }} from '{{ descriptor2 }}' to 'Old' should be "
+      "NULL(nil) because there is no {{ container_name }} Old in the {{ project_name }}. Your result "
       "is %p.\n",
-      result_{_ITEM_});
+      result_{{ item_name }});
 
-  result_{_ITEM_} = {_CONTAINER_}_change({_PROJECT_NAME_}, 2, {_ITEM_}s, 4, "{_ITEM2_}", "{_DESCRIPTOR2_}", "{_DESCRIPTOR1_}");
+  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item2 }}", "{{ descriptor2 }}", "{{ descriptor1 }}");
   printf(
-      "The returned result of changing {_ITEM2_} from '{_DESCRIPTOR2_}' to '{_DESCRIPTOR1_}' should be "
+      "The returned result of changing {{ item2 }} from '{{ descriptor2 }}' to '{{ descriptor1 }}' should be "
       "NULL(nil). Your result is %p.\n",
-      result_{_ITEM_});
+      result_{{ item_name }});
   printf(
-      "The {_CONTAINER_} of {_ITEM2_} should not be changed from '{_DESCRIPTOR2_}' since the list "
-      "aleady has {_ITEM2_} in {_CONTAINER_} '{_DESCRIPTOR1_}'. Your result {_CONTAINER_} is '%s'.\n",
-      {_ITEM_}s[2].{_CONTAINER_});
+      "The {{ container_name }} of {{ item2 }} should not be changed from '{{ descriptor2 }}' since the list "
+      "aleady has {{ item2 }} in {{ container_name }} '{{ descriptor1 }}'. Your result {{ container_name }} is '%s'.\n",
+      {{ item_name }}s[2].{{ container_name }});
 
-  result_{_ITEM_} = {_CONTAINER_}_change({_PROJECT_NAME_}, 2, {_ITEM_}s, 4, "{_ITEM1_}", "{_DESCRIPTOR1_}", "{_DESCRIPTOR2_}");
-  comparison_result = (result_{_ITEM_} == &{_ITEM_}s[0]);
+  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ descriptor1 }}", "{{ descriptor2 }}");
+  comparison_result = (result_{{ item_name }} == &{{ item_name }}s[0]);
   printf(
-      "The comparison result should be 1 because the returned {_ITEM_} should be "
-      "the first {_ITEM_} in the {_ITEM_} list. Your result is %i.\n",
+      "The comparison result should be 1 because the returned {{ item_name }} should be "
+      "the first {{ item_name }} in the {{ item_name }} list. Your result is %i.\n",
       comparison_result);
   printf(
-      "The {_CONTAINER_} of {_ITEM1_} should be changed to '{_DESCRIPTOR2_}', and your {_ITEM1_}'s "
-      "{_CONTAINER_} is '%s'.\n",
-      {_ITEM_}s[0].{_CONTAINER_});
-  printf("{_ITEM1_} should be the first item of {_PROJECT_NAME_}[1]. Your result is %s.\n",
-         ({_PROJECT_NAME_}[1].list)->{_ITEM_}->{_ITEM_}_name);
+      "The {{ container_name }} of {{ item1 }} should be changed to '{{ descriptor2 }}', and your {{ item1 }}'s "
+      "{{ container_name }} is '%s'.\n",
+      {{ item_name }}s[0].{{ container_name }});
+  printf("{{ item1 }} should be the first item of {{ project_name }}[1]. Your result is %s.\n",
+         ({{ project_name }}[1].list)->{{ item_name }}->{{ item_name }}_name);
   printf(
-      "The {_PROJECT_NAME_}[0].list should be NULL(nil) because the {_CONTAINER_} {_DESCRIPTOR1_} has "
+      "The {{ project_name }}[0].list should be NULL(nil) because the {{ container_name }} {{ descriptor1 }} has "
       "no item. Your result is %p.\n",
-      {_PROJECT_NAME_}[0].list);
+      {{ project_name }}[0].list);
 
   return 0;
 }

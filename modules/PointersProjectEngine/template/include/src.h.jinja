@@ -1,36 +1,36 @@
 // note that in these two lines, the "substitute" should be in all-caps
-#ifndef __{_PROJECT_NAME_}
-#define __{_PROJECT_NAME_}
+#ifndef __{{ project_name }}
+#define __{{ project_name }}
 
-typedef struct {_CONTAINER_} {_CONTAINER_};
-typedef struct {_LINKED_LIST_} {_LINKED_LIST_};
-typedef struct {_CONTAINER_TYPE_} {_CONTAINER_TYPE_};
+typedef struct {{ container_name }} {{ container_name }};
+typedef struct {{ linked_list_name }} {{ linked_list_name }};
+typedef struct {{ container_type }} {{ container_type }};
 
-// Represents a {_CONTAINER_}.
-struct {_CONTAINER_} {
+// Represents a {{ container_name }}.
+struct {{ container_name }} {
   char* name;
-  {_LINKED_LIST_}* list;
+  {{ linked_list_name }}* list;
 };
 
 // Represents a node in the linked list.
-struct {_LINKED_LIST_} {
-  {_CONTAINER_TYPE_}* {_ITEM_};
-  {_LINKED_LIST_}* next;
+struct {{ linked_list_name }} {
+  {{ container_type }}* {{ item_name }};
+  {{ linked_list_name }}* next;
 };
 
-// Represents a {_ITEM_} and its {_CONTAINER_}.
-struct {_CONTAINER_TYPE_} {
-  char* {_ITEM_}_name;
-  char* {_CONTAINER_};
+// Represents a {{ item_name }} and its {{ container_name }}.
+struct {{ container_type }} {
+  char* {{ item_name }}_name;
+  char* {{ container_name }};
 };
 
-int {_CONTAINER_}_add({_CONTAINER_} {_PROJECT_NAME_}[], int number_of_{_CONTAINER_}, {_CONTAINER_TYPE_} {_ITEM_}[],
-                 int number_of_{_ITEM_}, const char* {_ITEM_}_name);
-{_CONTAINER_TYPE_}* {_CONTAINER_}_remove({_CONTAINER_} {_PROJECT_NAME_}[], int number_of_{_CONTAINER_},
-                          const char* {_CONTAINER_}, const char* {_ITEM_}_name);
-{_CONTAINER_TYPE_}* {_CONTAINER_}_change({_CONTAINER_} {_PROJECT_NAME_}[], int number_of_{_CONTAINER_},
-                          {_CONTAINER_TYPE_} {_ITEM_}[], int number_of_{_ITEM_},
-                          const char* {_ITEM_}_name, const char* old_{_CONTAINER_},
-                          const char* new_{_CONTAINER_});
+int {{ container_name }}_add({{ container_name }} {{ project_name }}[], int number_of_{{ container_name }}, {{ container_type }} {{ item_name }}[],
+                 int number_of_{{ item_name }}, const char* {{ item_name }}_name);
+{{ container_type }}* {{ container_name }}_remove({{ container_name }} {{ project_name }}[], int number_of_{{ container_name }},
+                          const char* {{ container_name }}, const char* {{ item_name }}_name);
+{{ container_type }}* {{ container_name }}_change({{ container_name }} {{ project_name }}[], int number_of_{{ container_name }},
+                          {{ container_type }} {{ item_name }}[], int number_of_{{ item_name }},
+                          const char* {{ item_name }}_name, const char* old_{{ container_name }},
+                          const char* new_{{ container_name }});
 
 #endif

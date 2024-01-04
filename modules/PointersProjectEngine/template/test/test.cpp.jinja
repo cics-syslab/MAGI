@@ -1,50 +1,50 @@
 #include <gtest/gtest.h>
 
 extern "C" {
-#include <{_PROJECT_NAME_}.h>
+#include <{{ project_name }}.h>
 }
 
 #define MAX_LEN 1024
 
-const char* names[5] = {"{_DESCRIPTOR1_}", "{_DESCRIPTOR2_}", "{_ITEM1_}", "{_ITEM2_}", "{_ITEM3_}"};
-{_CONTAINER_} {_PROJECT_NAME_}[2];
-{_ITEM_}Data {_ITEM_}[4];
+const char* names[5] = {"{{ descriptor1 }}", "{{ descriptor2 }}", "{{ item1 }}", "{{ item2 }}", "{{ item3 }}"};
+{{ container_name }} {{ project_name }}[2];
+{{ item_name }}Data {{ item_name }}[4];
 
 // PRIVATE_BEGIN
-const char* private_{_{_CONTAINER_}_NAMES_}[4] = {"Excellent", "Great", "Fair", "Poor"};
-const char* private_{_ITEM_NAMES_}[10] = {"X", "Y", "Z",  "A",  "B",
+const char* private_{{ container_names }}[4] = {"Excellent", "Great", "Fair", "Poor"};
+const char* private_{{ item_names }}[10] = {"X", "Y", "Z",  "A",  "B",
                                   "C", "D", "AB", "AX", "DC"};
-{_CONTAINER_} private_dataset[4];
-{_ITEM_}Data private_{_ITEM_}[20];
-{_ITEM_}Data private_{_ITEM_}_backup[20];
+{{ container_name }} private_dataset[4];
+{{ item_name }}Data private_{{ item_name }}[20];
+{{ item_name }}Data private_{{ item_name }}_backup[20];
 // PRIVATE_END
 
 class basicDatabaseEnvironment : public testing::Environment {
  public:
   virtual void SetUp() {
-    {_PROJECT_NAME_}[0].name = (char*)malloc(4);
-    strcpy({_PROJECT_NAME_}[0].name, names[0]);
-    {_PROJECT_NAME_}[0].list = NULL;
-    {_PROJECT_NAME_}[1].name = (char*)malloc(5);
-    strcpy({_PROJECT_NAME_}[1].name, names[1]);
-    {_PROJECT_NAME_}[1].list = NULL;
+    {{ project_name }}[0].name = (char*)malloc(4);
+    strcpy({{ project_name }}[0].name, names[0]);
+    {{ project_name }}[0].list = NULL;
+    {{ project_name }}[1].name = (char*)malloc(5);
+    strcpy({{ project_name }}[1].name, names[1]);
+    {{ project_name }}[1].list = NULL;
 
-    {_ITEM_}[0].{_CONTAINER_} = (char*)malloc(4);
-    {_ITEM_}[0].{_ITEM_}_name = (char*)malloc(5);
-    strcpy({_ITEM_}[0].{_CONTAINER_}, names[0]);
-    strcpy({_ITEM_}[0].{_ITEM_}_name, names[2]);
-        {_ITEM_}[1].{_CONTAINER_} = (char*)malloc(4);
-    {_ITEM_}[1].{_ITEM_}_name = (char*)malloc(4);
-    strcpy({_ITEM_}[1].{_CONTAINER_}, names[0]);
-    strcpy({_ITEM_}[1].{_ITEM_}_name, names[3]);
-    {_ITEM_}[2].{_CONTAINER_} = (char*)malloc(5);
-    {_ITEM_}[2].{_ITEM_}_name = (char*)malloc(4);
-    strcpy({_ITEM_}[2].{_CONTAINER_}, names[1]);
-    strcpy({_ITEM_}[2].{_ITEM_}_name, names[3]);
-    {_ITEM_}[3].{_CONTAINER_} = (char*)malloc(5);
-    {_ITEM_}[3].{_ITEM_}_name = (char*)malloc(7);
-    strcpy({_ITEM_}[3].{_CONTAINER_}, names[1]);
-    strcpy({_ITEM_}[3].{_ITEM_}_name, names[4]);
+    {{ item_name }}[0].{{ container_name }} = (char*)malloc(4);
+    {{ item_name }}[0].{{ item_name }}_name = (char*)malloc(5);
+    strcpy({{ item_name }}[0].{{ container_name }}, names[0]);
+    strcpy({{ item_name }}[0].{{ item_name }}_name, names[2]);
+        {{ item_name }}[1].{{ container_name }} = (char*)malloc(4);
+    {{ item_name }}[1].{{ item_name }}_name = (char*)malloc(4);
+    strcpy({{ item_name }}[1].{{ container_name }}, names[0]);
+    strcpy({{ item_name }}[1].{{ item_name }}_name, names[3]);
+    {{ item_name }}[2].{{ container_name }} = (char*)malloc(5);
+    {{ item_name }}[2].{{ item_name }}_name = (char*)malloc(4);
+    strcpy({{ item_name }}[2].{{ container_name }}, names[1]);
+    strcpy({{ item_name }}[2].{{ item_name }}_name, names[3]);
+    {{ item_name }}[3].{{ container_name }} = (char*)malloc(5);
+    {{ item_name }}[3].{{ item_name }}_name = (char*)malloc(7);
+    strcpy({{ item_name }}[3].{{ container_name }}, names[1]);
+    strcpy({{ item_name }}[3].{{ item_name }}_name, names[4]);
 
     // PRIVATE_BEGIN
     for (int i = 0; i < 4; i++) {
@@ -54,64 +54,64 @@ class basicDatabaseEnvironment : public testing::Environment {
     }
 
     for (int i = 0; i < 10; i++) {
-      private_{_ITEM_}[i].{_ITEM_}_name = (char*)malloc(strlen(private_fnames[i]));
-      strcpy(private_{_ITEM_}[i].{_ITEM_}_name, private_fnames[i]);
-      private_{_ITEM_}[i].{_CONTAINER_} = (char*)malloc(strlen(private_cnames[i % 4]));
-      strcpy(private_{_ITEM_}[i].{_CONTAINER_}, private_cnames[i % 4]);
+      private_{{ item_name }}[i].{{ item_name }}_name = (char*)malloc(strlen(private_fnames[i]));
+      strcpy(private_{{ item_name }}[i].{{ item_name }}_name, private_fnames[i]);
+      private_{{ item_name }}[i].{{ container_name }} = (char*)malloc(strlen(private_cnames[i % 4]));
+      strcpy(private_{{ item_name }}[i].{{ container_name }}, private_cnames[i % 4]);
 
-      private_{_ITEM_}_backup[i].{_ITEM_}_name =
+      private_{{ item_name }}_backup[i].{{ item_name }}_name =
           (char*)malloc(strlen(private_fnames[i]));
-      strcpy(private_{_ITEM_}_backup[i].{_ITEM_}_name, private_fnames[i]);
-      private_{_ITEM_}_backup[i].{_CONTAINER_} =
+      strcpy(private_{{ item_name }}_backup[i].{{ item_name }}_name, private_fnames[i]);
+      private_{{ item_name }}_backup[i].{{ container_name }} =
           (char*)malloc(strlen(private_cnames[i % 4]));
-      strcpy(private_{_ITEM_}_backup[i].{_CONTAINER_}, private_cnames[i % 4]);
+      strcpy(private_{{ item_name }}_backup[i].{{ container_name }}, private_cnames[i % 4]);
     }
     for (int i = 0; i < 5; i++) {
-      private_{_ITEM_}[i + 10].{_ITEM_}_name =
+      private_{{ item_name }}[i + 10].{{ item_name }}_name =
           (char*)malloc(strlen(private_fnames[i]));
-      strcpy(private_{_ITEM_}[i + 10].{_ITEM_}_name, private_fnames[i]);
-      private_{_ITEM_}[i + 10].{_CONTAINER_} =
+      strcpy(private_{{ item_name }}[i + 10].{{ item_name }}_name, private_fnames[i]);
+      private_{{ item_name }}[i + 10].{{ container_name }} =
           (char*)malloc(strlen(private_cnames[(i + 2) % 4]));
-      strcpy(private_{_ITEM_}[i + 10].{_CONTAINER_}, private_cnames[(i + 2) % 4]);
+      strcpy(private_{{ item_name }}[i + 10].{{ container_name }}, private_cnames[(i + 2) % 4]);
 
-      private_{_ITEM_}_backup[i + 10].{_ITEM_}_name =
+      private_{{ item_name }}_backup[i + 10].{{ item_name }}_name =
           (char*)malloc(strlen(private_fnames[i]));
-      strcpy(private_{_ITEM_}_backup[i + 10].{_ITEM_}_name, private_fnames[i]);
-      private_{_ITEM_}_backup[i + 10].{_CONTAINER_} =
+      strcpy(private_{{ item_name }}_backup[i + 10].{{ item_name }}_name, private_fnames[i]);
+      private_{{ item_name }}_backup[i + 10].{{ container_name }} =
           (char*)malloc(strlen(private_cnames[(i + 2) % 4]));
-      strcpy(private_{_ITEM_}_backup[i + 10].{_CONTAINER_},
+      strcpy(private_{{ item_name }}_backup[i + 10].{{ container_name }},
              private_cnames[(i + 2) % 4]);
     }
     for (int i = 0; i < 3; i++) {
-      private_{_ITEM_}[i + 15].{_ITEM_}_name =
+      private_{{ item_name }}[i + 15].{{ item_name }}_name =
           (char*)malloc(strlen(private_fnames[i]));
-      strcpy(private_{_ITEM_}[i + 15].{_ITEM_}_name, private_fnames[i]);
-      private_{_ITEM_}[i + 15].{_CONTAINER_} =
+      strcpy(private_{{ item_name }}[i + 15].{{ item_name }}_name, private_fnames[i]);
+      private_{{ item_name }}[i + 15].{{ container_name }} =
           (char*)malloc(strlen(private_cnames[(i + 1) % 4]));
-      strcpy(private_{_ITEM_}[i + 15].{_CONTAINER_}, private_cnames[(i + 1) % 4]);
+      strcpy(private_{{ item_name }}[i + 15].{{ container_name }}, private_cnames[(i + 1) % 4]);
 
-      private_{_ITEM_}_backup[i + 15].{_ITEM_}_name =
+      private_{{ item_name }}_backup[i + 15].{{ item_name }}_name =
           (char*)malloc(strlen(private_fnames[i]));
-      strcpy(private_{_ITEM_}_backup[i + 15].{_ITEM_}_name, private_fnames[i]);
-      private_{_ITEM_}_backup[i + 15].{_CONTAINER_} =
+      strcpy(private_{{ item_name }}_backup[i + 15].{{ item_name }}_name, private_fnames[i]);
+      private_{{ item_name }}_backup[i + 15].{{ container_name }} =
           (char*)malloc(strlen(private_cnames[(i + 1) % 4]));
-      strcpy(private_{_ITEM_}_backup[i + 15].{_CONTAINER_},
+      strcpy(private_{{ item_name }}_backup[i + 15].{{ container_name }},
              private_cnames[(i + 1) % 4]);
     }
     for (int i = 0; i < 2; i++) {
-      private_{_ITEM_}[i + 18].{_ITEM_}_name =
+      private_{{ item_name }}[i + 18].{{ item_name }}_name =
           (char*)malloc(strlen(private_fnames[i]));
-      strcpy(private_{_ITEM_}[i + 18].{_ITEM_}_name, private_fnames[i]);
-      private_{_ITEM_}[i + 18].{_CONTAINER_} =
+      strcpy(private_{{ item_name }}[i + 18].{{ item_name }}_name, private_fnames[i]);
+      private_{{ item_name }}[i + 18].{{ container_name }} =
           (char*)malloc(strlen(private_cnames[(i + 3) % 4]));
-      strcpy(private_{_ITEM_}[i + 18].{_CONTAINER_}, private_cnames[(i + 3) % 4]);
+      strcpy(private_{{ item_name }}[i + 18].{{ container_name }}, private_cnames[(i + 3) % 4]);
 
-      private_{_ITEM_}_backup[i + 18].{_ITEM_}_name =
+      private_{{ item_name }}_backup[i + 18].{{ item_name }}_name =
           (char*)malloc(strlen(private_fnames[i]));
-      strcpy(private_{_ITEM_}_backup[i + 18].{_ITEM_}_name, private_fnames[i]);
-      private_{_ITEM_}_backup[i + 18].{_CONTAINER_} =
+      strcpy(private_{{ item_name }}_backup[i + 18].{{ item_name }}_name, private_fnames[i]);
+      private_{{ item_name }}_backup[i + 18].{{ container_name }} =
           (char*)malloc(strlen(private_cnames[(i + 3) % 4]));
-      strcpy(private_{_ITEM_}_backup[i + 18].{_CONTAINER_},
+      strcpy(private_{{ item_name }}_backup[i + 18].{{ container_name }},
              private_cnames[(i + 3) % 4]);
     }
     // PRIVATE_END
@@ -123,120 +123,120 @@ void reset_dataset() {
   dataset[1].list = NULL;
 }
 
-TEST(ProjectTests, {_CONTAINER_}_add_first) {
+TEST(ProjectTests, {{ container_name }}_add_first) {
   reset_dataset();
   int result;
-  result = {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "{_ITEM1_}");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
-  ASSERT_STREQ((dataset[0].list)->{_ITEM_}->{_ITEM_}_name, "{_ITEM1_}")
-      << "The first item in {_CONTAINER_} 'New' should be {_ITEM1_}.";
+  result = {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "{{ item1 }}");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
+  ASSERT_STREQ((dataset[0].list)->{{ item_name }}->{{ item_name }}_name, "{{ item1 }}")
+      << "The first item in {{ container_name }} 'New' should be {{ item1 }}.";
 }
 
-TEST(ProjectTests, {_CONTAINER_}_add_none) {
+TEST(ProjectTests, {{ container_name }}_add_none) {
   reset_dataset();
   int result;
-  result = {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "Apple");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0";
+  result = {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "Apple");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0";
 }
 
-TEST(ProjectTests, {_CONTAINER_}_add_multiple) {
+TEST(ProjectTests, {{ container_name }}_add_multiple) {
   reset_dataset();
   int result;
-  result = {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "{_ITEM1_}");
-  result = {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "Pen");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
-  ASSERT_STREQ((dataset[0].list)->next->{_ITEM_}->{_ITEM_}_name, "Pen")
-      << "The second item in {_CONTAINER_} 'New' should be Pen.";
-  ASSERT_STREQ((dataset[1].list)->{_ITEM_}->{_ITEM_}_name, "Pen")
-      << "The first item in {_CONTAINER_} 'Used' should be Pen.";
+  result = {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "{{ item1 }}");
+  result = {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "Pen");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
+  ASSERT_STREQ((dataset[0].list)->next->{{ item_name }}->{{ item_name }}_name, "Pen")
+      << "The second item in {{ container_name }} 'New' should be Pen.";
+  ASSERT_STREQ((dataset[1].list)->{{ item_name }}->{{ item_name }}_name, "Pen")
+      << "The first item in {{ container_name }} 'Used' should be Pen.";
 }
 
-TEST(ProjectTests, {_CONTAINER_}_remove_second_item) {
+TEST(ProjectTests, {{ container_name }}_remove_second_item) {
   reset_dataset();
-  {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "{_ITEM1_}");
-  {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "Pen");
-  {_ITEM_}Data* result_{_ITEM_} = {_CONTAINER_}_remove(dataset, 2, "New", "Pen");
-  EXPECT_TRUE(result_{_ITEM_} == &{_ITEM_}[1])
-      << "The returned {_ITEM_} should be the second {_ITEM_} in the {_ITEM_} list.";
-  ASSERT_STREQ((dataset[0].list)->{_ITEM_}->{_ITEM_}_name, "{_ITEM1_}")
-      << "The first item in {_CONTAINER_} 'New' should be {_ITEM1_}.";
-  ASSERT_STREQ((dataset[1].list)->{_ITEM_}->{_ITEM_}_name, "Pen")
-      << "The first item in {_CONTAINER_} 'Used' should be Pen.";
+  {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "{{ item1 }}");
+  {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "Pen");
+  {{ item_name }}Data* result_{{ item_name }} = {{ container_name }}_remove(dataset, 2, "New", "Pen");
+  EXPECT_TRUE(result_{{ item_name }} == &{{ item_name }}[1])
+      << "The returned {{ item_name }} should be the second {{ item_name }} in the {{ item_name }} list.";
+  ASSERT_STREQ((dataset[0].list)->{{ item_name }}->{{ item_name }}_name, "{{ item1 }}")
+      << "The first item in {{ container_name }} 'New' should be {{ item1 }}.";
+  ASSERT_STREQ((dataset[1].list)->{{ item_name }}->{{ item_name }}_name, "Pen")
+      << "The first item in {{ container_name }} 'Used' should be Pen.";
   EXPECT_TRUE((dataset[0].list)->next == NULL)
-      << "The {_CONTAINER_} 'New' should have only one item";
+      << "The {{ container_name }} 'New' should have only one item";
 }
 
-TEST(ProjectTests, {_CONTAINER_}_remove_none) {
+TEST(ProjectTests, {{ container_name }}_remove_none) {
   reset_dataset();
-  {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "{_ITEM1_}");
-  {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "Pen");
-  {_ITEM_}Data* result_{_ITEM_} = {_CONTAINER_}_remove(dataset, 2, "New", "Pen");
-  result_{_ITEM_} = {_CONTAINER_}_remove(dataset, 2, "New", "Pen");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned result should be NULL";
+  {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "{{ item1 }}");
+  {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "Pen");
+  {{ item_name }}Data* result_{{ item_name }} = {{ container_name }}_remove(dataset, 2, "New", "Pen");
+  result_{{ item_name }} = {{ container_name }}_remove(dataset, 2, "New", "Pen");
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned result should be NULL";
 }
 
-TEST(ProjectTests, {_CONTAINER_}_remove_first_item) {
+TEST(ProjectTests, {{ container_name }}_remove_first_item) {
   reset_dataset();
-  {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "{_ITEM1_}");
-  {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "Pen");
-  {_ITEM_}Data* result_{_ITEM_} = {_CONTAINER_}_remove(dataset, 2, "Used", "Pen");
-  EXPECT_TRUE(result_{_ITEM_} == &{_ITEM_}[2])
-      << "The returned {_ITEM_} should be the third {_ITEM_} in the {_ITEM_} list.";
-  ASSERT_STREQ((dataset[0].list)->{_ITEM_}->{_ITEM_}_name, "{_ITEM1_}")
-      << "The first item in {_CONTAINER_} 'New' should be {_ITEM1_}.";
-  ASSERT_STREQ((dataset[0].list)->next->{_ITEM_}->{_ITEM_}_name, "Pen")
-      << "The second item in {_CONTAINER_} 'New' should be Pen.";
-  EXPECT_TRUE(dataset[1].list == NULL) << "The {_CONTAINER_} 'Used' should be empty";
+  {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "{{ item1 }}");
+  {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "Pen");
+  {{ item_name }}Data* result_{{ item_name }} = {{ container_name }}_remove(dataset, 2, "Used", "Pen");
+  EXPECT_TRUE(result_{{ item_name }} == &{{ item_name }}[2])
+      << "The returned {{ item_name }} should be the third {{ item_name }} in the {{ item_name }} list.";
+  ASSERT_STREQ((dataset[0].list)->{{ item_name }}->{{ item_name }}_name, "{{ item1 }}")
+      << "The first item in {{ container_name }} 'New' should be {{ item1 }}.";
+  ASSERT_STREQ((dataset[0].list)->next->{{ item_name }}->{{ item_name }}_name, "Pen")
+      << "The second item in {{ container_name }} 'New' should be Pen.";
+  EXPECT_TRUE(dataset[1].list == NULL) << "The {{ container_name }} 'Used' should be empty";
 }
 
-TEST(ProjectTests, Change_{_ITEM_}_not_included) {
+TEST(ProjectTests, Change_{{ item_name }}_not_included) {
   reset_dataset();
-  {_ITEM_}Data* result_{_ITEM_} =
-      {_CONTAINER_}_change(dataset, 2, {_ITEM_}, 4, "Laptop", "Used", "New");
-  EXPECT_TRUE(result_{_ITEM_} == &{_ITEM_}[3])
-      << "The returned {_ITEM_} should be the forth {_ITEM_} in the {_ITEM_} list.";
-  ASSERT_STREQ({_ITEM_}[3].{_CONTAINER_}, "New")
-      << "The {_CONTAINER_} of Laptop should be changed to 'New'.";
+  {{ item_name }}Data* result_{{ item_name }} =
+      {{ container_name }}_change(dataset, 2, {{ item_name }}, 4, "Laptop", "Used", "New");
+  EXPECT_TRUE(result_{{ item_name }} == &{{ item_name }}[3])
+      << "The returned {{ item_name }} should be the forth {{ item_name }} in the {{ item_name }} list.";
+  ASSERT_STREQ({{ item_name }}[3].{{ container_name }}, "New")
+      << "The {{ container_name }} of Laptop should be changed to 'New'.";
 }
 
-TEST(ProjectTests, Change_{_ITEM_}_with_incorrect_{_CONTAINER_}) {
+TEST(ProjectTests, Change_{{ item_name }}_with_incorrect_{{ container_name }}) {
   reset_dataset();
-  {_ITEM_}Data* result_{_ITEM_} =
-      {_CONTAINER_}_change(dataset, 2, {_ITEM_}, 4, "{_ITEM1_}", "Used", "New");
-  EXPECT_TRUE(result_{_ITEM_} == NULL)
-      << "The returned result of changing {_ITEM1_} from 'Used' to 'New' should be "
-         "NULL since there is no Used {_ITEM1_}.";
+  {{ item_name }}Data* result_{{ item_name }} =
+      {{ container_name }}_change(dataset, 2, {{ item_name }}, 4, "{{ item1 }}", "Used", "New");
+  EXPECT_TRUE(result_{{ item_name }} == NULL)
+      << "The returned result of changing {{ item1 }} from 'Used' to 'New' should be "
+         "NULL since there is no Used {{ item1 }}.";
 
-  result_{_ITEM_} = {_CONTAINER_}_change(dataset, 2, {_ITEM_}, 4, "Laptop", "New", "Old");
-  EXPECT_TRUE(result_{_ITEM_} == NULL)
-      << "The returned result of changing {_ITEM1_} from 'Used' to 'Old' should be "
-         "NULL because there is no {_CONTAINER_} Old in the dataset.";
+  result_{{ item_name }} = {{ container_name }}_change(dataset, 2, {{ item_name }}, 4, "Laptop", "New", "Old");
+  EXPECT_TRUE(result_{{ item_name }} == NULL)
+      << "The returned result of changing {{ item1 }} from 'Used' to 'Old' should be "
+         "NULL because there is no {{ container_name }} Old in the dataset.";
 }
 
-TEST(ProjectTests, Change_{_ITEM_}_to_duplicate_{_CONTAINER_}) {
+TEST(ProjectTests, Change_{{ item_name }}_to_duplicate_{{ container_name }}) {
   reset_dataset();
-  {_ITEM_}Data* result_{_ITEM_} =
-      {_CONTAINER_}_change(dataset, 2, {_ITEM_}, 4, "Pen", "Used", "New");
-  EXPECT_TRUE(result_{_ITEM_} == NULL)
+  {{ item_name }}Data* result_{{ item_name }} =
+      {{ container_name }}_change(dataset, 2, {{ item_name }}, 4, "Pen", "Used", "New");
+  EXPECT_TRUE(result_{{ item_name }} == NULL)
       << "The returned result of changing Pen from 'Used' to 'New' should be "
          "NULL since there is a New Pen exist in the list.";
-  ASSERT_STREQ({_ITEM_}[2].{_CONTAINER_}, "Used")
-      << "The {_CONTAINER_} of Used Pen should not be changed.";
+  ASSERT_STREQ({{ item_name }}[2].{{ container_name }}, "Used")
+      << "The {{ container_name }} of Used Pen should not be changed.";
 }
 
-TEST(ProjectTests, Change_{_ITEM_}_included) {
+TEST(ProjectTests, Change_{{ item_name }}_included) {
   reset_dataset();
-  {_CONTAINER_}_add(dataset, 2, {_ITEM_}, 4, "{_ITEM1_}");
-  {_ITEM_}Data* result_{_ITEM_} =
-      {_CONTAINER_}_change(dataset, 2, {_ITEM_}, 4, "{_ITEM1_}", "New", "Used");
-  EXPECT_TRUE(result_{_ITEM_} == &{_ITEM_}[0])
-      << "The returned {_ITEM_} should be the first {_ITEM_} in the {_ITEM_} list.";
-  ASSERT_STREQ({_ITEM_}[0].{_CONTAINER_}, "Used")
-      << "The {_CONTAINER_} of {_ITEM1_} should be changed to Used";
-  ASSERT_STREQ((dataset[1].list)->{_ITEM_}->{_ITEM_}_name, "{_ITEM1_}")
-      << "{_ITEM1_} should be the first item of dataset[1].";
+  {{ container_name }}_add(dataset, 2, {{ item_name }}, 4, "{{ item1 }}");
+  {{ item_name }}Data* result_{{ item_name }} =
+      {{ container_name }}_change(dataset, 2, {{ item_name }}, 4, "{{ item1 }}", "New", "Used");
+  EXPECT_TRUE(result_{{ item_name }} == &{{ item_name }}[0])
+      << "The returned {{ item_name }} should be the first {{ item_name }} in the {{ item_name }} list.";
+  ASSERT_STREQ({{ item_name }}[0].{{ container_name }}, "Used")
+      << "The {{ container_name }} of {{ item1 }} should be changed to Used";
+  ASSERT_STREQ((dataset[1].list)->{{ item_name }}->{{ item_name }}_name, "{{ item1 }}")
+      << "{{ item1 }} should be the first item of dataset[1].";
   EXPECT_TRUE(dataset[0].list == NULL)
-      << "The dataset[0].list should be NULL because the {_CONTAINER_} New has no "
+      << "The dataset[0].list should be NULL because the {{ container_name }} New has no "
          "item.";
 }
 
@@ -248,26 +248,26 @@ void resetdataset() {
   }
 }
 
-int grader_add({_CONTAINER_} dataset[], int number_of_categories, {_ITEM_}Data {_ITEM_}[],
-               int number_of_{_ITEM_}, const char* {_ITEM_}_name) {
+int grader_add({{ container_name }} dataset[], int number_of_categories, {{ item_name }}Data {{ item_name }}[],
+               int number_of_{{ item_name }}, const char* {{ item_name }}_name) {
   int modified = 0;
-  for (int i = 0; i < number_of_{_ITEM_}; i++) {
-    if (strncmp({_ITEM_}[i].{_ITEM_}_name, {_ITEM_}_name, MAX_LEN) == 0) {
-      {_ITEM_}Node* newNode = ({_ITEM_}Node*)(malloc(sizeof({_ITEM_}Node)));
-      newNode->{_ITEM_} = &{_ITEM_}[i];
+  for (int i = 0; i < number_of_{{ item_name }}; i++) {
+    if (strncmp({{ item_name }}[i].{{ item_name }}_name, {{ item_name }}_name, MAX_LEN) == 0) {
+      {{ item_name }}Node* newNode = ({{ item_name }}Node*)(malloc(sizeof({{ item_name }}Node)));
+      newNode->{{ item_name }} = &{{ item_name }}[i];
       for (int j = 0; j < number_of_categories; j++) {
-        if (strncmp(dataset[j].name, newNode->{_ITEM_}->{_CONTAINER_}, MAX_LEN) == 0) {
-          // add node into this {_CONTAINER_}
-          {_ITEM_}Node* preNode = NULL;
-          {_ITEM_}Node* curNode = dataset[j].list;
-          while (curNode && strncmp(newNode->{_ITEM_}->{_ITEM_}_name,
-                                    curNode->{_ITEM_}->{_ITEM_}_name, MAX_LEN) > 0) {
+        if (strncmp(dataset[j].name, newNode->{{ item_name }}->{{ container_name }}, MAX_LEN) == 0) {
+          // add node into this {{ container_name }}
+          {{ item_name }}Node* preNode = NULL;
+          {{ item_name }}Node* curNode = dataset[j].list;
+          while (curNode && strncmp(newNode->{{ item_name }}->{{ item_name }}_name,
+                                    curNode->{{ item_name }}->{{ item_name }}_name, MAX_LEN) > 0) {
             preNode = curNode;
             curNode = curNode->next;
           }
 
-          if (curNode && strncmp(newNode->{_ITEM_}->{_ITEM_}_name,
-                                 curNode->{_ITEM_}->{_ITEM_}_name, MAX_LEN) == 0) {
+          if (curNode && strncmp(newNode->{{ item_name }}->{{ item_name }}_name,
+                                 curNode->{{ item_name }}->{{ item_name }}_name, MAX_LEN) == 0) {
             break;
           }
 
@@ -285,14 +285,14 @@ int grader_add({_CONTAINER_} dataset[], int number_of_categories, {_ITEM_}Data {
   return modified;
 }
 
-{_ITEM_}Data* grader_remove({_CONTAINER_} dataset[], int number_of_categories,
-                        const char* {_CONTAINER_}, const char* {_ITEM_}_name) {
+{{ item_name }}Data* grader_remove({{ container_name }} dataset[], int number_of_categories,
+                        const char* {{ container_name }}, const char* {{ item_name }}_name) {
   for (int j = 0; j < number_of_categories; j++) {
-    if (strncmp(dataset[j].name, {_CONTAINER_}, MAX_LEN) == 0) {
-      {_ITEM_}Node* preNode = NULL;
-      {_ITEM_}Node* curNode = dataset[j].list;
+    if (strncmp(dataset[j].name, {{ container_name }}, MAX_LEN) == 0) {
+      {{ item_name }}Node* preNode = NULL;
+      {{ item_name }}Node* curNode = dataset[j].list;
       while (curNode &&
-             strncmp({_ITEM_}_name, curNode->{_ITEM_}->{_ITEM_}_name, MAX_LEN) != 0) {
+             strncmp({{ item_name }}_name, curNode->{{ item_name }}->{{ item_name }}_name, MAX_LEN) != 0) {
         preNode = curNode;
         curNode = curNode->next;
       }
@@ -303,56 +303,56 @@ int grader_add({_CONTAINER_} dataset[], int number_of_categories, {_ITEM_}Data {
         } else {
           dataset[j].list = curNode->next;
         }
-        {_ITEM_}Data* result = curNode->{_ITEM_};
+        {{ item_name }}Data* result = curNode->{{ item_name }};
         free(curNode);
         return result;
       }
     }
   }
-  // Cannot find the {_CONTAINER_} or the {_ITEM_} in the {_CONTAINER_}
+  // Cannot find the {{ container_name }} or the {{ item_name }} in the {{ container_name }}
   return NULL;
 }
 
-void test{_ITEM_}NameImmutablilty({_ITEM_}Data* private_{_ITEM_}) {
+void test{{ item_name }}NameImmutablilty({{ item_name }}Data* private_{{ item_name }}) {
   for (int i = 0; i < 20; i++) {
-    EXPECT_TRUE(strcmp(private_{_ITEM_}[i].{_ITEM_}_name,
-                       private_{_ITEM_}_backup[i].{_ITEM_}_name) == 0)
-        << "The {_ITEM_} names in the array should not be changed";
+    EXPECT_TRUE(strcmp(private_{{ item_name }}[i].{{ item_name }}_name,
+                       private_{{ item_name }}_backup[i].{{ item_name }}_name) == 0)
+        << "The {{ item_name }} names in the array should not be changed";
   }
 }
 
-void testLinkedList({_ITEM_}Node* node, int index[], int l) {
+void testLinkedList({{ item_name }}Node* node, int index[], int l) {
   int i;
   for (i = 0; i < l && node != NULL; i++, node = node->next) {
-    // printf("TEST: %s vs %s\n", node->{_ITEM_}->{_ITEM_}_name,
-    // private_{_ITEM_}[index[i]].{_ITEM_}_name);
-    EXPECT_TRUE(node->{_ITEM_} == &private_{_ITEM_}[index[i]])
+    // printf("TEST: %s vs %s\n", node->{{ item_name }}->{{ item_name }}_name,
+    // private_{{ item_name }}[index[i]].{{ item_name }}_name);
+    EXPECT_TRUE(node->{{ item_name }} == &private_{{ item_name }}[index[i]])
         << "The dataset has incorrect nodes or order of nodes in the "
            "linkedList";
   }
 
-  EXPECT_TRUE(node == NULL) << "One or more {_CONTAINER_} in the dataset have a "
+  EXPECT_TRUE(node == NULL) << "One or more {{ container_name }} in the dataset have a "
                                "longer linkedList than expected "
                             << l;
-  EXPECT_EQ(l, i) << "One or more {_CONTAINER_} in the dataset have a shorter "
+  EXPECT_EQ(l, i) << "One or more {{ container_name }} in the dataset have a shorter "
                      "linkedList than expected "
                   << l;
 }
 
-int contains({_ITEM_}Node* head, const char* {_ITEM_}name) {
-  for ({_ITEM_}Node* cur = head; cur; cur = cur->next) {
-    if (!strncmp(cur->{_ITEM_}->{_ITEM_}_name, {_ITEM_}name, MAX_LEN)) {
+int contains({{ item_name }}Node* head, const char* {{ item_name }}name) {
+  for ({{ item_name }}Node* cur = head; cur; cur = cur->next) {
+    if (!strncmp(cur->{{ item_name }}->{{ item_name }}_name, {{ item_name }}name, MAX_LEN)) {
       return 1;
     }
   }
   return 0;
 }
 
-TEST(ProjectTests, {_CONTAINER_}_add_one_with_same_name) {
+TEST(ProjectTests, {{ container_name }}_add_one_with_same_name) {
   int result;
   resetdataset();
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
   int c1[] = {0};
   int c2[] = {15};
   int c3[] = {10};
@@ -361,15 +361,15 @@ TEST(ProjectTests, {_CONTAINER_}_add_one_with_same_name) {
   testLinkedList(private_dataset[1].list, c2, 1);
   testLinkedList(private_dataset[2].list, c3, 1);
   testLinkedList(private_dataset[3].list, c4, 1);
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_add_two_with_same_name) {
+TEST(ProjectTests, {{ container_name }}_add_two_with_same_name) {
   int result;
   resetdataset();
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "Z");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "Z");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
   int c1[] = {0, 12};
   int c2[] = {15};
   int c3[] = {10, 2};
@@ -378,23 +378,23 @@ TEST(ProjectTests, {_CONTAINER_}_add_two_with_same_name) {
   testLinkedList(private_dataset[1].list, c2, 1);
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4, 2);
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_add_duplicate_{_ITEM_}) {
+TEST(ProjectTests, {{ container_name }}_add_duplicate_{{ item_name }}) {
   int result;
   resetdataset();
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0 since "
-                          "it should not add the same {_ITEM_} into the dataset";
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "Z");
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0 since "
-                          "it should not add the same {_ITEM_} into the dataset";
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "Z");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0 since "
-                          "it should not add the same {_ITEM_} into the dataset";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0 since "
+                          "it should not add the same {{ item_name }} into the dataset";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "Z");
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0 since "
+                          "it should not add the same {{ item_name }} into the dataset";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "Z");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0 since "
+                          "it should not add the same {{ item_name }} into the dataset";
   int c1[] = {0, 12};
   int c2[] = {15};
   int c3[] = {10, 2};
@@ -403,16 +403,16 @@ TEST(ProjectTests, {_CONTAINER_}_add_duplicate_{_ITEM_}) {
   testLinkedList(private_dataset[1].list, c2, 1);
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4, 2);
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_add_multiple_with_same_name) {
+TEST(ProjectTests, {{ container_name }}_add_multiple_with_same_name) {
   int result;
   resetdataset();
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "Z");
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "A");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "Z");
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "A");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
   int c1[] = {0, 12};
   int c2[] = {13, 15};
   int c3[] = {10, 2};
@@ -421,32 +421,32 @@ TEST(ProjectTests, {_CONTAINER_}_add_multiple_with_same_name) {
   testLinkedList(private_dataset[1].list, c2, 2);
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4, 3);
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_add_multiple_unique) {
+TEST(ProjectTests, {{ container_name }}_add_multiple_unique) {
   int result;
   resetdataset();
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "C");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "C");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "AB");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "AB");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "XA");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "XA");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "AX");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "AX");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "DC");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "DC");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "BC");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "BC");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "D");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "D");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
   int c1[] = {8};
   int c2[] = {5, 9};
   int c3[] = {6};
@@ -455,51 +455,51 @@ TEST(ProjectTests, {_CONTAINER_}_add_multiple_unique) {
   testLinkedList(private_dataset[1].list, c2, 2);
   testLinkedList(private_dataset[2].list, c3, 1);
   testLinkedList(private_dataset[3].list, c4, 1);
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_add_all_{_ITEM_}) {
+TEST(ProjectTests, {{ container_name }}_add_all_{{ item_name }}) {
   int result;
   resetdataset();
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "C");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "C");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "AB");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "AB");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "A");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "A");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "Y");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "Y");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "XYZ");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "XYZ");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "XA");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "XA");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "AX");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "AX");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "DC");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "DC");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "B");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "B");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "BC");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "BC");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "D");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "D");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "Z");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "Z");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
   int c1[] = {8, 4, 0, 19, 12};
   int c2[] = {13, 5, 9, 15, 1};
@@ -509,14 +509,14 @@ TEST(ProjectTests, {_CONTAINER_}_add_all_{_ITEM_}) {
   testLinkedList(private_dataset[1].list, c2, 5);
   testLinkedList(private_dataset[2].list, c3, 5);
   testLinkedList(private_dataset[3].list, c4, 5);
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_remove_only_with_same_name) {
+TEST(ProjectTests, {{ container_name }}_remove_only_with_same_name) {
   int result;
   resetdataset();
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
   int c1[] = {0};
   int c2[] = {15};
   int c3[] = {10};
@@ -526,62 +526,62 @@ TEST(ProjectTests, {_CONTAINER_}_remove_only_with_same_name) {
   testLinkedList(private_dataset[2].list, c3, 1);
   testLinkedList(private_dataset[3].list, c4, 1);
 
-  {_ITEM_}Data* result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Excellent", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[0])
-      << "The returned {_ITEM_} is incorrect.";
+  {{ item_name }}Data* result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Excellent", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[0])
+      << "The returned {{ item_name }} is incorrect.";
   EXPECT_TRUE(private_dataset[0].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   testLinkedList(private_dataset[1].list, c2, 1);
   testLinkedList(private_dataset[2].list, c3, 1);
   testLinkedList(private_dataset[3].list, c4, 1);
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Great", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[15])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Great", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[15])
+      << "The returned {{ item_name }} is incorrect.";
   EXPECT_TRUE(private_dataset[0].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   EXPECT_TRUE(private_dataset[1].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   testLinkedList(private_dataset[2].list, c3, 1);
   testLinkedList(private_dataset[3].list, c4, 1);
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poor", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[18])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poor", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[18])
+      << "The returned {{ item_name }} is incorrect.";
   EXPECT_TRUE(private_dataset[0].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   EXPECT_TRUE(private_dataset[1].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   EXPECT_TRUE(private_dataset[3].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   testLinkedList(private_dataset[2].list, c3, 1);
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Fair", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[10])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Fair", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[10])
+      << "The returned {{ item_name }} is incorrect.";
   EXPECT_TRUE(private_dataset[0].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   EXPECT_TRUE(private_dataset[1].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   EXPECT_TRUE(private_dataset[2].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   EXPECT_TRUE(private_dataset[3].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
 
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_remove_not_exist) {
+TEST(ProjectTests, {{ container_name }}_remove_not_exist) {
   resetdataset();
 
-  {_ITEM_}Data* result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Excellent", "X");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned {_ITEM_} should be NULL.";
+  {{ item_name }}Data* result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Excellent", "X");
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned {{ item_name }} should be NULL.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poo", "X");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned {_ITEM_} should be NULL.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poo", "X");
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned {{ item_name }} should be NULL.";
 
-  {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  {_CONTAINER_}_add(private_dataset, 4, private_{_ITEM_}, 20, "Z");
+  {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  {{ container_name }}_add(private_dataset, 4, private_{{ item_name }}, 20, "Z");
   int c1[] = {0, 12};
   int c2[] = {15};
   int c3[] = {10, 2};
@@ -591,28 +591,28 @@ TEST(ProjectTests, {_CONTAINER_}_remove_not_exist) {
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4, 2);
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Excellent", "Y");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned {_ITEM_} should be NULL.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Excellent", "Y");
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned {{ item_name }} should be NULL.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poo", "Z");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned {_ITEM_} should be NULL.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poo", "Z");
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned {{ item_name }} should be NULL.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Great", "Z");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned {_ITEM_} should be NULL.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Great", "Z");
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned {{ item_name }} should be NULL.";
 
   testLinkedList(private_dataset[0].list, c1, 2);
   testLinkedList(private_dataset[1].list, c2, 1);
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4, 2);
 
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_remove_duplicate) {
+TEST(ProjectTests, {{ container_name }}_remove_duplicate) {
   resetdataset();
 
-  grader_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  grader_add(private_dataset, 4, private_{_ITEM_}, 20, "AB");
+  grader_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  grader_add(private_dataset, 4, private_{{ item_name }}, 20, "AB");
   int c1[] = {0};
   int c2[] = {15};
   int c3[] = {10};
@@ -622,52 +622,52 @@ TEST(ProjectTests, {_CONTAINER_}_remove_duplicate) {
   testLinkedList(private_dataset[2].list, c3, 1);
   testLinkedList(private_dataset[3].list, c4, 2);
 
-  {_CONTAINER_}_remove(private_dataset, 4, "Great", "X");
-  {_ITEM_}Data* result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Great", "X");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned {_ITEM_} should be NULL.";
+  {{ container_name }}_remove(private_dataset, 4, "Great", "X");
+  {{ item_name }}Data* result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Great", "X");
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned {{ item_name }} should be NULL.";
 
   testLinkedList(private_dataset[0].list, c1, 1);
   EXPECT_TRUE(private_dataset[1].list == NULL)
-      << "The {_CONTAINER_} should be empty after the first remove.";
+      << "The {{ container_name }} should be empty after the first remove.";
   ;
   testLinkedList(private_dataset[2].list, c3, 1);
   testLinkedList(private_dataset[3].list, c4, 2);
 
-  {_CONTAINER_}_remove(private_dataset, 4, "Poor", "X");
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poor", "X");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned {_ITEM_} should be NULL.";
+  {{ container_name }}_remove(private_dataset, 4, "Poor", "X");
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poor", "X");
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned {{ item_name }} should be NULL.";
   int c4_removeX[] = {7};
 
   testLinkedList(private_dataset[0].list, c1, 1);
   EXPECT_TRUE(private_dataset[1].list == NULL)
-      << "The {_CONTAINER_} should be empty after the first remove.";
+      << "The {{ container_name }} should be empty after the first remove.";
   ;
   testLinkedList(private_dataset[2].list, c3, 1);
   testLinkedList(private_dataset[3].list, c4_removeX, 1);
 
-  {_CONTAINER_}_remove(private_dataset, 4, "Poor", "AB");
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poor", "AB");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned {_ITEM_} should be NULL.";
+  {{ container_name }}_remove(private_dataset, 4, "Poor", "AB");
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poor", "AB");
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned {{ item_name }} should be NULL.";
 
   testLinkedList(private_dataset[0].list, c1, 1);
   EXPECT_TRUE(private_dataset[1].list == NULL)
-      << "The {_CONTAINER_} should be empty after the first remove.";
+      << "The {{ container_name }} should be empty after the first remove.";
   ;
   testLinkedList(private_dataset[2].list, c3, 1);
   EXPECT_TRUE(private_dataset[3].list == NULL)
-      << "The {_CONTAINER_} should be empty after the first remove.";
+      << "The {{ container_name }} should be empty after the first remove.";
   ;
 
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_remove_multiple_with_same_name) {
+TEST(ProjectTests, {{ container_name }}_remove_multiple_with_same_name) {
   int result;
   resetdataset();
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "Z");
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "A");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "Z");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "A");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
   int c1[] = {0, 12};
   int c2[] = {13, 15};
   int c3[] = {10, 2};
@@ -677,86 +677,86 @@ TEST(ProjectTests, {_CONTAINER_}_remove_multiple_with_same_name) {
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4, 3);
 
-  {_ITEM_}Data* result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Excellent", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[0])
-      << "The returned {_ITEM_} is incorrect.";
+  {{ item_name }}Data* result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Excellent", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[0])
+      << "The returned {{ item_name }} is incorrect.";
   int c1removeX[] = {12};
   testLinkedList(private_dataset[0].list, c1removeX, 1);
   testLinkedList(private_dataset[1].list, c2, 2);
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4, 3);
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Great", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[15])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Great", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[15])
+      << "The returned {{ item_name }} is incorrect.";
   int c2removeX[] = {13};
   testLinkedList(private_dataset[0].list, c1removeX, 1);
   testLinkedList(private_dataset[1].list, c2removeX, 1);
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4, 3);
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poor", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[18])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poor", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[18])
+      << "The returned {{ item_name }} is incorrect.";
   int c4removeX[] = {3, 17};
   testLinkedList(private_dataset[0].list, c1removeX, 1);
   testLinkedList(private_dataset[1].list, c2removeX, 1);
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4removeX, 2);
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Fair", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[10])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Fair", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[10])
+      << "The returned {{ item_name }} is incorrect.";
   int c3removeX[] = {2};
   testLinkedList(private_dataset[0].list, c1removeX, 1);
   testLinkedList(private_dataset[1].list, c2removeX, 1);
   testLinkedList(private_dataset[2].list, c3removeX, 1);
   testLinkedList(private_dataset[3].list, c4removeX, 2);
 
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, {_CONTAINER_}_remove_all) {
+TEST(ProjectTests, {{ container_name }}_remove_all) {
   int result;
   resetdataset();
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "C");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "C");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "AB");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "AB");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "A");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "A");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "Y");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "Y");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "XYZ");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "XYZ");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "XA");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "XA");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "AX");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "AX");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "DC");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "DC");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "B");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "B");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "BC");
-  EXPECT_EQ(result, 0) << "The return value of {_CONTAINER_}_add should be 0";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "BC");
+  EXPECT_EQ(result, 0) << "The return value of {{ container_name }}_add should be 0";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "D");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "D");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "Z");
-  EXPECT_EQ(result, 1) << "The return value of {_CONTAINER_}_add should be 1";
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "Z");
+  EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
 
   int c1[] = {8, 4, 0, 19, 12};
   int c2[] = {13, 5, 9, 15, 1};
@@ -767,376 +767,376 @@ TEST(ProjectTests, {_CONTAINER_}_remove_all) {
   testLinkedList(private_dataset[2].list, c3, 5);
   testLinkedList(private_dataset[3].list, c4, 5);
 
-  {_ITEM_}Data* result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Excellent", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[0])
-      << "The returned {_ITEM_} is incorrect.";
+  {{ item_name }}Data* result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Excellent", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[0])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Great", "Y");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[1])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Great", "Y");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[1])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Fair", "Z");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[2])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Fair", "Z");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[2])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poor", "A");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[3])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poor", "A");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[3])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Excellent", "B");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[4])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Excellent", "B");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[4])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Great", "C");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[5])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Great", "C");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[5])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Fair", "D");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[6])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Fair", "D");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[6])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poor", "AB");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[7])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poor", "AB");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[7])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Excellent", "AX");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[8])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Excellent", "AX");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[8])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Great", "DC");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[9])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Great", "DC");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[9])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Fair", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[10])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Fair", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[10])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poor", "Y");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[11])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poor", "Y");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[11])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Excellent", "Z");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[12])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Excellent", "Z");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[12])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Great", "A");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[13])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Great", "A");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[13])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Fair", "B");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[14])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Fair", "B");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[14])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Great", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[15])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Great", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[15])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Fair", "Y");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[16])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Fair", "Y");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[16])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poor", "Z");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[17])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poor", "Z");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[17])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Poor", "X");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[18])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Poor", "X");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[18])
+      << "The returned {{ item_name }} is incorrect.";
 
-  result_{_ITEM_} = {_CONTAINER_}_remove(private_dataset, 4, "Excellent", "Y");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[19])
-      << "The returned {_ITEM_} is incorrect.";
+  result_{{ item_name }} = {{ container_name }}_remove(private_dataset, 4, "Excellent", "Y");
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[19])
+      << "The returned {{ item_name }} is incorrect.";
 
   EXPECT_TRUE(private_dataset[0].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   EXPECT_TRUE(private_dataset[1].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   EXPECT_TRUE(private_dataset[2].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
   EXPECT_TRUE(private_dataset[3].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
 
-  test{_ITEM_}NameImmutablilty(private_{_ITEM_});
+  test{{ item_name }}NameImmutablilty(private_{{ item_name }});
 }
 
-TEST(ProjectTests, Change_{_ITEM_}_not_included_advance) {
-  {_ITEM_}Data* result_{_ITEM_};
+TEST(ProjectTests, Change_{{ item_name }}_not_included_advance) {
+  {{ item_name }}Data* result_{{ item_name }};
   resetdataset();
 
   for (int j = 1; j < 5; j++) {
     for (int i = 0; i < 5; i++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(
-          private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+      result_{{ item_name }} = {{ container_name }}_change(
+          private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
           private_cnames[(i + j) % 4], private_cnames[(i + j + 1) % 4]);
-      EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[i + 5])
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[i + 5])
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
     }
   }
 
-  int result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
+  int result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
 
   for (int j = 1; j < 5; j++) {
     for (int i = 0; i < 5; i++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(
-          private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+      result_{{ item_name }} = {{ container_name }}_change(
+          private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
           private_cnames[(i + j) % 4], private_cnames[(i + j + 1) % 4]);
-      EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[i + 5])
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[i + 5])
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
     }
   }
 
-  result_{_ITEM_} = grader_remove(private_dataset, 4, "Great", "X");
+  result_{{ item_name }} = grader_remove(private_dataset, 4, "Great", "X");
 
   for (int j = 1; j < 5; j++) {
     for (int i = 0; i < 5; i++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(
-          private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+      result_{{ item_name }} = {{ container_name }}_change(
+          private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
           private_cnames[(i + j) % 4], private_cnames[(i + j + 1) % 4]);
-      EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[i + 5])
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[i + 5])
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
     }
   }
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "Y");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "Y");
 
   for (int j = 1; j < 5; j++) {
     for (int i = 0; i < 5; i++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(
-          private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+      result_{{ item_name }} = {{ container_name }}_change(
+          private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
           private_cnames[(i + j) % 4], private_cnames[(i + j + 1) % 4]);
-      EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[i + 5])
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[i + 5])
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
     }
   }
 }
 
-TEST(ProjectTests, Change_{_ITEM_}_with_incorrect_{_CONTAINER_}_advance) {
-  {_ITEM_}Data* result_{_ITEM_};
+TEST(ProjectTests, Change_{{ item_name }}_with_incorrect_{{ container_name }}_advance) {
+  {{ item_name }}Data* result_{{ item_name }};
   resetdataset();
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 4; j++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20,
+      result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20,
                                     private_fnames[i], private_cnames[j], "X");
-      EXPECT_TRUE(result_{_ITEM_} == NULL)
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == NULL)
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
     }
   }
 
   for (int i = 0; i < 5; i++) {
-    result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20,
+    result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20,
                                   private_fnames[i + 5], private_cnames[i % 4],
                                   private_cnames[(i + 3) % 4]);
-    EXPECT_TRUE(result_{_ITEM_} == NULL)
-        << "The returned result of the change with incorrect {_CONTAINER_} should "
+    EXPECT_TRUE(result_{{ item_name }} == NULL)
+        << "The returned result of the change with incorrect {{ container_name }} should "
            "be NULL.";
 
-    result_{_ITEM_} = {_CONTAINER_}_change(
-        private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+    result_{{ item_name }} = {{ container_name }}_change(
+        private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
         private_cnames[(i + 2) % 4], private_cnames[(i + 1) % 4]);
-    EXPECT_TRUE(result_{_ITEM_} == NULL)
-        << "The returned result of the change with incorrect {_CONTAINER_} should "
+    EXPECT_TRUE(result_{{ item_name }} == NULL)
+        << "The returned result of the change with incorrect {{ container_name }} should "
            "be NULL.";
   }
 
-  int result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
+  int result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
 
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 4; j++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20,
+      result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20,
                                     private_fnames[i], private_cnames[j], "X");
-      EXPECT_TRUE(result_{_ITEM_} == NULL)
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == NULL)
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
     }
   }
 
   for (int i = 0; i < 5; i++) {
-    result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20,
+    result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20,
                                   private_fnames[i + 5], private_cnames[i % 4],
                                   private_cnames[(i + 3) % 4]);
-    EXPECT_TRUE(result_{_ITEM_} == NULL)
-        << "The returned result of the change with incorrect {_CONTAINER_} should "
+    EXPECT_TRUE(result_{{ item_name }} == NULL)
+        << "The returned result of the change with incorrect {{ container_name }} should "
            "be NULL.";
 
-    result_{_ITEM_} = {_CONTAINER_}_change(
-        private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+    result_{{ item_name }} = {{ container_name }}_change(
+        private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
         private_cnames[(i + 2) % 4], private_cnames[(i + 1) % 4]);
-    EXPECT_TRUE(result_{_ITEM_} == NULL)
-        << "The returned result of the change with incorrect {_CONTAINER_} should "
+    EXPECT_TRUE(result_{{ item_name }} == NULL)
+        << "The returned result of the change with incorrect {{ container_name }} should "
            "be NULL.";
   }
 
-  result_{_ITEM_} = grader_remove(private_dataset, 4, "Great", "X");
+  result_{{ item_name }} = grader_remove(private_dataset, 4, "Great", "X");
 
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 4; j++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20,
+      result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20,
                                     private_fnames[i], private_cnames[j], "X");
-      EXPECT_TRUE(result_{_ITEM_} == NULL)
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == NULL)
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
     }
   }
 
   for (int i = 0; i < 5; i++) {
-    result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20,
+    result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20,
                                   private_fnames[i + 5], private_cnames[i % 4],
                                   private_cnames[(i + 3) % 4]);
-    EXPECT_TRUE(result_{_ITEM_} == NULL)
-        << "The returned result of the change with incorrect {_CONTAINER_} should "
+    EXPECT_TRUE(result_{{ item_name }} == NULL)
+        << "The returned result of the change with incorrect {{ container_name }} should "
            "be NULL.";
 
-    result_{_ITEM_} = {_CONTAINER_}_change(
-        private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+    result_{{ item_name }} = {{ container_name }}_change(
+        private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
         private_cnames[(i + 2) % 4], private_cnames[(i + 1) % 4]);
-    EXPECT_TRUE(result_{_ITEM_} == NULL)
-        << "The returned result of the change with incorrect {_CONTAINER_} should "
+    EXPECT_TRUE(result_{{ item_name }} == NULL)
+        << "The returned result of the change with incorrect {{ container_name }} should "
            "be NULL.";
   }
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "Y");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "Y");
 
   for (int i = 0; i < 10; i++) {
     for (int j = 0; j < 4; j++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20,
+      result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20,
                                     private_fnames[i], private_cnames[j], "X");
-      EXPECT_TRUE(result_{_ITEM_} == NULL)
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == NULL)
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
     }
   }
 
   for (int i = 0; i < 5; i++) {
-    result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20,
+    result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20,
                                   private_fnames[i + 5], private_cnames[i % 4],
                                   private_cnames[(i + 3) % 4]);
-    EXPECT_TRUE(result_{_ITEM_} == NULL)
-        << "The returned result of the change with incorrect {_CONTAINER_} should "
+    EXPECT_TRUE(result_{{ item_name }} == NULL)
+        << "The returned result of the change with incorrect {{ container_name }} should "
            "be NULL.";
 
-    result_{_ITEM_} = {_CONTAINER_}_change(
-        private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+    result_{{ item_name }} = {{ container_name }}_change(
+        private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
         private_cnames[(i + 2) % 4], private_cnames[(i + 1) % 4]);
-    EXPECT_TRUE(result_{_ITEM_} == NULL)
-        << "The returned result of the change with incorrect {_CONTAINER_} should "
+    EXPECT_TRUE(result_{{ item_name }} == NULL)
+        << "The returned result of the change with incorrect {{ container_name }} should "
            "be NULL.";
   }
 }
 
-TEST(ProjectTests, Change_{_ITEM_}_to_duplicate_{_CONTAINER_}_advance) {
-  {_ITEM_}Data* result_{_ITEM_};
+TEST(ProjectTests, Change_{{ item_name }}_to_duplicate_{{ container_name }}_advance) {
+  {{ item_name }}Data* result_{{ item_name }};
   resetdataset();
 
   for (int i = 0; i < 4; i++) {
     for (int j = i + 1; j < 4; j++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20, "X",
+      result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20, "X",
                                     private_cnames[i], private_cnames[j]);
-      EXPECT_TRUE(result_{_ITEM_} == NULL)
-          << "The returned result of the change to duplicate {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == NULL)
+          << "The returned result of the change to duplicate {{ container_name }} should "
              "be NULL.";
     }
   }
 
-  int result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
+  int result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
   for (int i = 0; i < 4; i++) {
     for (int j = i + 1; j < 4; j++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20, "X",
+      result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20, "X",
                                     private_cnames[i], private_cnames[j]);
-      EXPECT_TRUE(result_{_ITEM_} == NULL)
-          << "The returned result of the change to duplicate {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == NULL)
+          << "The returned result of the change to duplicate {{ container_name }} should "
              "be NULL.";
     }
   }
 
-  result_{_ITEM_} = grader_remove(private_dataset, 4, "Great", "X");
+  result_{{ item_name }} = grader_remove(private_dataset, 4, "Great", "X");
   for (int i = 0; i < 4; i++) {
     for (int j = i + 1; j < 4; j++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20, "X",
+      result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20, "X",
                                     private_cnames[i], private_cnames[j]);
-      EXPECT_TRUE(result_{_ITEM_} == NULL)
-          << "The returned result of the change to duplicate {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == NULL)
+          << "The returned result of the change to duplicate {{ container_name }} should "
              "be NULL.";
     }
   }
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "Y");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "Y");
   for (int i = 0; i < 4; i++) {
     for (int j = i + 1; j < 4; j++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20, "Y",
+      result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20, "Y",
                                     private_cnames[i], private_cnames[j]);
-      EXPECT_TRUE(result_{_ITEM_} == NULL)
-          << "The returned result of the change to duplicate {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == NULL)
+          << "The returned result of the change to duplicate {{ container_name }} should "
              "be NULL.";
     }
   }
 
-  result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20, "Z",
+  result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20, "Z",
                                 "Poor", "Excellent");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned result of the change to "
-                                      "duplicate {_CONTAINER_} should be NULL.";
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned result of the change to "
+                                      "duplicate {{ container_name }} should be NULL.";
 
-  result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20, "B",
+  result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20, "B",
                                 "Excellent", "Fair");
-  EXPECT_TRUE(result_{_ITEM_} == NULL) << "The returned result of the change to "
-                                      "duplicate {_CONTAINER_} should be NULL.";
+  EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned result of the change to "
+                                      "duplicate {{ container_name }} should be NULL.";
 }
 
-TEST(ProjectTests, Change_{_ITEM_}_included_advance) {
-  {_ITEM_}Data* result_{_ITEM_};
+TEST(ProjectTests, Change_{{ item_name }}_included_advance) {
+  {{ item_name }}Data* result_{{ item_name }};
   resetdataset();
 
-  int result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "AB");
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "C");
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "AX");
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "DC");
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "D");
+  int result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "AB");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "C");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "AX");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "DC");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "D");
 
   for (int j = 1; j < 5; j++) {
     for (int i = 0; i < 5; i++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(
-          private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+      result_{{ item_name }} = {{ container_name }}_change(
+          private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
           private_cnames[(i + j) % 4], private_cnames[(i + j + 1) % 4]);
-      EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[i + 5])
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[i + 5])
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
       EXPECT_TRUE(contains(private_dataset[(i + j + 1) % 4].list,
                            private_fnames[i + 5]));
     }
   }
 
-  result_{_ITEM_} = grader_remove(private_dataset, 4, "Great", "C");
+  result_{{ item_name }} = grader_remove(private_dataset, 4, "Great", "C");
   for (int j = 1; j < 5; j++) {
     for (int i = 1; i < 5; i++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(
-          private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+      result_{{ item_name }} = {{ container_name }}_change(
+          private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
           private_cnames[(i + j) % 4], private_cnames[(i + j + 1) % 4]);
-      EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[i + 5])
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[i + 5])
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
       EXPECT_TRUE(contains(private_dataset[(i + j + 1) % 4].list,
                            private_fnames[i + 5]));
     }
   }
 
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "X");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "X");
   for (int j = 1; j < 3; j++) {
     for (int i = 1; i < 5; i++) {
-      result_{_ITEM_} = {_CONTAINER_}_change(
-          private_dataset, 4, private_{_ITEM_}, 20, private_fnames[i + 5],
+      result_{{ item_name }} = {{ container_name }}_change(
+          private_dataset, 4, private_{{ item_name }}, 20, private_fnames[i + 5],
           private_cnames[(i + j) % 4], private_cnames[(i + j + 1) % 4]);
-      EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[i + 5])
-          << "The returned result of the change with incorrect {_CONTAINER_} should "
+      EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[i + 5])
+          << "The returned result of the change with incorrect {{ container_name }} should "
              "be NULL.";
       EXPECT_TRUE(contains(private_dataset[(i + j + 1) % 4].list,
                            private_fnames[i + 5]));
     }
   }
-  result = grader_add(private_dataset, 4, private_{_ITEM_}, 20, "C");
+  result = grader_add(private_dataset, 4, private_{{ item_name }}, 20, "C");
 
   int c1[] = {6, 0};
   int c2[] = {7, 5, 15};
@@ -1147,11 +1147,11 @@ TEST(ProjectTests, Change_{_ITEM_}_included_advance) {
   testLinkedList(private_dataset[2].list, c3, 2);
   testLinkedList(private_dataset[3].list, c4, 2);
 
-  result_{_ITEM_} = grader_remove(private_dataset, 4, "Poor", "X");
-  result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20, "DC",
+  result_{{ item_name }} = grader_remove(private_dataset, 4, "Poor", "X");
+  result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20, "DC",
                                 "Poor", "Great");
-  EXPECT_TRUE(result_{_ITEM_} == &private_{_ITEM_}[9])
-      << "The returned result of the change with incorrect {_CONTAINER_} should be "
+  EXPECT_TRUE(result_{{ item_name }} == &private_{{ item_name }}[9])
+      << "The returned result of the change with incorrect {{ container_name }} should be "
          "NULL.";
 
   int c2_addDC[] = {7, 5, 9, 15};
@@ -1159,9 +1159,9 @@ TEST(ProjectTests, Change_{_ITEM_}_included_advance) {
   testLinkedList(private_dataset[1].list, c2_addDC, 4);
   testLinkedList(private_dataset[2].list, c3, 2);
   EXPECT_TRUE(private_dataset[3].list == NULL)
-      << "The {_CONTAINER_} should be empty after removing the only item.";
+      << "The {{ container_name }} should be empty after removing the only item.";
 
-  result_{_ITEM_} = {_CONTAINER_}_change(private_dataset, 4, private_{_ITEM_}, 20, "D",
+  result_{{ item_name }} = {{ container_name }}_change(private_dataset, 4, private_{{ item_name }}, 20, "D",
                                 "Excellent", "Poor");
   int c1_update[] = {0};
   int c4_update[] = {6};
