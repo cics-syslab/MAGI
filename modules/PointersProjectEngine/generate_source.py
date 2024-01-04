@@ -2,7 +2,18 @@ import os
 import re
 import sys
 from jinja2 import Environment, FileSystemLoader
-from config import Config
+from .config import Config
+
+
+def generating():
+    from core.components.render import render_templates
+    from core.info import Directories
+    render_templates(
+        os.path.join(Directories.SRC_PATH, "modules", "PointersProjectEngine", "template"),
+        Config.__dict__,
+        os.path.join(Directories.WORK_DIR)
+    )
+
 
 def convert_template(template_content):
     # Replace template variables in the form {_VAR_} for Jinja double bracket reading

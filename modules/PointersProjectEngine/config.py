@@ -1,7 +1,3 @@
-# from core.managers import SettingManager
-import sys
-import os
-
 from dataclasses import dataclass, field
 from core.managers import SettingManager
 
