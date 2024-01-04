@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from core.managers import SettingManager
+from magi.managers import SettingManager
 
 @SettingManager.register
 @dataclass

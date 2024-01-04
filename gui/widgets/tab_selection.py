@@ -3,7 +3,7 @@ import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
-from core.managers import SettingManager
+from magi.managers import SettingManager
 from .selection import Selection
 from .tab_page import TabPage
 
@@ -28,7 +28,7 @@ class ModuleTab:
             return
         # set the enabled tab to the new tab 
         self.pointer[0][self.pointer[1]] = new_tab_name
-        from core.managers import AddonManager
+        from magi.managers import AddonManager
         AddonManager.enabled_module
 
         if new_tab_name not in self.tabs:
@@ -56,7 +56,7 @@ class PluginTab:
 
     def update(self, value):
         self.pointer[0][self.pointer[1]] = self.value = value
-        from core.managers import AddonManager
+        from magi.managers import AddonManager
         AddonManager.enabled_plugins
         for tab in value:
             if tab not in self.tabs.keys():

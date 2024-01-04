@@ -1,7 +1,7 @@
 import logging
 
-from core._private.singleton import lazy_singleton
-from core.common.gradescope import TestCase
+from magi._private.singleton import lazy_singleton
+from magi.common.gradescope import TestCase
 
 logging = logging.getLogger("TestManager")
 

@@ -3,9 +3,9 @@ import os
 import os.path as op
 from typing import Any
 
-from core._private.singleton import lazy_singleton
-from core.common.addon import Addon
-from core.info.directories import Directories
+from magi._private.singleton import lazy_singleton
+from magi.common.addon import Addon
+from magi.info.directories import Directories
 
 logging = logging.getLogger('AddonManager')
 
@@ -55,7 +55,7 @@ class AddonManager:
 
     @property
     def enabled_module(self) -> Any | None:
-        from core.managers import SettingManager
+        from magi.managers import SettingManager
         enabled_module_name = SettingManager.BaseSettings.enabled_module
         if not enabled_module_name:
             logging.debug("No enabled module")
@@ -72,7 +72,7 @@ class AddonManager:
 
     @property
     def enabled_plugins(self) -> list:
-        from core.managers import SettingManager
+        from magi.managers import SettingManager
         enabled_plugins_names = SettingManager.BaseSettings.enabled_plugins
         if not enabled_plugins_names:
             logging.debug("No enabled plugins")

@@ -10,8 +10,8 @@ def generate_documentation(file_path: str) -> None:
     : param file_path: The path to the file to write the documentation to.
     : return: None
     """
-    from core.managers import AddonManager
-    from core.managers import SettingManager
+    from magi.managers import AddonManager
+    from magi.managers import SettingManager
     docs = AddonManager.generate_documentation()
 
     if not docs:

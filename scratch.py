@@ -1,4 +1,4 @@
-from core.components.render import render_templates
+from magi.components.render import render_templates
 from scratch.jinja.config import Config
 
 context = Config().__dict__

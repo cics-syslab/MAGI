@@ -5,8 +5,8 @@ import os.path as op
 import shutil
 from pathlib import Path
 
-from core.info import Directories
-from core.managers import SettingManager
+from magi.info import Directories
+from magi.managers import SettingManager
 
 logging = logging.getLogger("Generator")
 
@@ -110,7 +110,7 @@ def generate_output(output_parent_dir: str = None) -> None:
 
     output_dir = create_output_dir(output_parent_dir)
 
-    from core.managers import AddonManager
+    from magi.managers import AddonManager
     AddonManager.generate()
     generate_autograder(output_dir)
 

@@ -6,9 +6,9 @@ from xml.dom import minidom
 
 import yaml
 
-from core.common import gradescope
-from core.common.gradescope import TestCase
-from core.managers import TestManager
+from magi.common import gradescope
+from magi.common.gradescope import TestCase
+from magi.managers import TestManager
 
 
 @dataclass
@@ -112,12 +112,12 @@ def grade_all(test_file_name: str) -> None:
     with open(test_file_name, 'r') as file:
         tests = yaml.load(file, Loader=yaml.FullLoader)
 
-    from core.info import Directories
+    from magi.info import Directories
     import logging
 
     TEMP_DIR = Directories.WORK_DIR / "gtest_temp"
     os.makedirs(TEMP_DIR, exist_ok=True)
-    from core.utils.code_runner import Popen
+    from magi.utils.code_runner import Popen
     # TODO: seperate Make
     Popen(["make"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=Directories.WORK_DIR.as_posix()).communicate()
     for test in tests['tests']:

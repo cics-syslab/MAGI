@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from core._private.singleton import overwrite_singleton
+from magi._private.singleton import overwrite_singleton
 
 
 @overwrite_singleton

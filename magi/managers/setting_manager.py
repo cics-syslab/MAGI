@@ -7,7 +7,7 @@ from dataclasses import is_dataclass, dataclass
 import dataconf
 
 logging = logging.getLogger('SettingManager')
-from core._private.singleton import lazy_singleton
+from magi._private.singleton import lazy_singleton
 
 
 def load_or_create(filepath: str, cls):
@@ -40,7 +40,7 @@ def load_or_create(filepath: str, cls):
 class SettingManager:
     def __init__(self):
 
-        from core._private.base_settings import BaseSettings
+        from magi._private.base_settings import BaseSettings
         self.addon_settings = {}
         self.addon_settings_file = {}
         os.makedirs("settings", exist_ok=True)

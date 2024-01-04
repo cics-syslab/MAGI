@@ -168,7 +168,7 @@ class ThreadTest:
         for resource in config.config_json['resource']:
             resource_records.append(ResourceRecord(resource))
 
-        from core.info.directories import Directories
+        from magi.info.directories import Directories
         exec_name = config.exec_name
         # TODO: Check return code so we could know the program has some problem(in case no output)
         # so the pipe will read in real-time instead of all lines at once

@@ -5,8 +5,8 @@ import subprocess
 import threading
 from time import sleep
 
-from core.info.directories import Directories
-from core.managers import TestManager
+from magi.info.directories import Directories
+from magi.managers import TestManager
 from . import Config
 from .server import Server
 

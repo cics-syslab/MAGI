@@ -1,4 +1,4 @@
-from core.managers import SettingManager
+from magi.managers import SettingManager
 
 
 def register_settings(cls, filepath=None):

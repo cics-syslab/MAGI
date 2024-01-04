@@ -35,13 +35,13 @@ def main():
     elif args.test:
         pass
     elif args.autograder:
-        from core.components.grader import grade_submission
+        from magi.components.grader import grade_submission
         grade_submission()
     elif args.mock:
         pass
     else:
         start_gui()
-        from core.managers import SettingManager
+        from magi.managers import SettingManager
         SettingManager.save_settings()
 
 

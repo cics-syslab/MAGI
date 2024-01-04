@@ -1,6 +1,6 @@
 import os
 
-from core.info.directories import Directories
+from magi.info.directories import Directories
 from .config import Config, CompileMethod
 
 
