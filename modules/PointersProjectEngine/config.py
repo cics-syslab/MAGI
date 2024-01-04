@@ -2,12 +2,6 @@
 import sys
 import os
 
-# Add the path to the root directory (MAGI) to sys.path so that the 
-# 'core' module can be found.
-current_dir = os.path.dirname(os.path.abspath(__file__))
-root_dir = os.path.abspath(os.path.join(current_dir, "..", ".."))
-sys.path.append(root_dir)
-
 from dataclasses import dataclass, field
 from core.managers import SettingManager
 
