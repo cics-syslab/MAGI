@@ -3,3 +3,6 @@
 # from . import components
 # from . import info
 # from . import managers
+import pluggy
+
+hookimpl = pluggy.HookimplMarker("magi")

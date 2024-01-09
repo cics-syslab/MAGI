@@ -61,6 +61,8 @@ class Addon:
 
             self.module = importlib.import_module(f"{self.category}.{self.name}")
             self.loaded = True
+            from magi.managers import AddonManager
+            AddonManager.plugin_manager.register(self.module)
             assert (self.module is not None)
         except Exception as e:
             logging.error(f"Error importing {self.name}: {e}", exc_info=True)

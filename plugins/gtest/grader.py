@@ -166,7 +166,8 @@ def grade_all(test_file_name: str) -> None:
                 test_case.pass_test(xml_test_case.failed_msg)
             TestManager.add_test(test_case)
 
-
+from magi._private.hookspecs import hookimpl
+@hookimpl
 def grade():
     from .config import Config
     grade_all(Config.test_list_file)

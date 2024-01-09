@@ -3,8 +3,8 @@ import re
 import sys
 from jinja2 import Environment, FileSystemLoader
 from .config import Config
-
-
+from magi._private.hookspecs import hookimpl
+@hookimpl
 def generating():
     from magi.components.render import render_templates
     from magi.info import Directories
