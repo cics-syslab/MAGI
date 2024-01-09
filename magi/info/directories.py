@@ -12,7 +12,7 @@ class Directories:
     # MAGI folder, /autograder/source/
 
     TEMPLATE_DIR: Path = SRC_PATH / "static" / "GRADESCOPE_TEMPLATE"
-    CORE_DIR: Path = SRC_PATH / "core"
+    CORE_DIR: Path = SRC_PATH / "magi"
     LOGS_DIR: Path = SRC_PATH / "logs"
     SETTINGS_DIR: Path = SRC_PATH / "settings"
 
