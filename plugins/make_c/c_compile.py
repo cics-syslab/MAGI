@@ -1,6 +1,6 @@
 import os
 
-from core.info.directories import Directories
+from magi.info.directories import Directories
 from .config import Config, CompileMethod
 
 
@@ -31,7 +31,9 @@ def compile_code():
     # if rtn != 0:
     #     TestManager.fail_all("Compile Failed")
 
-
+import pluggy
+hookimpl = pluggy.HookimplMarker("magi")
+@hookimpl
 def before_grading():
     compile_code()
 

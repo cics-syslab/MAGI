@@ -2,10 +2,12 @@ import logging
 import os
 import os.path as op
 from typing import Any
+import pluggy
 
-from core._private.singleton import lazy_singleton
-from core.common.addon import Addon
-from core.info.directories import Directories
+from magi._private.singleton import lazy_singleton
+from magi.common.addon import Addon
+from magi.info.directories import Directories
+
 
 logging = logging.getLogger('AddonManager')
 
@@ -37,9 +39,14 @@ def list_available_addons(subdirectory: str) -> list:
     return available
 
 
+
 @lazy_singleton
 class AddonManager:
     def __init__(self):
+        self.plugin_manager = pluggy.PluginManager("magi")
+        from magi._private import hookspecs
+        self.plugin_manager.add_hookspecs(hookspecs)
+        
         self.available_modules = list_available_addons("modules")
         self.available_plugins = list_available_addons("plugins")
         self._name_to_modules = {addon.name: addon for addon in self.available_modules}
@@ -55,7 +62,7 @@ class AddonManager:
 
     @property
     def enabled_module(self) -> Any | None:
-        from core.managers import SettingManager
+        from magi.managers import SettingManager
         enabled_module_name = SettingManager.BaseSettings.enabled_module
         if not enabled_module_name:
             logging.debug("No enabled module")
@@ -72,7 +79,7 @@ class AddonManager:
 
     @property
     def enabled_plugins(self) -> list:
-        from core.managers import SettingManager
+        from magi.managers import SettingManager
         enabled_plugins_names = SettingManager.BaseSettings.enabled_plugins
         if not enabled_plugins_names:
             logging.debug("No enabled plugins")
@@ -116,12 +123,17 @@ class AddonManager:
         pass
 
     def generate(self):
-        self.run_attr_for_all("generating")
+        # self.run_attr_for_all("generating")
+        self.plugin_manager.hook.generating()
+    def generate_documentation(self):
+        # return self.run_attr_for_all("generate_documentation")
+        return self.plugin_manager.hook.generate_documentation()
 
     def grade(self):
-        self.run_attr_for_all("before_grading")
-        self.run_attr_for_all("grade")
-        self.run_attr_for_all("after_grading")
-
-    def generate_documentation(self):
-        return self.run_attr_for_all("generate_documentation")
+        # self.run_attr_for_all("before_grading")
+        # self.run_attr_for_all("grade")
+        # self.run_attr_for_all("after_grading")
+        self.plugin_manager.hook.before_grading()
+        self.plugin_manager.hook.grade()
+        self.plugin_manager.hook.after_grading()
+        

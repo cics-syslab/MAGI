@@ -1,4 +1,4 @@
-from core.managers import SettingManager, AddonManager
+from magi.managers import SettingManager, AddonManager
 from .. import widgets
 from ..widgets import ModuleTab, PluginTab
 

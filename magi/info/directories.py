@@ -2,7 +2,7 @@ import os.path as op
 from pathlib import Path
 from dataclasses import dataclass
 
-from core._private.singleton import overwrite_singleton
+from magi._private.singleton import overwrite_singleton
 
 
 @overwrite_singleton
@@ -12,7 +12,7 @@ class Directories:
     # MAGI folder, /autograder/source/
 
     TEMPLATE_DIR: Path = SRC_PATH / "static" / "GRADESCOPE_TEMPLATE"
-    CORE_DIR: Path = SRC_PATH / "core"
+    CORE_DIR: Path = SRC_PATH / "magi"
     LOGS_DIR: Path = SRC_PATH / "logs"
     SETTINGS_DIR: Path = SRC_PATH / "settings"
 

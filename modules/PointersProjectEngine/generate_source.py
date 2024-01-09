@@ -3,11 +3,11 @@ import re
 import sys
 from jinja2 import Environment, FileSystemLoader
 from .config import Config
-
-
+from magi._private.hookspecs import hookimpl
+@hookimpl
 def generating():
-    from core.components.render import render_templates
-    from core.info import Directories
+    from magi.components.render import render_templates
+    from magi.info import Directories
     render_templates(
         os.path.join(Directories.SRC_PATH, "modules", "PointersProjectEngine", "template"),
         Config.__dict__,

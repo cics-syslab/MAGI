@@ -1,7 +1,7 @@
 import dataconf
 
-from core._private.singleton import lazy_singleton
-from core.common.gradescope import Result
+from magi._private.singleton import lazy_singleton
+from magi.common.gradescope import Result
 
 
 @lazy_singleton
@@ -17,7 +17,7 @@ class ResultManager:
         :return: None
         """
 
-        from core.managers import TestManager
+        from magi.managers import TestManager
         self._result.output += TestManager.output
         # self._result.extra_data = {"testing": [1, 2, 3]}
         for test in TestManager.test_cases:

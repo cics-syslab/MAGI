@@ -59,9 +59,9 @@ def grade_submission():
     """
     Start the grading process
     """
-    from core.managers import SettingManager
-    from core.info.directories import Directories
-    from core.managers import AddonManager, TestManager
+    from magi.managers import SettingManager
+    from magi.info.directories import Directories
+    from magi.managers import AddonManager, TestManager
 
     submission_files = SettingManager.BaseSettings.submission_files
     submission_dir = Directories.SUBMISSION_DIR
@@ -82,7 +82,7 @@ def grade_submission():
     AddonManager.grade()
 
     logging.debug("Finished grading, outputting result")
-    from core.managers import ResultManager
+    from magi.managers import ResultManager
     ResultManager.output_result(Directories.RESULT_JSON_PATH)
 
 

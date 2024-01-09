@@ -5,8 +5,8 @@ import os.path as op
 import shutil
 from pathlib import Path
 
-from core.info import Directories
-from core.managers import SettingManager
+from magi.info import Directories
+from magi.managers import SettingManager
 
 logging = logging.getLogger("Generator")
 
@@ -74,7 +74,7 @@ def generate_autograder(output_dir: str | Path) -> None:
         os.makedirs(output_source_dir / empty_dir, exist_ok=True)
         Path.touch(output_source_dir / empty_dir / '.gitkeep', exist_ok=True)
 
-    clone_dirs = ['core', 'settings', 'workdir']
+    clone_dirs = ['magi', 'settings', 'workdir']
     for clone_dir in clone_dirs:
         shutil.copytree(Directories.SRC_PATH / clone_dir, output_source_dir / clone_dir)
 
@@ -110,7 +110,7 @@ def generate_output(output_parent_dir: str = None) -> None:
 
     output_dir = create_output_dir(output_parent_dir)
 
-    from core.managers import AddonManager
+    from magi.managers import AddonManager
     AddonManager.generate()
     generate_autograder(output_dir)
 
