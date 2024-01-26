@@ -3,6 +3,7 @@ import logging
 import os.path as op
 from dataclasses import dataclass
 import yaml
+import dacite
 
 
 @dataclass
@@ -10,8 +11,8 @@ class AddonInfo:
     name: str = ""
     documentation: str = ""
     # TODO: Implement dependencies
-    #dependencies: list = field(default_factory=list)
-    version: str|float|int = ""
+    # dependencies: list = field(default_factory=list)
+    version: str = ""
     description: str = ""
     author: str = ""
     author_email: str = ""
@@ -28,19 +29,19 @@ class Addon:
         self.category = category
         self.root_dir = root_dir
         self.loaded = False
-        self.module = None
+        self.imported_object = None
         self.errored = False
         self.load_information()
         # self.load_documentation()
 
-    # TODO: load with some library instead, dataconf has too many issues
     def load_information(self) -> bool:
         if not op.isfile(op.join(self.root_dir, "info.yaml")):
             return False
         logging.info(f"{self.name} has info.yaml with path {op.join(self.root_dir, 'info.yaml')}"
                      f"Loading from {op.join(self.root_dir, 'info.yaml')}")
         try:
-            self.info = AddonInfo(**yaml.load(open(op.join(self.root_dir, "info.yaml"), "r", encoding="utf-8"), Loader=yaml.FullLoader))
+            self.info = dacite.from_dict(AddonInfo, yaml.safe_load(
+                open(op.join(self.root_dir, "info.yaml"), "r", encoding="utf-8")))
 
         except Exception as e:
             logging.error(f"Error loading info.yaml for {self.name}: {e}")
@@ -59,14 +60,14 @@ class Addon:
         try:
             logging.debug(f"Importing {self.name} from {self.category}")
 
-            self.module = importlib.import_module(f"{self.category}.{self.name}")
+            self.imported_object = importlib.import_module(f"{self.category}.{self.name}")
             self.loaded = True
-            assert (self.module is not None)
+            assert (self.imported_object is not None)
         except Exception as e:
             logging.error(f"Error importing {self.name}: {e}", exc_info=True)
             self.loaded = False
             self.errored = True
-            return None
+            return False
         logging.debug(f"Loaded addon {self.name} from {self.root_dir}")
         return self.loaded
 

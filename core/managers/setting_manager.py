@@ -4,7 +4,7 @@ import os
 import os.path as op
 from dataclasses import is_dataclass, dataclass
 
-import dataconf
+from core.utils.serialization import dump_dataclass_to_file, load_dataclass_from_file
 
 logging = logging.getLogger('SettingManager')
 from core._private.singleton import lazy_singleton
@@ -18,21 +18,21 @@ def load_or_create(filepath: str, cls):
     :param cls: The dataclass to load
     :return: The loaded or created instance
     """
+
     try:
-        instance = dataconf.load(filepath, cls)
+        instance = load_dataclass_from_file(cls, filepath)
         logging.info(f"Setting file loaded from {filepath}: {instance}")
     except FileNotFoundError:
         logging.warning(f"Setting file not exists, created at {filepath}")
         instance = cls()
-        dataconf.dump(filepath, instance, "json")
+        dump_dataclass_to_file(instance, filepath)
     except Exception as e:
-        logging.error("", exc_info=True)
         logging.error(f"Error loading setting file from {filepath}: {e}"
                       "created a new instance, the old file is renamed to "
-                      "{filepath}.old")
+                      f"{filepath}.old", exc_info=True)
         os.rename(filepath, filepath + ".old")
         instance = cls()
-        dataconf.dump(filepath, instance, "json")
+        dump_dataclass_to_file(instance, filepath)
     return instance
 
 
@@ -83,6 +83,6 @@ class SettingManager:
         return self.addon_settings[addon_name]
 
     def save_settings(self) -> None:
-        dataconf.dump(op.join("settings", "BaseSettings.json"), self.BaseSettings, "json")
+        dump_dataclass_to_file(self.BaseSettings, op.join("settings", "BaseSettings.json"))
         for name, instance in self.addon_settings.items():
-            dataconf.dump(self.addon_settings_file[name], instance, "json")
+            dump_dataclass_to_file(instance, self.addon_settings_file[name])

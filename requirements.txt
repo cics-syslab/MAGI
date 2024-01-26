@@ -1,3 +1,4 @@
-dataconf
-
-ttkbootstrap
+jinja2
+streamlit
+dacite
+pluggy

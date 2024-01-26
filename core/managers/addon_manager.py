@@ -37,7 +37,6 @@ def list_available_addons(subdirectory: str) -> list:
     return available
 
 
-@lazy_singleton
 class AddonManager:
     def __init__(self):
         self.available_modules = list_available_addons("modules")
@@ -54,7 +53,7 @@ class AddonManager:
         return list(module.name for module in self.available_modules if not module.errored)
 
     @property
-    def enabled_module(self) -> Any | None:
+    def enabled_module(self) -> Any:
         from core.managers import SettingManager
         enabled_module_name = SettingManager.BaseSettings.enabled_module
         if not enabled_module_name:
@@ -96,7 +95,7 @@ class AddonManager:
             if addon is None:
                 continue
 
-            module = addon.module
+            module = addon.imported_object
             if not module:
                 continue
             func = getattr(module, attr, None)

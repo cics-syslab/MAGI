@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import os
 import os.path as op
@@ -82,8 +84,7 @@ def grade_submission():
     AddonManager.grade()
 
     logging.debug("Finished grading, outputting result")
-    from core.managers import ResultManager
-    ResultManager.output_result(Directories.RESULT_JSON_PATH)
+    TestManager.output_result(Directories.RESULT_JSON_PATH)
 
 
 if __name__ == "__main__":

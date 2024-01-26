@@ -48,10 +48,24 @@ class TestManager:
     def get_testcae_by_name(self, name: str):
         return self.test_cases_by_name.get(name)
 
-    def print_results(self):
-        return str(self)
+    def _output_result(self, result_path: str) -> None:
+        """
+        Write the result to the result file
 
-    def __str__(self):
-        _dict = {}
-        return str(_dict)
+        :param result_path: The path to the result file
+        :return: None
+        """
+        from core.common.gradescope import Result
+        from core.utils.serialization import dump_dataclass_to_file
+        result = Result()
+        result += self.output
+        for test in self.test_cases:
+            result.tests.append(test)
+        dump_dataclass_to_file(result, result_path)
+    # def print_results(self):
+    #     return str(self)
+
+    # def __str__(self):
+    #     _dict = {}
+    #     return str(_dict)
 
