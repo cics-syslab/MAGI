@@ -112,7 +112,7 @@ def grade_all(test_file_name: str) -> None:
     with open(test_file_name, 'r') as file:
         tests = yaml.load(file, Loader=yaml.FullLoader)
 
-    from core.info import Directories
+    from core.managers.info_manager import Directories
     import logging
 
     TEMP_DIR = Directories.WORK_DIR / "gtest_temp"

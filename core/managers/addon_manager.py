@@ -1,23 +1,30 @@
-import logging
+from __future__ import annotations
+
 import os
 import os.path as op
-from typing import Any
+from typing import Any, List
 
-from core._private.singleton import lazy_singleton
-from core.common.addon import Addon
-from core.info.directories import Directories
+from core.common.addon import Module, Plugin
+from core.managers.info_manager import Directories
+import logging
 
 logging = logging.getLogger('AddonManager')
+import pluggy
+
+pm = pluggy.PluginManager("magi")
+from core.common.addon import AddonSpec
+
+pm.add_hookspecs(AddonSpec)
 
 
-def list_available_addons(subdirectory: str) -> list:
+def list_available_addons(addon_category: str) -> list:
     """
     List all available addons in the given subdirectory
 
-    :param subdirectory: The subdirectory to search for addons, either "modules" or "plugins"
+    :param addon_category: The subdirectory to search for addons, either "modules" or "plugins"
     :return: A list of Addon objects
     """
-    searching_dir = op.join(Directories.SRC_PATH, subdirectory)
+    searching_dir = op.join(Directories.SRC_PATH, addon_category)
     dirs = os.listdir(searching_dir)
     available = []
 
@@ -25,8 +32,15 @@ def list_available_addons(subdirectory: str) -> list:
         if not op.exists(op.join(searching_dir, sub_dir, "info.yaml")):
             logging.warning(f"Skipping {sub_dir} because info.yaml does not exist")
             continue
+        if addon_category == "modules":
+            from core.common.addon import Module as Addon
+        elif addon_category == "plugins":
+            from core.common.addon import Plugin as Addon
+        else:
+            raise ValueError(f"Invalid addon category {addon_category}")
+
         try:
-            addon = Addon(sub_dir, subdirectory, op.join(searching_dir, sub_dir))
+            addon = Addon(sub_dir, op.join(searching_dir, sub_dir))
             available.append(addon)
             logging.info(f"Found addon {addon.name} in {addon.root_dir}")
 
@@ -37,90 +51,129 @@ def list_available_addons(subdirectory: str) -> list:
     return available
 
 
-class AddonManager:
-    def __init__(self):
-        self.available_modules = list_available_addons("modules")
-        self.available_plugins = list_available_addons("plugins")
-        self._name_to_modules = {addon.name: addon for addon in self.available_modules}
-        self._name_to_plugins = {addon.name: addon for addon in self.available_plugins}
+available_modules = list_available_addons("modules")
+available_plugins = list_available_addons("plugins")
+_name_to_modules = {addon.name: addon for addon in available_modules}
+_name_to_plugins = {addon.name: addon for addon in available_plugins}
+enabled_module = None
+enabled_plugins = []
 
-    @property
-    def available_plugin_names(self):
-        return list(plugin.name for plugin in self.available_plugins if not plugin.errored)
 
-    @property
-    def available_module_names(self):
-        return list(module.name for module in self.available_modules if not module.errored)
+def get_available_plugin_names():
+    return list(plugin.name for plugin in available_plugins if not plugin.errored)
 
-    @property
-    def enabled_module(self) -> Any:
-        from core.managers import SettingManager
-        enabled_module_name = SettingManager.BaseSettings.enabled_module
-        if not enabled_module_name:
-            logging.debug("No enabled module")
-            return None
-        if enabled_module_name not in self._name_to_modules.keys():
-            logging.error(f"Module {SettingManager.BaseSettings.enabled_module} not found")
-            return None
-        if self._name_to_modules[SettingManager.BaseSettings.enabled_module].load():
-            return self._name_to_modules[SettingManager.BaseSettings.enabled_module]
 
-        logging.error(f"Error loading module {SettingManager.BaseSettings.enabled_module}")
-        SettingManager.BaseSettings.enabled_module = "None"
+def get_available_module_names():
+    return list(module.name for module in available_modules if not module.errored)
+
+
+def unload_addon(addon):
+    pm.unregister(addon.imported_object)
+    addon.unload()
+    from core.managers import SettingManager
+    SettingManager.save_settings_for(addon.name)
+
+
+def update_enabled_module() -> Module | None:
+    from core.managers import SettingManager
+    new_enabled_module_name = SettingManager.BaseSettings.enabled_module
+
+    global enabled_module
+    # If unchanged, return the current enabled module
+    if enabled_module is not None and enabled_module.name == new_enabled_module_name:
+        return enabled_module
+
+    # unload the current enabled module
+    if enabled_module:
+        unload_addon(enabled_module)
+    enabled_module = None
+
+    if not new_enabled_module_name or new_enabled_module_name == "None":
+        logging.debug("No enabled module")
         return None
 
-    @property
-    def enabled_plugins(self) -> list:
-        from core.managers import SettingManager
-        enabled_plugins_names = SettingManager.BaseSettings.enabled_plugins
-        if not enabled_plugins_names:
-            logging.debug("No enabled plugins")
-            return []
-        enabled_plugins = []
-        for plugin_name in enabled_plugins_names:
-            if plugin_name not in self._name_to_plugins.keys():
-                logging.error(f"Plugin {plugin_name} not found")
-                continue
-            if self._name_to_plugins[plugin_name].load():
-                enabled_plugins.append(self._name_to_plugins[plugin_name])
+    if new_enabled_module_name not in _name_to_modules.keys():
+        logging.error(f"Module {SettingManager.BaseSettings.enabled_module} not found")
+        return None
+
+    if _name_to_modules[SettingManager.BaseSettings.enabled_module].load():
+        enabled_module = _name_to_modules[SettingManager.BaseSettings.enabled_module]
+        pm.register(enabled_module.imported_object)
+        return enabled_module
+
+    logging.error(f"Error loading module {SettingManager.BaseSettings.enabled_module}")
+    raise ValueError(f"Error loading module {SettingManager.BaseSettings.enabled_module}")
+    SettingManager.BaseSettings.enabled_module = "None"
+    enabled_module = None
+    return None
+
+
+def update_enabled_plugins() -> List[Plugin]:
+    from core.managers import SettingManager
+    new_enabled_plugin_names = SettingManager.BaseSettings.enabled_plugins
+
+    global enabled_plugins
+    # Convert enabled_plugins names to a set for easier comparison
+    current_enabled_plugin_names = {plugin.name for plugin in enabled_plugins}
+
+    # Find plugins to unload (those that are currently enabled but not in the new list)
+    plugins_to_unload = current_enabled_plugin_names - set(new_enabled_plugin_names)
+    for plugin_name in plugins_to_unload:
+        plugin_to_unload = _name_to_plugins[plugin_name]
+        if plugin_to_unload:
+            unload_addon(plugin_to_unload)
+            enabled_plugins.remove(plugin_to_unload)
+
+    # Find and load new plugins (those that are in the new list but not currently enabled)
+    for plugin_name in new_enabled_plugin_names:
+        if plugin_name not in current_enabled_plugin_names:
+            if plugin_name in _name_to_plugins and _name_to_plugins[plugin_name].load():
+                pm.register(_name_to_plugins[plugin_name].imported_object)
+                enabled_plugins.append(_name_to_plugins[plugin_name])
             else:
                 logging.error(f"Error loading plugin {plugin_name}")
                 SettingManager.BaseSettings.enabled_plugins.remove(plugin_name)
-        return enabled_plugins
 
-    def run_attr_for_all(self, attr):
-        all_addon = [self.enabled_module] + self.enabled_plugins
-        rtn = []
-        for addon in all_addon:
-            if addon is None:
-                continue
+    return enabled_plugins
 
-            module = addon.imported_object
-            if not module:
-                continue
-            func = getattr(module, attr, None)
-            if func:
-                logging.info(f"Running {attr} for {addon.name}")
-                try:
-                    rtn.append(func())
-                except Exception as e:
-                    logging.error(f"Error running {attr} for {addon.name}: {e}", exc_info=True)
 
-            else:
-                logging.debug(f"Addon {addon.name} does not have {attr},skipped")
-        return rtn
+# def run_attr_for_all(attr):
+#     all_addon = [get_enabled_module()] + get_enabled_plugins()
+#     rtn = []
+#     for addon in all_addon:
+#         if addon is None:
+#             continue
+#
+#         module = addon.imported_object
+#         if not module:
+#             continue
+#         func = getattr(module, attr, None)
+#         if func:
+#             logging.info(f"Running {attr} for {addon.name}")
+#             try:
+#                 rtn.append(func())
+#             except Exception as e:
+#                 logging.error(f"Error running {attr} for {addon.name}: {e}", exc_info=True)
+#
+#         else:
+#             logging.debug(f"Addon {addon.name} does not have {attr},skipped")
+#     return rtn
 
-    # TODO: implement setup for each addon
-    def setup(self):
-        pass
 
-    def generate(self):
-        self.run_attr_for_all("generating")
+# TODO: implement setup for each addon
+def setup(self):
+    pass
 
-    def grade(self):
-        self.run_attr_for_all("before_grading")
-        self.run_attr_for_all("grade")
-        self.run_attr_for_all("after_grading")
 
-    def generate_documentation(self):
-        return self.run_attr_for_all("generate_documentation")
+def generate():
+    return pm.hook.generate()
+
+
+def grade():
+    pm.hook.before_grading()
+    pm.hook.grade()
+    pm.hook.after_grading()
+
+
+def generate_documentation():
+    return pm.hook.generate_documentation()

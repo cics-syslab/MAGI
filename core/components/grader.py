@@ -62,7 +62,7 @@ def grade_submission():
     Start the grading process
     """
     from core.managers import SettingManager
-    from core.info.directories import Directories
+    from core.managers.info_manager import Directories
     from core.managers import AddonManager, TestManager
 
     submission_files = SettingManager.BaseSettings.submission_files

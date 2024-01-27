@@ -7,7 +7,7 @@ import os.path as op
 import shutil
 from pathlib import Path
 
-from core.info import Directories
+from core.managers.info_manager import Directories
 from core.managers import SettingManager
 
 logging = logging.getLogger("Generator")

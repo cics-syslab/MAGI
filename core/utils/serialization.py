@@ -12,7 +12,7 @@ def dump_dataclass_to_file(instance, filepath):
     :param filepath: The path to the file
     :return: None
     """
-    json.dump(asdict(instance), open(filepath, "w", encoding="utf-8"), indent=4)
+    json.dump(asdict(instance), open(filepath, "w+", encoding="utf-8"), indent=4)
 
 
 def load_dataclass_from_file(cls, filepath):

@@ -5,7 +5,7 @@ import subprocess
 import threading
 from time import sleep
 
-from core.info.directories import Directories
+from core.managers.info_manager import Directories
 from core.managers import TestManager
 from . import Config
 from .server import Server
