@@ -1,0 +1,1 @@
+from .minimal_module_example import MinimalModuleExample2
