@@ -1,13 +1,9 @@
 from streamlit import session_state
-import sys
-import os
 from .addons import update_pages
 import streamlit as st
 
 
 def init_session():
-    if os.getcwd() not in sys.path:
-        sys.path.append(os.getcwd())
     if not hasattr(session_state, "ManagerLoaded") or not session_state.ManagerLoaded:
         session_state["ManagerLoaded"] = True
         from core.managers import AddonManager

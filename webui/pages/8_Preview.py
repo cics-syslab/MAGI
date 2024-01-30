@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit import session_state
 
-from st.functions.session import init_session
+from webui.functions.session import init_session
 
 init_session()
 SettingManager = session_state.SettingManager

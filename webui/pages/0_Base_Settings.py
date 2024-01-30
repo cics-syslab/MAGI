@@ -1,8 +1,8 @@
 import streamlit as st
 from streamlit import session_state
 
-from st.functions.common_field import generate_ui_for_dataclass
-from st.functions.session import init_session
+from webui.functions.common_field import generate_ui_for_dataclass
+from webui.functions.session import init_session
 
 init_session()
 SettingManager = session_state.SettingManager
@@ -18,7 +18,7 @@ def update_addons():
     AddonManager.update_enabled_module()
     AddonManager.update_enabled_plugins()
     SettingManager.save_settings()
-    from st.functions.addons import update_pages
+    from webui.functions.addons import update_pages
     update_pages()
 
 

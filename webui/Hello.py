@@ -3,13 +3,13 @@ from streamlit import session_state
 import sys
 import os
 
-if os.getcwd() not in sys.path:
-    sys.path.append(os.getcwd())
-
 st.set_page_config(
     page_title="Hello",
     page_icon="👋",
 )
+from functions.session import init_session
+
+init_session()
 
 st.write("# Welcome to Streamlit! 👋")
 
@@ -34,9 +34,7 @@ st.markdown(
 
 st.write(os.getcwd())
 
-from functions.session import init_session
 
-init_session()
 
 AddonManager = session_state.AddonManager
 

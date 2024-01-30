@@ -93,6 +93,12 @@ def save_settings_for(addon_name: str) -> None:
     dump_dataclass_to_file(addon_settings[addon_name], addon_settings_file[addon_name])
 
 
+def reload_settings_for(addon_name: str) -> None:
+    if addon_name not in addon_settings.keys():
+        raise ValueError(f"Addon {addon_name} not registered")
+    addon_settings[addon_name] = load_or_create(addon_settings_file[addon_name], addon_settings[addon_name].__class__)
+
+
 import atexit
 
 atexit.register(save_settings)
