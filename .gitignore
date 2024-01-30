@@ -10,4 +10,8 @@ venv-min/
 workdir/
 scratch/
 
+# Ignore dynamic pages
+webui/pages/1_*.py
+webui/pages/2_*.py
+
 .vscode/settings.json
