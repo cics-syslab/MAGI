@@ -68,7 +68,7 @@ def generate_autograder(output_dir: str | Path) -> None:
         output_dir = Path(output_dir)
 
     # Since the autograder depends on the framework, copy the framework core, enabled module, and enabled plugins to it.
-    shutil.copytree(Directories.TEMPLATE_DIR, output_dir)
+    # shutil.copytree(Directories.TEMPLATE_DIR, output_dir)
     output_source_dir = output_dir / "source"
 
     empty_dirs = ['logs', 'modules', 'plugins', ]
@@ -110,7 +110,10 @@ def generate_output(output_parent_dir: str = None) -> None:
     # Save the settings before generating the output, useful for GUI
     SettingManager.save_settings()
 
-    output_dir = create_output_dir(output_parent_dir)
+    # output_dir = create_output_dir(output_parent_dir)
+    output_dir = Path(output_parent_dir)
+
+    shutil.rmtree(output_dir / "source", ignore_errors=True)
 
     from core.managers import AddonManager
     AddonManager.generate()
@@ -120,10 +123,9 @@ def generate_output(output_parent_dir: str = None) -> None:
     generate_documentation(op.join(output_dir, "documentation.md"))
 
     # Open the output directory if on Windows
-    try:
-        os.startfile(output_dir)
-    except AttributeError:
-        pass
-    # TODO: add support for other OS
-    # TODO: add option to skip opening the output directory
+    # try:
+    #     os.startfile(output_dir)
+    # except AttributeError:
+    #     pass
+
     # TODO: Pop window to notify user that output is generated
