@@ -58,11 +58,13 @@ def generate_ui_for_dataclass(dataclass_obj):
                             args=(dataclass_obj, field_name, field_id), key=field_id, help=field.metadata.get("help"))
         elif field_type == str:
             if field.metadata.get("text_area"):
-                st.text_area(f"{field_display_name} (str)", on_change=update_data,
-                             args=(dataclass_obj, field_name, field_id), key=field_id, help=field.metadata.get("help"))
+                st.text_area(f"{field_display_name} (str)", value=getattr(dataclass_obj, field_name, ""), key=field_id,
+                             on_change=update_data, args=(dataclass_obj, field_name, field_id),
+                             help=field.metadata.get("help"))
             else:
-                st.text_input(f"{field_display_name} (str)", on_change=update_data,
-                              args=(dataclass_obj, field_name, field_id), key=field_id, help=field.metadata.get("help"))
+                st.text_input(f"{field_display_name} (str)", value=getattr(dataclass_obj, field_name, ""), key=field_id,
+                              on_change=update_data, args=(dataclass_obj, field_name, field_id),
+                              help=field.metadata.get("help"))
 
         elif field_type == bool:
             st.checkbox(f"{field_display_name} (bool)", on_change=update_data,
@@ -87,14 +89,16 @@ def generate_ui_for_dataclass_list(parent_dataclass, parent_field_name, field_id
 
     def add_object_callback():
         st.session_state.my_objects.append(new_object)
+        update_to_parent()
 
     def remove_object_callback(index):
         st.session_state.my_objects.pop(index)
+        update_to_parent()
 
     for i, obj in enumerate(list_object):
         with st.container(border=True):
             generate_ui_for_dataclass(obj)
-            st.button(f"X", on_click=remove_object_callback(), args=(i,))
+            st.button(f"X", on_click=remove_object_callback, args=(i,))
     with st.container(border=False):
         generate_ui_for_dataclass(new_object)
         st.button(f"+", on_click=add_object_callback)

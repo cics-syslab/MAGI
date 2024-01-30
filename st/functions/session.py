@@ -21,7 +21,7 @@ def init_session():
         session_state["InfoManager"] = InfoManager
 
     update_pages()
-
+    session_state["SettingManager"].save_settings()
     st.markdown(
         r"""
         <style>

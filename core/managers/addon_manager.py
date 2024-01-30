@@ -102,9 +102,10 @@ def update_enabled_module() -> Module | None:
         return enabled_module
 
     logging.error(f"Error loading module {SettingManager.BaseSettings.enabled_module}")
-    raise ValueError(f"Error loading module {SettingManager.BaseSettings.enabled_module}")
+    # raise ValueError(f"Error loading module {SettingManager.BaseSettings.enabled_module}")
     SettingManager.BaseSettings.enabled_module = "None"
     enabled_module = None
+
     return None
 
 
@@ -166,7 +167,8 @@ def setup(self):
 
 
 def generate():
-    return pm.hook.generate()
+    # print(dir(pm.hook))
+    return pm.hook.generating()
 
 
 def grade():

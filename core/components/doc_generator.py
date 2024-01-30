@@ -28,11 +28,11 @@ def generate_documentation(file_path: str) -> None:
 
 def replace_template(template: str, field_data: dict) -> str:
     """
-    Replace the template fields in the given template string with the values in the given dictionary.
+    Replace the templates fields in the given templates string with the values in the given dictionary.
 
-    : param template: The template string to replace the fields in.
+    : param templates: The templates string to replace the fields in.
     : param field_data: The dictionary containing the values to replace the fields with.
-    : return: The template string with the fields replaced.
+    : return: The templates string with the fields replaced.
     """
 
     result = re.search(r'\{_(.*?)_\}', template)
