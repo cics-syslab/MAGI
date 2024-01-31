@@ -13,7 +13,7 @@ test_cases_by_name = {}
 anonymous_counter: int = 0
 
 
-def append_output(msg: str):
+def output_global_message(msg: str):
     global output
     output += "\n" + msg
     logging.info("Test output: " + msg)
@@ -39,15 +39,16 @@ def new_test(*args, **kwargs):
     return add_test(TestCase(*args, **kwargs))
 
 
-def fail_all(self, msg: str):
-    self.append_output(msg)
-    for test_case in self.test_cases:
+def fail_all(msg: str):
+    global score
+    output_global_message(msg)
+    for test_case in test_cases:
         test_case.score = 0
         test_case.status = "failed"
-    self.score = 0
+    score = 0
 
 
-def get_testcae_by_name(name: str):
+def get_testcase_by_name(name: str):
     return test_cases_by_name.get(name)
 
 
@@ -66,10 +67,3 @@ def output_result(result_path: str) -> None:
     for test in test_cases:
         result.tests.append(test)
     dump_dataclass_to_file(result, result_path)
-
-# def print_results(self):
-#     return str(self)
-
-# def __str__(self):
-#     _dict = {}
-#     return str(_dict)

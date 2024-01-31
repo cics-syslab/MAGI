@@ -1,6 +1,8 @@
 import json
 from dataclasses import asdict
+from enum import Enum
 
+import dacite
 from dacite import from_dict
 
 
@@ -23,4 +25,4 @@ def load_dataclass_from_file(cls, filepath):
     :param filepath:  The path to the file
     :return:  The loaded instance
     """
-    return from_dict(cls, json.load(open(filepath, "r", encoding="utf-8")))
+    return from_dict(cls, json.load(open(filepath, "r", encoding="utf-8")), config=dacite.Config(cast=[Enum]))

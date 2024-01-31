@@ -33,6 +33,10 @@ def get_addon_page_path(addon):
 
 def update_pages():
     from streamlit import session_state
+    if "updating" in session_state:
+        while session_state.updating:
+            pass
+    session_state["updating"] = True
     SettingManager = session_state.SettingManager
     AddonManager = session_state.AddonManager
     files = os.listdir(os.path.join("webui", "pages"))
@@ -49,3 +53,4 @@ def update_pages():
 
     for addon in [AddonManager.enabled_module] + AddonManager.enabled_plugins:
         render_addon_page(addon)
+    session_state["updating"] = False

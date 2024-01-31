@@ -23,4 +23,3 @@ def solve_question(question: str) -> str:
     parsed = question.split()
     ans = str(interp[parsed[1]](int(parsed[0]), int(parsed[2])))
     return ans
-

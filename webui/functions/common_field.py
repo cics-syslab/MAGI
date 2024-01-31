@@ -1,7 +1,10 @@
 import dataclasses
+import os.path
 from dataclasses import Field
 
 import streamlit as st
+from code_editor import code_editor
+from streamlit import session_state
 
 
 def attribute_name_convention(field_info: Field) -> str:
@@ -27,6 +30,9 @@ def generate_ui_for_dataclass(dataclass_obj):
 
         field_type = field.type
         field_id = id(field)
+        if field.metadata.get("file_editor"):
+            generate_ui_code_editor(field.metadata["file_editor"])
+            continue
         if field.metadata.get("excluded_from_ui", False):
             continue
         if hasattr(field_type, '__origin__') and field_type.__origin__ == list:
@@ -102,3 +108,82 @@ def generate_ui_for_dataclass_list(parent_dataclass, parent_field_name, field_id
     with st.container(border=False):
         generate_ui_for_dataclass(new_object)
         st.button(f"+", on_click=add_object_callback)
+
+
+def generate_ui_code_editor(file_path):
+    ace_props = {"style": {"borderRadius": "0px 0px 8px 8px"}}
+    info_bar = {
+        "name": "language info",
+        "css": "\nbackground-color: #bee1e5;\n\nbody > #root .ace-streamlit-dark~& {\n   background-color: #262830;\n}"
+               "\n\n.ace-streamlit-dark~& span {\n   color: #fff;\n    opacity: 0.6;\n}\n\nspan {\n   color: #000;\n    "
+               "opacity: 0.5;\n}\n\n.code_editor-info.message {\n    width: inherit;\n    margin-right: 75px;\n    "
+               "order: 2;\n    text-align: center;\n    opacity: 0;\n    transition: opacity 0.7s ease-out;\n}\n"
+               "\n.code_editor-info.message.show {\n    opacity: 0.6;\n}\n\n.ace-streamlit-dark~& "
+               ".code_editor-info.message.show {\n    opacity: 0.5;\n}\n",
+        "style": {
+            "order": "1",
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "width": "100%",
+            "height": "2.5rem",
+            "padding": "0rem 0.6rem",
+            "padding-bottom": "0.2rem",
+            "margin-bottom": "-1px",
+            "borderRadius": "8px 8px 0px 0px",
+            "zIndex": "9993"
+        },
+        "info": [{
+            "name": os.path.basename(file_path),
+            "style": {"width": "100px"}
+        }]
+    }
+    custom_buttons = [{
+        "name": "Copy",
+        "feather": "Copy",
+        "hasText": True,
+        "alwaysOn": True,
+        "commands": ["copyAll",
+                     ["infoMessage",
+                      {
+                          "text": "Copied to clipboard!",
+                          "timeout": 2500,
+                          "classToggle": "show"
+                      }
+                      ]
+                     ],
+        "style": {"top": "-0.25rem", "right": "0.4rem"}
+    }, {
+        "name": "Save",
+        "feather": "Save",
+        "hasText": True,
+        "commands": ["save-state", ["response", "saved"]],
+        "response": "saved",
+        "style": {"bottom": "calc(50% - 4.25rem)", "right": "0.4rem"}
+    }, {
+        "name": "Run",
+        "feather": "Play",
+        "primary": True,
+        "hasText": True,
+        "showWithIcon": True,
+        "commands": ["submit"],
+        "style": {"bottom": "0.44rem", "right": "0.4rem"}}
+    ]
+
+    if file_path not in session_state:
+        print("loading")
+        original_file_content = open(file_path).read()
+        # original_file_content = "123"
+        session_state[file_path] = original_file_content
+
+    editor = code_editor(session_state[file_path], lang="python", focus=True, height=[30, 30], buttons=custom_buttons,
+                         key=file_path + "editor", info=info_bar, props=ace_props)
+
+    if editor['text']:
+        if editor['text'] != session_state[file_path]:
+            session_state[file_path] = editor['text']
+            with open(file_path, "w") as f:
+                f.write(session_state[file_path])
+
+    if editor['type'] == "submit":
+        st.write(exec(session_state[file_path]))
