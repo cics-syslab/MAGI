@@ -1,4 +1,5 @@
 from core.common.addon import hookimpl
+from core.common.gradescope import TestCase
 from .config import Config
 
 
@@ -10,9 +11,10 @@ class MinimalPluginExample:
     def grade(self):
         from core.managers import TestManager
         testcase = TestManager.new_test()
+        # testcase = TestCase()
         from core.managers.info_manager import Directories
         testcase.max_score = 1
-        with open(Directories.output_dir / self.config.submittig_file, "r") as f:
+        with open(Directories.WORK_DIR / self.config.submittig_file, "r") as f:
             content = f.read()
 
         if content == self.config.content:

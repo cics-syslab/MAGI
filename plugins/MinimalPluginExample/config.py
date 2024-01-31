@@ -6,4 +6,4 @@ from core.managers import SettingManager
 @dataclass
 class Config:
     content: str = "Hello World!"
-    submittig_file: str = "output.txt"
+    submittig_file: str = "client.c"

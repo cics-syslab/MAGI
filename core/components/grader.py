@@ -76,6 +76,7 @@ def grade_submission():
     missing_file = check_submitted_files(submission_files, submission_dir)
     if missing_file:
         TestManager.fail_all(f"Missing file(s): {', '.join(missing_file)}")
+        TestManager.output_result(str(Directories.RESULT_JSON_PATH))
         return
 
     move_submission_files(submission_files, Directories.WORK_DIR, submission_dir)
@@ -84,7 +85,7 @@ def grade_submission():
     AddonManager.grade()
 
     logging.debug("Finished grading, outputting result")
-    TestManager.output_result(Directories.RESULT_JSON_PATH)
+    TestManager.output_result(str(Directories.RESULT_JSON_PATH))
 
 
 if __name__ == "__main__":

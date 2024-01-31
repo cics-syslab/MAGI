@@ -17,7 +17,7 @@ from core.common.addon import AddonSpec
 pm.add_hookspecs(AddonSpec)
 
 
-def list_available_addons(addon_category: str) -> list:
+def list_available_addons(addon_category: str) -> List[Module | Plugin]:
     """
     List all available addons in the given subdirectory
 
@@ -49,7 +49,6 @@ def list_available_addons(addon_category: str) -> list:
             logging.error(f"Error importing {sub_dir}: {e}", exc_info=True)
 
     return available
-
 
 available_modules = list_available_addons("modules")
 available_plugins = list_available_addons("plugins")

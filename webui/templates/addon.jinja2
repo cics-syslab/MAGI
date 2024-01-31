@@ -14,5 +14,7 @@ st.write("# {{ addon.name }}")
 generate_ui_for_dataclass(SettingManager.get_settings("{{ addon.name }}"))
 
 # Customize Field
+if getattr(AddonManager._name_to_modules["{{ addon.name }}"].imported_object, "webui", None):
+AddonManager._name_to_modules["{{ addon.name }}"].imported_object.webui()
 
 

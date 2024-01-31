@@ -90,7 +90,7 @@ from hashlib import sha256
 from os import makedirs
 from os import path as osp
 
-from . import QA
+import QA
 
 PORT = 27993
 MAGIC_STR = 'cs230'
@@ -439,6 +439,7 @@ class Server:
         """
         listen = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         listen.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
         listen.bind(("", self.port))
         listen.listen(1)
 

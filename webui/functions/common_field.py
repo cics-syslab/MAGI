@@ -30,30 +30,33 @@ def generate_ui_for_dataclass(dataclass_obj):
 
         field_type = field.type
         field_id = id(field)
+
         if field.metadata.get("file_editor"):
             generate_ui_code_editor(field.metadata["file_editor"])
             continue
+
         if field.metadata.get("excluded_from_ui", False):
             continue
-        if hasattr(field_type, '__origin__') and field_type.__origin__ == list:
-            # Determine the type of list elements
-            element_type = field_type.__args__[0]
 
-            # You can customize this part for different element types
-            if element_type == int:
-                # Example: select multiple integers (you can customize the options)
-                inputs[field_display_name] = st.multiselect(f"{field_display_name} (List[int])",
-                                                            options=list(range(100)))
-
-            elif element_type == str:
-                # Example: select multiple strings (you can customize the options)
-                inputs[field_display_name] = st.multiselect(f"{field_display_name} (List[str])",
-                                                            options=["Option 1", "Option 2", "Option 3"])
-
-
-            else:
-                st.text(f"List of '{element_type}' not supported")
-            continue
+        # if hasattr(field_type, '__origin__') and field_type.__origin__ == list:
+        #     # Determine the type of list elements
+        #     element_type = field_type.__args__[0]
+        #
+        #     # You can customize this part for different element types
+        #     if element_type == int:
+        #         # Example: select multiple integers (you can customize the options)
+        #         inputs[field_display_name] = st.multiselect(f"{field_display_name} (List[int])",
+        #                                                     options=list(range(100)))
+        #
+        #     elif element_type == str:
+        #         # Example: select multiple strings (you can customize the options)
+        #         inputs[field_display_name] = st.multiselect(f"{field_display_name} (List[str])",
+        #                                                     options=["Option 1", "Option 2", "Option 3"])
+        #
+        #
+        #     else:
+        #         st.text(f"List of '{element_type}' not supported")
+        #     continue
 
         # Generate appropriate Streamlit widget based on the field type
         if field_type == int:
@@ -172,6 +175,7 @@ def generate_ui_code_editor(file_path):
 
     if file_path not in session_state:
         print("loading")
+        session_state[file_path] = ""
         original_file_content = open(file_path).read()
         # original_file_content = "123"
         session_state[file_path] = original_file_content
@@ -184,6 +188,6 @@ def generate_ui_code_editor(file_path):
             session_state[file_path] = editor['text']
             with open(file_path, "w") as f:
                 f.write(session_state[file_path])
-
+            st.rerun()
     if editor['type'] == "submit":
         st.write(exec(session_state[file_path]))

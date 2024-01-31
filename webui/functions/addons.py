@@ -39,7 +39,8 @@ def update_pages():
     session_state["updating"] = True
     SettingManager = session_state.SettingManager
     AddonManager = session_state.AddonManager
-    files = os.listdir(os.path.join("webui", "pages"))
+    InfoManager = session_state.InfoManager
+    files = os.listdir(InfoManager.Directories.SRC_PATH / "webui" / "pages")
 
     for file in files:
         if file.startswith("1_"):

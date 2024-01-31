@@ -114,7 +114,7 @@ def generate_output(output_parent_dir: str = None) -> None:
     output_dir = Path(output_parent_dir)
 
     shutil.rmtree(output_dir / "source", ignore_errors=True)
-
+    shutil.copytree(Directories.TEMPLATE_DIR / "source", output_dir / "source")
     from core.managers import AddonManager
     AddonManager.generate()
     generate_autograder(output_dir)
@@ -122,10 +122,3 @@ def generate_output(output_parent_dir: str = None) -> None:
     from .doc_generator import generate_documentation
     generate_documentation(op.join(output_dir, "documentation.md"))
 
-    # Open the output directory if on Windows
-    # try:
-    #     os.startfile(output_dir)
-    # except AttributeError:
-    #     pass
-
-    # TODO: Pop window to notify user that output is generated
