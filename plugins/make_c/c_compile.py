@@ -35,5 +35,6 @@ def compile_code():
 def before_grading():
     compile_code()
 
+
 def generating():
-    pass 
+    pass

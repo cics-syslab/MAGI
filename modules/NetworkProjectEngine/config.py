@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 
 from core.managers import SettingManager
-import logging
 
 
 # def load_qa():

@@ -3,15 +3,13 @@ import random
 import shlex
 import subprocess
 import sys
-import threading
 from time import sleep
 
 from core.common.gradescope import Result, Visibility
-from core.managers.info_manager import Directories
 from core.managers import TestManager
-from . import Config
-
+from core.managers.info_manager import Directories
 from core.utils.serialization import load_dataclass_from_file
+from . import Config
 
 
 def compile_student_code():

@@ -1,5 +1,4 @@
 from core.common.addon import hookimpl
-from core.common.gradescope import TestCase
 from .config import Config
 
 

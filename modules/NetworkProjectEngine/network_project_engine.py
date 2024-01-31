@@ -1,6 +1,6 @@
+from core.common.addon import hookimpl
 from .config import Config
 from .gen_doc import generate_documentation
-from core.common.addon import hookimpl
 from .grader import grade
 
 
@@ -18,9 +18,8 @@ class NetworkProjectEngine:
         grade()
 
     def webui(self):
-        import streamlit as st
         # import importlib
-        from . import QA
+        pass
         # # importlib.reload(QA)
         # sample_question = QA.generate_question()
         # sample_answer = QA.solve_question(sample_question)

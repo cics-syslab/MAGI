@@ -1,12 +1,12 @@
 from __future__ import annotations
 
+import logging
 import os
 import os.path as op
-from typing import Any, List
+from typing import List
 
 from core.common.addon import Module, Plugin
 from core.managers.info_manager import Directories
-import logging
 
 logging = logging.getLogger('AddonManager')
 import pluggy
@@ -49,6 +49,7 @@ def list_available_addons(addon_category: str) -> List[Module | Plugin]:
             logging.error(f"Error importing {sub_dir}: {e}", exc_info=True)
 
     return available
+
 
 available_modules = list_available_addons("modules")
 available_plugins = list_available_addons("plugins")

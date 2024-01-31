@@ -1,14 +1,18 @@
 import os
 import re
 import sys
+
 from jinja2 import Environment, FileSystemLoader
+
 from config import Config
+
 
 def convert_template(template_content):
     # Replace templates variables in the form {_VAR_} for Jinja double bracket reading
     pattern = re.compile(r'\{_(\w+)_\}')
     converted_template = re.sub(pattern, r'{{ \1 }}', template_content)
     return converted_template
+
 
 def generate_code(template_file, output_file, variables):
     # Set up Jinja environment
@@ -24,6 +28,7 @@ def generate_code(template_file, output_file, variables):
     with open(output_file, "w") as file:
         file.write(rendered_code)
     print(f"{output_file} generated successfully.")
+
 
 if __name__ == "__main__":
     # Get variables from Config class

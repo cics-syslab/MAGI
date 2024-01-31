@@ -1,7 +1,8 @@
+import os
+import sys
+
 import streamlit as st
 from streamlit import session_state
-import sys
-import os
 
 st.set_page_config(
     page_title="Hello",
@@ -33,8 +34,6 @@ st.markdown(
 )
 
 st.write(os.getcwd())
-
-
 
 AddonManager = session_state.AddonManager
 

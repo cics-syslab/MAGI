@@ -1,9 +1,9 @@
 import streamlit as st
 from streamlit import session_state
 
+from webui.functions.addons import update_pages
 from webui.functions.common_field import generate_ui_for_dataclass
 from webui.functions.session import init_session
-from webui.functions.addons import update_pages
 
 init_session()
 SettingManager = session_state.SettingManager

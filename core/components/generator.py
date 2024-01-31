@@ -7,8 +7,8 @@ import os.path as op
 import shutil
 from pathlib import Path
 
-from core.managers.info_manager import Directories
 from core.managers import SettingManager
+from core.managers.info_manager import Directories
 
 logging = logging.getLogger("Generator")
 
@@ -48,7 +48,7 @@ def pack_autograder(autograder_dir: str | Path) -> None:
     if not isinstance(autograder_dir, Path):
         autograder_dir = Path(autograder_dir)
     zip_name = "autograder"
-    shutil.make_archive(str(autograder_dir.parent/zip_name), 'zip', autograder_dir)
+    shutil.make_archive(str(autograder_dir.parent / zip_name), 'zip', autograder_dir)
 
     logging.info(f'Autograder packed to {op.join(autograder_dir.parent, "autograder.zip")}')
 
@@ -121,4 +121,3 @@ def generate_output(output_parent_dir: str = None) -> None:
 
     from .doc_generator import generate_documentation
     generate_documentation(op.join(output_dir, "documentation.md"))
-

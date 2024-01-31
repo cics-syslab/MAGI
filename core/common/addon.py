@@ -4,10 +4,10 @@ import importlib
 import logging
 import os.path as op
 from dataclasses import dataclass
-import yaml
-import dacite
 
+import dacite
 import pluggy
+import yaml
 
 hookspec = pluggy.HookspecMarker("magi")
 hookimpl = pluggy.HookimplMarker("magi")

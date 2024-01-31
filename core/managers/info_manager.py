@@ -1,8 +1,7 @@
-from dataclasses import dataclass
-from pathlib import Path
 import logging
 import os.path as op
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Optional, List
 
 from core._private.singleton import overwrite_singleton

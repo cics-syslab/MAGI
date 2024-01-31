@@ -1,7 +1,7 @@
 import random
 import string
+
 import numpy as np
-import logging
 
 
 def generate_question() -> str:
@@ -37,6 +37,7 @@ def solve_question(question: str) -> str:
         unscramble += _dict[i]
 
     return unscramble.strip()
+
 
 if __name__ == '__main__':
     import sys
