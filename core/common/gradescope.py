@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 
 class Visibility(str, Enum):
@@ -44,3 +44,4 @@ class Result:
     stdout_visibility: str = Visibility.HIDDEN
     extra_data: dict = field(default_factory=dict)
     tests: List[TestCase] = field(default_factory=list)
+    score: Optional[float] = None

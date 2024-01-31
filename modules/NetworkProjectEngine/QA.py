@@ -1,30 +1,42 @@
 import random
+import string
+import numpy as np
+import logging
 
 
 def generate_question() -> str:
-    import random
-    rand1 = random.randint(1, 1000)
-    rand2 = random.randint(1, 1000)
-    operator = random.choice(('+', '-', '*', '/'))
+    # generate string
+    letters = string.ascii_lowercase
+    result_str = ' '.join(random.choice(letters) for i in range(50))
 
-    question = str(rand1) + " " + operator + " " + str(rand2)
-    return question
+    # split string and scamble
+    split_str = result_str.split(" ")
+    scramble_order = np.arange(len(split_str))
+    np.random.shuffle(scramble_order)
+
+    # reorder
+    question = ""
+    for i in range(len(split_str)):
+        question += f"{scramble_order[i]}-{split_str[scramble_order[i]]} "
+    return question.strip()
 
 
 def solve_question(question: str) -> str:
-    interp = {
-        '+': lambda x, y: x + y,
-        '-': lambda x, y: x - y,
-        '*': lambda x, y: x * y,
-        '/': lambda x, y: int(x / y)
-    }
-    if not question:
-        print("no question provided")
-        return ""
-    parsed = question.split()
-    ans = str(interp[parsed[1]](int(parsed[0]), int(parsed[2])))
-    return ans
+    split_str = question.strip().split(" ")
 
+    # create dictionary
+    _dict = {}
+    for _str in split_str:
+        if "-" in _str:
+            index, string = _str.split("-")
+            _dict[int(index)] = string
+
+    # unscramble
+    unscramble = ""
+    for i in range(len(split_str) - 1):
+        unscramble += _dict[i]
+
+    return unscramble.strip()
 
 if __name__ == '__main__':
     import sys

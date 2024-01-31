@@ -61,9 +61,11 @@ def generate_ui_for_dataclass(dataclass_obj):
         # Generate appropriate Streamlit widget based on the field type
         if field_type == int:
             st.number_input(f"{field_display_name} (int)", step=1, on_change=update_data,
+                            value=getattr(dataclass_obj, field_name, 0),
                             args=(dataclass_obj, field_name, field_id), key=field_id, help=field.metadata.get("help"))
         elif field_type == float:
             st.number_input(f"{field_display_name} (float)", step=0.1, on_change=update_data,
+                            value=getattr(dataclass_obj, field_name, 0),
                             args=(dataclass_obj, field_name, field_id), key=field_id, help=field.metadata.get("help"))
         elif field_type == str:
             if field.metadata.get("text_area"):

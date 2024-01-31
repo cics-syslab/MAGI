@@ -66,4 +66,6 @@ def output_result(result_path: str) -> None:
     result.output += output
     for test in test_cases:
         result.tests.append(test)
+    if len(test_cases) == 0:
+        result.score = 0
     dump_dataclass_to_file(result, result_path)

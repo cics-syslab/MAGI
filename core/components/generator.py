@@ -47,10 +47,10 @@ def pack_autograder(autograder_dir: str | Path) -> None:
         raise NotADirectoryError()
     if not isinstance(autograder_dir, Path):
         autograder_dir = Path(autograder_dir)
-    zip_name = autograder_dir.parent.name + "_autograder"
+    zip_name = "autograder"
     shutil.make_archive(str(autograder_dir.parent/zip_name), 'zip', autograder_dir)
 
-    logging.debug(f'Autograder packed to {op.join(autograder_dir, "..", "autograder.zip")}')
+    logging.info(f'Autograder packed to {op.join(autograder_dir.parent, "autograder.zip")}')
 
 
 def generate_autograder(output_dir: str | Path) -> None:
