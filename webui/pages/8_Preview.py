@@ -12,4 +12,4 @@ with st.spinner('Wait for generation...'):
 
     generator.generate_output("output")
 
-st.download_button("Download", open("output/autograder.zip", mode="rb"), "Autograder.zip")
+st.download_button("Download", open("output/autograder.zip", mode="rb"), "autograder.zip")
