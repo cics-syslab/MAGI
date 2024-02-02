@@ -1,31 +1,6 @@
 import re
 
 
-def generate_documentation(file_path: str) -> None:
-    """
-    Generate the documentation for the project, and write it to the given file path.
-
-    Iterates through all addons and calls their generate_documentation() method. If none of the addons have documentation, then no documentation is generated.
-
-    : param file_path: The path to the file to write the documentation to.
-    : return: None
-    """
-    from core.managers import AddonManager
-    from core.managers import SettingManager
-    docs = AddonManager.generate_documentation()
-
-    if not docs:
-        return
-
-    doc_string = f"# {SettingManager.BaseSettings.project_name} \n {SettingManager.BaseSettings.project_desc} \n"
-
-    doc_string += "\n".join(docs)
-    with open(file_path, "w+", encoding="utf-8") as f:
-        f.write(doc_string)
-
-    return
-
-
 def replace_template(template: str, field_data: dict) -> str:
     """
     Replace the templates fields in the given templates string with the values in the given dictionary.

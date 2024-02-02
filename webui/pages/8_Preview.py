@@ -8,7 +8,7 @@ SettingManager = session_state.SettingManager
 AddonManager = session_state.AddonManager
 st.write("# Preview")
 with st.spinner('Wait for generation...'):
-    from core.components import generator
+    from magi.components import generator
 
     generator.generate_output("output")
 

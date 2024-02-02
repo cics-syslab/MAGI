@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional, List
 
-from core._private.singleton import overwrite_singleton
+from magi._private.singleton import overwrite_singleton
 
 
 @overwrite_singleton
@@ -21,7 +21,7 @@ class Directories:
     # MAGI folder, /autograder/source/
 
     TEMPLATE_DIR: Path = SRC_PATH / "static" / "GRADESCOPE_TEMPLATE"
-    CORE_DIR: Path = SRC_PATH / "core"
+    CORE_DIR: Path = SRC_PATH / "magi"
     LOGS_DIR: Path = SRC_PATH / "logs"
     SETTINGS_DIR: Path = SRC_PATH / "settings"
 
@@ -80,7 +80,7 @@ def load_metadata(metadata_path: str) -> Metadata:
     :param metadata_path: the path to the metadata file
     :return:
     """
-    from core.utils.serialization import load_dataclass_from_file
+    from magi.utils.serialization import load_dataclass_from_file
     if not op.isfile(metadata_path):
         logging.error(f"Metadata file {metadata_path} does not exist.")
         return Metadata()

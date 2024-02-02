@@ -5,14 +5,15 @@ import os
 import os.path as op
 from typing import List
 
-from core.common.addon import Module, Plugin
-from core.managers.info_manager import Directories
+import magi.components.generator
+from magi.common.addon import Module, Plugin
+from magi.managers.info_manager import Directories
 
 logging = logging.getLogger('AddonManager')
 import pluggy
 
 pm = pluggy.PluginManager("magi")
-from core.common.addon import AddonSpec
+from magi.common.addon import AddonSpec
 
 pm.add_hookspecs(AddonSpec)
 
@@ -33,9 +34,9 @@ def list_available_addons(addon_category: str) -> List[Module | Plugin]:
             logging.warning(f"Skipping {sub_dir} because info.yaml does not exist")
             continue
         if addon_category == "modules":
-            from core.common.addon import Module as Addon
+            from magi.common.addon import Module as Addon
         elif addon_category == "plugins":
-            from core.common.addon import Plugin as Addon
+            from magi.common.addon import Plugin as Addon
         else:
             raise ValueError(f"Invalid addon category {addon_category}")
 
@@ -70,12 +71,12 @@ def get_available_module_names():
 def unload_addon(addon):
     pm.unregister(addon.imported_object)
     addon.unload()
-    from core.managers import SettingManager
+    from magi.managers import SettingManager
     SettingManager.save_settings_for(addon.name)
 
 
 def update_enabled_module() -> Module | None:
-    from core.managers import SettingManager
+    from magi.managers import SettingManager
     new_enabled_module_name = SettingManager.BaseSettings.enabled_module
 
     global enabled_module
@@ -110,7 +111,7 @@ def update_enabled_module() -> Module | None:
 
 
 def update_enabled_plugins() -> List[Plugin]:
-    from core.managers import SettingManager
+    from magi.managers import SettingManager
     new_enabled_plugin_names = SettingManager.BaseSettings.enabled_plugins
 
     global enabled_plugins
@@ -165,10 +166,15 @@ def update_enabled_plugins() -> List[Plugin]:
 def setup(self):
     pass
 
+def before_generate():
+    pm.hook.before_generate()
+
+def after_generate():
+    pm.hook.after_generate()
 
 def generate():
     # print(dir(pm.hook))
-    return pm.hook.generating()
+    return pm.hook.generate()
 
 
 def grade():
@@ -178,4 +184,4 @@ def grade():
 
 
 def generate_documentation():
-    return pm.hook.generate_documentation()
+    return magi.components.generator.generate_documentation()

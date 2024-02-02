@@ -8,9 +8,9 @@ def example_question_answer() -> tuple:
 
 def generate_documentation():
     template: str = ""
-    with open("modules/NetworkProjectEngine/document.md", "r", encoding="utf-8") as f:
+    with open("modules/ClientServerSocket/document.md", "r", encoding="utf-8") as f:
         template = f.read()
-    from core.components.doc_generator import replace_template
+    from magi.components.doc_generator import replace_template
     from . import Config
     example_question, example_answer = example_question_answer()
     field_data = {"QUESTION_FORMAT": Config.question_format,

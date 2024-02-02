@@ -1,4 +1,7 @@
 import random
+import string
+
+import numpy as np
 
 
 def generate_question() -> str:
@@ -23,3 +26,14 @@ def solve_question(question: str) -> str:
     parsed = question.split()
     ans = str(interp[parsed[1]](int(parsed[0]), int(parsed[2])))
     return ans
+
+
+if __name__ == '__main__':
+    import sys
+
+    if len(sys.argv) > 1:
+        user_question = ' '.join(sys.argv[1:])
+        print(solve_question(user_question))
+    else:
+        sample_question = generate_question()
+        print(sample_question)

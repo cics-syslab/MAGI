@@ -1,6 +1,6 @@
 import logging
 
-from core.common.gradescope import TestCase
+from magi.common.gradescope import TestCase
 
 logging = logging.getLogger("TestManager")
 
@@ -60,8 +60,8 @@ def output_result(result_path: str) -> None:
     :return: None
     """
     global output
-    from core.common.gradescope import Result
-    from core.utils.serialization import dump_dataclass_to_file
+    from magi.common.gradescope import Result
+    from magi.utils.serialization import dump_dataclass_to_file
     result = Result()
     result.output += output
     for test in test_cases:

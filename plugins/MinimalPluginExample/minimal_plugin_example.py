@@ -1,4 +1,4 @@
-from core.common.addon import hookimpl
+from magi.common.addon import hookimpl
 from .config import Config
 
 
@@ -8,10 +8,10 @@ class MinimalPluginExample:
 
     @hookimpl
     def grade(self):
-        from core.managers import TestManager
+        from magi.managers import TestManager
         testcase = TestManager.new_test()
         # testcase = TestCase()
-        from core.managers.info_manager import Directories
+        from magi.managers.info_manager import Directories
         testcase.max_score = 1
         with open(Directories.WORK_DIR / self.config.submittig_file, "r") as f:
             content = f.read()

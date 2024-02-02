@@ -6,31 +6,20 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define PORT 27993
+#define DEFAULT_PORT 27993
+#define MAGIC_STR "cs230"
 
-int conduct_op(int op1, char operand, int op2)
-{
-        int res;
-        switch (operand)
-        {
-        case '+':
-                res = op1 + op2;
-                break;
-        case '-':
-                res = op1 - op2;
-                break;
-        case '*':
-                res = op1 * op2;
-                break;
-        case '/':
-                res = op1 / op2;
-                break;
-        default:
-                res = 0;
-                break;
-        }
-
-        return res;
+void solve_question(char* question, char* answer){
+    char command[256];
+    snprintf(command, sizeof(command), "python3 QA.py \'%s\'", question);
+    printf("Command= %s\n", command);
+    FILE *fp = popen(command, "r");
+    if (fp == NULL) {
+        printf("Failed to run command\n" );
+        exit(0);
+    }
+    fgets(answer, 256, fp);
+    pclose(fp);
 }
 
     /*These are some instructions*/
@@ -43,9 +32,7 @@ int main(int argc, char **argv)
         int status;
         char *flag = (char *)malloc(70);
         char *ret_str = (char *)malloc(200);
-        char op;
-        int op1, op2, result;
-        int port = PORT;
+        int port = DEFAULT_PORT;
         int max = 0; // max number of correct answers (for testing)
         char *sid = "richards@cs.umass.edu";
         char *message = (char *)malloc(256);
@@ -90,11 +77,14 @@ int main(int argc, char **argv)
                 exit(-1);
         }
 
-        sprintf(message, "cs230 HELLO %s\n", sid);
+        sprintf(message, MAGIC_STR" HELLO %s\n", sid);
+        printf("%s", message);
         //printf("message: %s", message);
         status = send(socket_c, message, strlen(message), 0);
         char *recv_mess = (char *)malloc(200);
         int rounds = 0;
+        char question[256];
+        char answer[256];
 
         while ((strstr(flag, "BYE")) == NULL)
         {
@@ -106,13 +96,12 @@ int main(int argc, char **argv)
                         printf("[*] ERROR in recv!\n");
                         exit(1);
                 }
+                printf("%s", recv_mess);
+                sscanf(recv_mess, MAGIC_STR" STATUS %[^\n]\n", question);
+                solve_question(question, answer);
 
-                sscanf(recv_mess, "cs230 STATUS %d %c %d\n", &op1, &op, &op2);
-                result = conduct_op(op1, op, op2);
-                if (max > 0 && rounds >= max){
-                    result += 1;        // Make a wrong answer
-                }
-                sprintf(ret_str, "cs230 %d\n", result);
+
+                sprintf(ret_str, MAGIC_STR" %s\n", answer);
                 status = send(socket_c, ret_str, strlen(ret_str), 0);
 
                 if (status < 0)

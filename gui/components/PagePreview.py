@@ -2,7 +2,7 @@ import tkinter as tk
 
 import ttkbootstrap as ttk
 
-from core.managers import SettingManager
+from magi.managers import SettingManager
 from ..functions.file import show_dir_selector
 from ..widgets import TabPage
 
@@ -37,5 +37,5 @@ class PagePreview:
         self.generate_button.pack(pady=10, fill='x')
 
     def generate(self):
-        from core.components.generator import generate_output
+        from magi.components.generator import generate_output
         generate_output(SettingManager.BaseSettings.output_dir)

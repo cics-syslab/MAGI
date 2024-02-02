@@ -5,10 +5,10 @@ import subprocess
 import sys
 from time import sleep
 
-from core.common.gradescope import Result, Visibility
-from core.managers import TestManager
-from core.managers.info_manager import Directories
-from core.utils.serialization import load_dataclass_from_file
+from magi.common.gradescope import Result, Visibility
+from magi.managers import TestManager
+from magi.managers.info_manager import Directories
+from magi.utils.serialization import load_dataclass_from_file
 from . import Config
 
 
@@ -33,7 +33,7 @@ def run_test(port, rounds, points_for_hello=0, points_for_goodbye=0, points_per_
     server = subprocess.Popen([sys.executable, "server.py", "--port", str(port), "--rounds", str(rounds),
                                "--points-for-hello", str(points_for_hello), "--points-for-goodbye",
                                str(points_for_goodbye), "--points-per-test", str(points_per_test), "--json"],
-                              cwd=str(Directories.SRC_PATH / "modules" / "NetworkProjectEngine"
+                              cwd=str(Directories.SRC_PATH / "modules" / "ClientServerSocket"
                                       ))
 
     # server_thread = threading.Thread(target=server.run)
@@ -60,7 +60,7 @@ def grade():
 
     port = Config.port if Config.port != -1 else random.randint(10000, 20000)
 
-    result_file_path = str(Directories.SRC_PATH / "modules" / "NetworkProjectEngine" / "results.json")
+    result_file_path = str(Directories.SRC_PATH / "modules" / "ClientServerSocket" / "results.json")
     if os.path.exists(result_file_path):
         os.remove(result_file_path)
 
@@ -85,7 +85,7 @@ def run_and_process_test(port, rounds, points_for_hello, points_for_goodbye, poi
 
 
 def process_results(visibility: Visibility = Visibility.VISIBLE):
-    result_file_path = str(Directories.SRC_PATH / "modules" / "NetworkProjectEngine" / "results.json")
+    result_file_path = str(Directories.SRC_PATH / "modules" / "ClientServerSocket" / "results.json")
     # print(result_file_path)
     if not os.path.exists(result_file_path):
         TestManager.fail_all("No result file was created.")

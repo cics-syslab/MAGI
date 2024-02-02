@@ -18,8 +18,17 @@ class AddonSpec:
         self.config = None
 
     @hookspec
-    def generating(self):
+    def before_generate(self):
+        pass
+
+
+    @hookspec
+    def generate(self):
         """Hook for generating functionality."""
+
+    @hookspec
+    def after_generate(self):
+        """Hook for actions after generating."""
 
     @hookspec
     def before_grading(self):

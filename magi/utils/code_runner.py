@@ -3,7 +3,7 @@ from functools import wraps
 from subprocess import Popen as original_popen
 from subprocess import run as original_run
 
-from core.info.env import Env
+from magi.info.env import Env
 
 logging = logging.getLogger(__name__)
 

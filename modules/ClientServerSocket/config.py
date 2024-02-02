@@ -1,15 +1,6 @@
 from dataclasses import dataclass, field
 
-from core.managers import SettingManager
-
-
-# def load_qa():
-#     try:
-#         with open("modules/NetworkProjectEngine/QA.py") as f:
-#             return f.read()
-#     except FileNotFoundError:
-#         logging.warning("QA.py not found")
-#         return ""
+from magi.managers import SettingManager
 
 
 @SettingManager.register
@@ -27,4 +18,4 @@ class Config:
     basic_test_points: int = 30
 
     qa: str = field(default_factory=str,
-                    metadata={"excluded_from_ui": True, "file_editor": "modules/NetworkProjectEngine/QA.py"})
+                    metadata={"excluded_from_ui": True, "file_editor": "modules/ClientServerSocket/QA.py"})
