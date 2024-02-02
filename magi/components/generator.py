@@ -94,7 +94,8 @@ def generate_autograder(output_dir: str | Path) -> None:
         for enabled_plugin in SettingManager.BaseSettings.enabled_plugins:
             shutil.copytree(Directories.SRC_PATH / "plugins" / enabled_plugin,
                             output_source_dir / "plugins" / enabled_plugin)
-    make_zip(output_source_dir)
+    make_zip(output_source_dir, "autograder")
+
     logging.info(f'Autograder successfully generated to {output_dir}')
 
 

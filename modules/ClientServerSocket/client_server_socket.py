@@ -11,7 +11,7 @@ class NetworkProjectEngine:
 
     @hookimpl
     def generate_documentation(self):
-        generate_documentation()
+        return generate_documentation()
 
     @hookimpl
     def grade(self):
