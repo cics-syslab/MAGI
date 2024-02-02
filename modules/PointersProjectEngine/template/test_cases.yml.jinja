@@ -1,0 +1,126 @@
+tests:
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_add_first
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_add_none
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_add_multiple
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_remove_second_{{ item_name }}
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_remove_none   
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_remove_first_{{ item_name }} 
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: Change_{{ item_name }}_not_included 
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: Change_{{ item_name }}_with_incorrect_{{ container_name }} 
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: Change_{{ item_name }}_to_duplicate_{{ container_name }}
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: Change_{{ item_name }}_included
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_add_one_with_same_name
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_add_two_with_same_name
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_add_duplicate_{{ item_name }}
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_add_multiple_with_same_name
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_add_multiple_unique
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_add_all_{{ item_name }}s
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_remove_only_with_same_name
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_remove_not_exist
+    points: 4
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_remove_duplicate
+    points: 4  
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_remove_multiple_with_same_name
+    points: 4   
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: {{ container_name }}_remove_all
+    points: 4   
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: Change_{{ item_name }}_not_included_advance
+    points: 4   
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: Change_{{ item_name }}_with_incorrect_{{ container_name }}_advance
+    points: 4   
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: Change_{{ item_name }}_to_duplicate_{{ container_name }}_advance
+    points: 4   
+  -
+    file: {{ project_name }}_test
+    class: ProjectTests
+    name: Change_{{ item_name }}_included_advance
+    points: 4    
