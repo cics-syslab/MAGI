@@ -8,7 +8,7 @@ def example_question_answer() -> tuple:
 
 def generate_documentation():
     template: str = ""
-    with open("modules/ClientServerSocket/document.md", "r", encoding="utf-8") as f:
+    with open("modules/ClientServerSocket/templates/document.md", "r", encoding="utf-8") as f:
         template = f.read()
     from magi.components.doc_generator import replace_template
     from . import Config

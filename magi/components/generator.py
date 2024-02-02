@@ -95,6 +95,7 @@ def generate_autograder(output_dir: str | Path) -> None:
             shutil.copytree(Directories.SRC_PATH / "plugins" / enabled_plugin,
                             output_source_dir / "plugins" / enabled_plugin)
     make_zip(output_source_dir, "autograder")
+    make_zip(output_dir/"solution", "solution")
 
     logging.info(f'Autograder successfully generated to {output_dir}')
 
@@ -145,7 +146,7 @@ def generate_documentation(file_path: str) -> None:
     if not docs:
         return
 
-    doc_string = f"# {SettingManager.BaseSettings.project_name} \n {SettingManager.BaseSettings.project_desc} \n"
+    doc_string = f"# {SettingManager.BaseSettings.project_name} \n {SettingManager.BaseSettings.project_description} \n"
 
     doc_string += "\n".join(docs)
     with open(file_path, "w+", encoding="utf-8") as f:

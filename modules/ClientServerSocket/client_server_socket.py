@@ -2,12 +2,23 @@ from magi.common.addon import hookimpl
 from .config import Config
 from .gen_doc import generate_documentation
 from .grader import grade
+import jinja2
 
 
-class NetworkProjectEngine:
+class ClientServerSocket:
     def __init__(self):
         self.config = Config
         print("ClientServerSocket init")
+
+    @hookimpl
+    def generate(self):
+        # use jinja to render the solution file
+        env = jinja2.Environment(loader=jinja2.FileSystemLoader('modules/ClientServerSocket/templates'))
+        template = env.get_template('client.c')
+        output = template.render()
+        from magi.managers import InfoManager
+        with open(InfoManager.Directories.OUTPUT_DIR / "solution" / "client.c", "w+") as f:
+            f.write(output)
 
     @hookimpl
     def generate_documentation(self):

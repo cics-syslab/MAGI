@@ -5,7 +5,6 @@ import os
 import os.path as op
 from typing import List
 
-import magi.components.generator
 from magi.common.addon import Module, Plugin
 from magi.managers.info_manager import Directories
 
@@ -166,11 +165,14 @@ def update_enabled_plugins() -> List[Plugin]:
 def setup(self):
     pass
 
+
 def before_generate():
     pm.hook.before_generate()
 
+
 def after_generate():
     pm.hook.after_generate()
+
 
 def generate():
     # print(dir(pm.hook))
@@ -184,4 +186,4 @@ def grade():
 
 
 def generate_documentation():
-    return magi.components.generator.generate_documentation()
+    return pm.hook.generate_documentation()

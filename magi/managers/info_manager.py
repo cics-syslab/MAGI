@@ -23,6 +23,7 @@ class Directories:
     TEMPLATE_DIR: Path = SRC_PATH / "static" / "GRADESCOPE_TEMPLATE"
     CORE_DIR: Path = SRC_PATH / "magi"
     LOGS_DIR: Path = SRC_PATH / "logs"
+    OUTPUT_DIR: Path = SRC_PATH / "output"
     SETTINGS_DIR: Path = SRC_PATH / "settings"
 
     WORK_DIR: Path = SRC_PATH / "workdir"  # the directory contains the project files for the project to
