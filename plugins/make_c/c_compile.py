@@ -1,10 +1,10 @@
 import os
 
-from magi.info.directories import Directories
+from magi.managers.info_manager import Directories
 from .config import Config, CompileMethod
 
 
-# from core.managers import TestManager
+# from magi.managers import TestManager
 
 # need chdir back or we will have a problem
 def compile_with_makefile():
@@ -37,5 +37,6 @@ hookimpl = pluggy.HookimplMarker("magi")
 def before_grading():
     compile_code()
 
+
 def generating():
-    pass 
+    pass

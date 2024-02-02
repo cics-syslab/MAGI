@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import os
 import os.path as op
@@ -60,7 +62,7 @@ def grade_submission():
     Start the grading process
     """
     from magi.managers import SettingManager
-    from magi.info.directories import Directories
+    from magi.managers.info_manager import Directories
     from magi.managers import AddonManager, TestManager
 
     submission_files = SettingManager.BaseSettings.submission_files
@@ -74,6 +76,7 @@ def grade_submission():
     missing_file = check_submitted_files(submission_files, submission_dir)
     if missing_file:
         TestManager.fail_all(f"Missing file(s): {', '.join(missing_file)}")
+        TestManager.output_result(str(Directories.RESULT_JSON_PATH))
         return
 
     move_submission_files(submission_files, Directories.WORK_DIR, submission_dir)
@@ -82,8 +85,7 @@ def grade_submission():
     AddonManager.grade()
 
     logging.debug("Finished grading, outputting result")
-    from magi.managers import ResultManager
-    ResultManager.output_result(Directories.RESULT_JSON_PATH)
+    TestManager.output_result(str(Directories.RESULT_JSON_PATH))
 
 
 if __name__ == "__main__":

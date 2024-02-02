@@ -1,2 +1,4 @@
-dataconf
+jinja2
+dacite
+pluggy
 numpy

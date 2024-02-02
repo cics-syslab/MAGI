@@ -1,8 +1,7 @@
-# from .addon_manager import _instance as AddonManager
-# from .result_manager import _instance as ResultManager
-# from .setting_manager import _instance as SettingManager
-# from .test_manager import _instance as TestManager
-from .addon_manager import AddonManager
-from .result_manager import ResultManager
-from .setting_manager import SettingManager
-from .test_manager import TestManager
+from . import addon_manager as AddonManager
+from . import info_manager as InfoManager
+from . import setting_manager as SettingManager
+from . import test_manager as TestManager
+
+AddonManager.update_enabled_module()
+AddonManager.update_enabled_plugins()

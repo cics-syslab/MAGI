@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 import logging
 import os
@@ -5,8 +7,8 @@ import os.path as op
 import shutil
 from pathlib import Path
 
-from magi.info import Directories
 from magi.managers import SettingManager
+from magi.managers.info_manager import Directories
 
 logging = logging.getLogger("Generator")
 
@@ -32,23 +34,24 @@ def create_output_dir(output_parent_dir: str) -> str:
     return output_dir
 
 
-def pack_autograder(autograder_dir: str | Path) -> None:
+def make_zip(target_dir: str | Path, zip_file_name: str) -> None:
     """
-    Pack the autograder directory into a zip file for uploading to Gradescope.
+    Pack the directory into a zip file in its parent directory.
 
-    : param autograder_dir: The directory to the autograder directory.
+    : param target_dir: The directory to the autograder directory.
+    : param zip_file_name: The name of the zip file to create.
     : return: None
     """
-    if not autograder_dir:
+    if not target_dir:
         raise Exception("No directory provided to make zip file")
-    if not op.isdir(autograder_dir):
+    if not op.isdir(target_dir):
         raise NotADirectoryError()
-    if not isinstance(autograder_dir, Path):
-        autograder_dir = Path(autograder_dir)
-    zip_name = autograder_dir.parent.name + "_autograder"
-    shutil.make_archive(str(autograder_dir.parent/zip_name), 'zip', autograder_dir)
+    if not isinstance(target_dir, Path):
+        target_dir = Path(target_dir)
 
-    logging.debug(f'Autograder packed to {op.join(autograder_dir, "..", "autograder.zip")}')
+    shutil.make_archive(str(target_dir.parent / zip_file_name), 'zip', target_dir)
+
+    logging.info(f'Autograder packed to {op.join(target_dir.parent, f"{zip_file_name}.zip")}')
 
 
 def generate_autograder(output_dir: str | Path) -> None:
@@ -66,7 +69,7 @@ def generate_autograder(output_dir: str | Path) -> None:
         output_dir = Path(output_dir)
 
     # Since the autograder depends on the framework, copy the framework core, enabled module, and enabled plugins to it.
-    shutil.copytree(Directories.TEMPLATE_DIR, output_dir)
+    # shutil.copytree(Directories.TEMPLATE_DIR, output_dir)
     output_source_dir = output_dir / "source"
 
     empty_dirs = ['logs', 'modules', 'plugins', ]
@@ -91,7 +94,9 @@ def generate_autograder(output_dir: str | Path) -> None:
         for enabled_plugin in SettingManager.BaseSettings.enabled_plugins:
             shutil.copytree(Directories.SRC_PATH / "plugins" / enabled_plugin,
                             output_source_dir / "plugins" / enabled_plugin)
-    pack_autograder(output_source_dir)
+    make_zip(output_source_dir, "autograder")
+    make_zip(output_dir/"solution", "solution")
+
     logging.info(f'Autograder successfully generated to {output_dir}')
 
 
@@ -102,26 +107,49 @@ def generate_output(output_parent_dir: str = None) -> None:
     : param output_parent_dir: The parent directory to create the output directory in.
     : return: None
     """
+    from magi.managers import AddonManager
     if output_parent_dir is None:
         output_parent_dir = SettingManager.BaseSettings.output_dir
 
     # Save the settings before generating the output, useful for GUI
     SettingManager.save_settings()
 
-    output_dir = create_output_dir(output_parent_dir)
+    # output_dir = create_output_dir(output_parent_dir)
+    output_dir = Path(output_parent_dir)
 
-    from magi.managers import AddonManager
-    AddonManager.generate()
+    shutil.rmtree(output_dir / "source", ignore_errors=True)
+
+    AddonManager.before_generate()
+
+    shutil.copytree(Directories.TEMPLATE_DIR / "source", output_dir / "source")
+
     generate_autograder(output_dir)
 
-    from .doc_generator import generate_documentation
+    AddonManager.generate()
+    AddonManager.after_generate()
     generate_documentation(op.join(output_dir, "documentation.md"))
 
-    # Open the output directory if on Windows
-    try:
-        os.startfile(output_dir)
-    except AttributeError:
-        pass
-    # TODO: add support for other OS
-    # TODO: add option to skip opening the output directory
-    # TODO: Pop window to notify user that output is generated
+
+def generate_documentation(file_path: str) -> None:
+    """
+    Generate the documentation for the project, and write it to the given file path.
+
+    Iterates through all addons and calls their generate_documentation() method. If none of the addons have documentation, then no documentation is generated.
+
+    : param file_path: The path to the file to write the documentation to.
+    : return: None
+    """
+    from magi.managers import AddonManager
+    from magi.managers import SettingManager
+    docs = AddonManager.generate_documentation()
+
+    if not docs:
+        return
+
+    doc_string = f"# {SettingManager.BaseSettings.project_name} \n {SettingManager.BaseSettings.project_description} \n"
+
+    doc_string += "\n".join(docs)
+    with open(file_path, "w+", encoding="utf-8") as f:
+        f.write(doc_string)
+
+    return

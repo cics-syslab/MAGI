@@ -112,7 +112,7 @@ def grade_all(test_file_name: str) -> None:
     with open(test_file_name, 'r') as file:
         tests = yaml.load(file, Loader=yaml.FullLoader)
 
-    from magi.info import Directories
+    from magi.managers.info_manager import Directories
     import logging
 
     TEMP_DIR = Directories.WORK_DIR / "gtest_temp"
@@ -158,8 +158,8 @@ def grade_all(test_file_name: str) -> None:
 
         for xml_test_case in xml_test_cases:
             test_case = TestCase(name=xml_test_case.name, max_score=test['points'])
-            test_case.visibility = gradescope.Visibility.visible if 'visible' not in test or test[
-                'visible'] else gradescope.Visibility.after_published
+            test_case.visibility = gradescope.Visibility.VISIBLE if 'visible' not in test or test[
+                'visible'] else gradescope.Visibility.AFTER_PUBLISHED
             if xml_test_case.status == "error":
                 test_case.fail_test(xml_test_case.failed_msg)
             else:

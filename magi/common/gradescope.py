@@ -1,12 +1,13 @@
 from dataclasses import dataclass, field
-from typing import List
+from enum import Enum
+from typing import List, Optional
 
 
-class Visibility:
-    hidden = "hidden"
-    after_due_date = "after_due_date"
-    after_published = "after_published"
-    visible = "visible"
+class Visibility(str, Enum):
+    HIDDEN = "hidden"
+    AFTER_DUE_DATE = "after_due_date"
+    AFTER_PUBLISHED = "after_published"
+    VISIBLE = "visible"
 
 
 @dataclass
@@ -14,7 +15,7 @@ class TestCase:
     # number: Optional[str]
     score: float = 0
     max_score: float = 0
-    visibility: str = Visibility.after_published
+    visibility: str = Visibility.AFTER_PUBLISHED
     output: str = ""
     name: str = ""
     status: str = ""
@@ -39,7 +40,8 @@ class TestCase:
 @dataclass
 class Result:
     output: str = field(default_factory=str)
-    visibility: str = Visibility.after_published
-    stdout_visibility: str = Visibility.hidden
+    visibility: str = Visibility.AFTER_PUBLISHED
+    stdout_visibility: str = Visibility.HIDDEN
     extra_data: dict = field(default_factory=dict)
     tests: List[TestCase] = field(default_factory=list)
+    score: Optional[float] = None

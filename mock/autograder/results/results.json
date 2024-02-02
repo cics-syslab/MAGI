@@ -1,27 +1,33 @@
-{ "score": 44.0, // optional, but required if not on each test case below. Overrides total of tests if specified.
-  "execution_time": 136, // optional, seconds
-  "output": "Text relevant to the entire submission", // optional
-  "visibility": "after_due_date", // Optional visibility setting
-  "stdout_visibility": "visible", // Optional stdout visibility setting
-  "extra_data": {}, // Optional extra data to be stored
-  "tests": // Optional, but required if no top-level score
-    [
+{
+    "output": "\nClient exited with status code -13.\nError: None\nOutput: None",
+    "visibility": "after_published",
+    "stdout_visibility": "hidden",
+    "extra_data": {},
+    "tests": [
         {
-            "score": 2.0, // optional, but required if not on top level submission
-            "max_score": 2.0, // optional
-            "name": "Your name here", // optional
-            "number": "1.1", // optional (will just be numbered in order of array if no number given)
-            "output": "Giant multiline string that will be placed in a <pre> tag and collapsed by default", // optional
-            "tags": ["tag1", "tag2", "tag3"], // optional
-            "visibility": "visible", // Optional visibility setting
-            "extra_data": {} // Optional extra data to be stored
+            "score": 0,
+            "max_score": 1,
+            "visibility": "after_published",
+            "output": "Expected Hello World! but got #include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <sys/socket.h>\n#include <netinet/in.h>\n#include <arpa/inet.h>\n#include <unistd.h>\n\n#define PORT 27993\n\nint conduct_op(int op1, char operand, int op2)\n{\n        int res;\n        switch (operand)\n        {\n        case '+':\n                res = op1 + op2;\n                break;\n        case '-':\n                res = op1 - op2;\n                break;\n        case '*':\n                res = op1 * op2;\n                break;\n        case '/':\n                res = op1 / op2;\n                break;\n        default:\n                res = 0;\n                break;\n        }\n\n        return res;\n}\n\n    /*These are some instructions*/\n    /*With the secret key*/\n    /*CS230-Spring-2022*/\n\nint main(int argc, char **argv)\n{\n        int socket_c;\n        int status;\n        char *flag = (char *)malloc(70);\n        char *ret_str = (char *)malloc(200);\n        char op;\n        int op1, op2, result;\n        int port = PORT;\n        int max = 0; // max number of correct answers (for testing)\n        char *sid = \"richards@cs.umass.edu\";\n        char *message = (char *)malloc(256);\n        char host[256];\n\n        strcpy(host, \"127.0.0.1\");\n\n        if (argc > 1)\n        {\n                sid = argv[1];\n        }\n        if (argc > 2)\n        {\n                port = atoi(argv[2]);\n        }\n        if (argc > 3)\n        {\n                strcpy(host, argv[3]);\n        }\n        if (argc > 4){\n            max = atoi(argv[4]);\n        }\n\n        if ((socket_c = socket(AF_INET, SOCK_STREAM, 0)) < 0)\n        {\n                printf(\"[*] ERROR IN CREATING SOCKET!\\n\");\n                close(socket_c);\n                exit(-1);\n        }\n\n        struct sockaddr_in client_address;\n\n        client_address.sin_family = AF_INET;\n        client_address.sin_port = htons(port);\n        inet_pton(AF_INET, host, &client_address.sin_addr);\n        memset(&(client_address.sin_zero), '\\0', 8);\n\n        if ((status = connect(socket_c, (struct sockaddr *)&client_address, sizeof(client_address))) < 0)\n        {\n                printf(\"[*] ERROR IN CONNECT!\\n\");\n                close(socket_c);\n                exit(-1);\n        }\n\n        sprintf(message, \"cs230 HELLO %s\\n\", sid);\n        //printf(\"message: %s\", message);\n        status = send(socket_c, message, strlen(message), 0);\n        char *recv_mess = (char *)malloc(200);\n        int rounds = 0;\n\n        while ((strstr(flag, \"BYE\")) == NULL)\n        {\n                memset(recv_mess, '\\0', 200);\n                status = recv(socket_c, recv_mess, 200, 0);\n\n                if (status < 0)\n                {\n                        printf(\"[*] ERROR in recv!\\n\");\n                        exit(1);\n                }\n\n                sscanf(recv_mess, \"cs230 STATUS %d %c %d\\n\", &op1, &op, &op2);\n                result = conduct_op(op1, op, op2);\n                if (max > 0 && rounds >= max){\n                    result += 1;        // Make a wrong answer\n                }\n                sprintf(ret_str, \"cs230 %d\\n\", result);\n                status = send(socket_c, ret_str, strlen(ret_str), 0);\n\n                if (status < 0)\n                {\n                        printf(\"[*] ERROR in recv!\\n\");\n                        exit(1);\n                }\n\n                memset(ret_str, '\\0', 200);\n                memset(flag, '\\0', 70);\n                sprintf(flag, \"%s\", recv_mess);\n                ++rounds;\n        }\n        printf(\"%s\", flag);\n        close(socket_c);\n\n        return 0;\n}\n",
+            "name": "Test case 0",
+            "status": "failed"
         },
-        // and more test cases...
+        {
+            "score": 30,
+            "max_score": 30,
+            "visibility": "after_due_date",
+            "output": "Successfully connected",
+            "name": "Test case 1",
+            "status": ""
+        },
+        {
+            "score": 0,
+            "max_score": 3,
+            "visibility": "after_due_date",
+            "output": "Test Case: 28-u 14-l 45-p 48-q 37-m 15-u 31-y 43-g 9-a 46-m 34-e 13-s 32-c 29-p 30-p 4-v 49-t 7-q 39-s 24-d 12-t 40-u 21-g 25-f 10-f 33-v 42-g 27-z 11-j 18-w 20-e 47-s 19-y 35-w 1-g 22-a 5-x 44-j 0-u 36-d 3-m 23-s 38-v 6-u 2-v 41-t 8-n 16-m 17-s 26-o ...... FAILED\nExpected: ugvmvxuqnafjtslumswyegasdfozuppycvewdmvsutggjpmsq\n Actual: 28",
+            "name": "Test case 2",
+            "status": ""
+        }
     ],
-  "leaderboard": // Optional, will set up leaderboards for these values
-    [
-      {"name": "Accuracy", "value": .926},
-      {"name": "Time", "value": 15.1, "order": "asc"},
-      {"name": "Stars", "value": "*****"}
-    ]
+    "score": null
 }

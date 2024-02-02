@@ -1,7 +1,7 @@
-from subprocess import run as original_run
-from subprocess import Popen as original_popen
 import logging
 from functools import wraps
+from subprocess import Popen as original_popen
+from subprocess import run as original_run
 
 from magi.info.env import Env
 

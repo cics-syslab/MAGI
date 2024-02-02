@@ -4,6 +4,8 @@ import sys
 from jinja2 import Environment, FileSystemLoader
 from .config import Config
 from magi._private.hookspecs import hookimpl
+
+
 @hookimpl
 def generating():
     from magi.components.render import render_templates
@@ -20,6 +22,7 @@ def convert_template(template_content):
     pattern = re.compile(r'\{_(\w+)_\}')
     converted_template = re.sub(pattern, r'{{ \1 }}', template_content)
     return converted_template
+
 
 def generate_code(template_file, output_file, variables):
     # Set up Jinja environment
