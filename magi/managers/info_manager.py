@@ -25,6 +25,8 @@ class Directories:
     LOGS_DIR: Path = SRC_PATH / "logs"
     OUTPUT_DIR: Path = SRC_PATH / "output"
     SETTINGS_DIR: Path = SRC_PATH / "settings"
+    MODULES_DIR: Path = SRC_PATH / "modules"
+    PLUGINS_DIR: Path = SRC_PATH / "plugins"
 
     WORK_DIR: Path = SRC_PATH / "workdir"  # the directory contains the project files for the project to
     # compile, run, and test

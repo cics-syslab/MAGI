@@ -1,9 +1,10 @@
 from magi.common.addon import hookimpl
 from .config import Config
-from .gen_doc import generate_documentation
 from .grader import grade
 import jinja2
+import shutil
 
+env = jinja2.Environment(loader=jinja2.FileSystemLoader('modules/ClientServerSocket/templates'))
 
 class ClientServerSocket:
     def __init__(self):
@@ -13,17 +14,25 @@ class ClientServerSocket:
     @hookimpl
     def generate(self):
         # use jinja to render the solution file
-        env = jinja2.Environment(loader=jinja2.FileSystemLoader('modules/ClientServerSocket/templates'))
-        template = env.get_template('client.c')
-        output = template.render()
+        template = env.get_template('client.c.jinja')
+        output = template.render(magic_str=Config.magic_str)
         from magi.managers import InfoManager
-        print(InfoManager.Directories.OUTPUT_DIR)
         with open(InfoManager.Directories.OUTPUT_DIR / "solution" / "client.c", "w+") as f:
             f.write(output)
+        shutil.copyfile("modules/ClientServerSocket/QA.py", InfoManager.Directories.OUTPUT_DIR / "solution" / "QA.py")
 
     @hookimpl
     def generate_documentation(self):
-        return generate_documentation()
+        template = env.get_template('documentation.md.jinja')
+        from . import Config
+        import subprocess
+        import sys
+        sample_question = subprocess.run([sys.executable, "-m", "QA.py"], cwd= "modules/ClientServerSocket",stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout
+        sample_question = sample_question
+        sample_answer = subprocess.run([sys.executable, "-m", "QA.py", sample_question], cwd= "modules/ClientServerSocket",stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout
+        doc = template.render(sample_question=sample_question, sample_answer=sample_answer, magic_str=Config.magic_str, question_format = Config.question_format)
+        return doc
+        
 
     @hookimpl
     def grade(self):

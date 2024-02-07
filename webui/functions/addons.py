@@ -59,7 +59,7 @@ def update_pages():
                 if addon_name not in SettingManager.BaseSettings.enabled_plugins:
                     os.remove(os.path.join("webui", "pages", file))
         # otherwise, the pages will be updated too quickly and streamlit will not be able to keep up
-        # sleep(0.1)
+        sleep(0.1)
         for addon in [AddonManager.enabled_module] + AddonManager.enabled_plugins:
             print("Rendering addon page", addon)
             render_addon_page(addon)

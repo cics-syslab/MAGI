@@ -13,6 +13,7 @@ def generate_question() -> str:
     return question
 
 
+
 def solve_question(question: str) -> str:
     interp = {
         '+': lambda x, y: x + y,

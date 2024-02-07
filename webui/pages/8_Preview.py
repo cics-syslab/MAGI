@@ -21,7 +21,7 @@ st.write("## Download Autograder")
 
 if os.path.exists("output/autograder.zip"):
     
-    st.download_button("Download autograder.zip", open("output/autograder.zip", mode="rb"), "autograder.zip")
+    st.download_button("Download autograder.zip", open("output/autograder.zip", mode="rb"), "autograder.zip",type="primary")
     
     event = st_file_browser("output/source", key = "autograder.zip")
     
@@ -31,7 +31,8 @@ else:
 
 st.write("## Download Solution")
 if os.path.exists("output/solution.zip"):
-    st.download_button("Download solution.zip", open("output/solution.zip", mode="rb"), "solution.zip")
+    st.download_button("Download solution.zip", open("output/solution.zip", mode="rb"), "solution.zip",type="primary")
+    event = st_file_browser("output/solution", key = "solution.zip")
 else:
     st.warning("Solution not found")
 
