@@ -64,7 +64,8 @@ def grade_submission():
     from magi.managers import SettingManager
     from magi.managers.info_manager import Directories
     from magi.managers import AddonManager, TestManager
-
+    TestManager.reset()
+    
     submission_files = SettingManager.BaseSettings.submission_files
     submission_dir = Directories.SUBMISSION_DIR
     os.makedirs(Directories.WORK_DIR, exist_ok=True)

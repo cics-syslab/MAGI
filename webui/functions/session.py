@@ -8,7 +8,7 @@ from .addons import update_pages
 
 
 
-def init_session():
+def init_session(preview_page=False):
     st.set_page_config(layout="wide")
     if "update_addon_lock" not in session_state:
         session_state.update_addon_lock = threading.Lock()
@@ -25,7 +25,9 @@ def init_session():
         session_state["InfoManager"] = InfoManager
     
     # print(session_state["AddonManager"]._name_to_modules["ClientServerSocket"].loaded)
-
+    if not preview_page:
+        session_state["output_generated"] = False
+    
     update_pages()
     session_state["SettingManager"].save_settings()
     st.markdown(

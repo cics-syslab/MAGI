@@ -1,3 +1,6 @@
+[logger]
+
+level = "debug"
 
 [runner]
 fastReruns = false 
@@ -6,3 +9,4 @@ magicEnabled = false
 
 [server]
 enableCORS = false
+folderWatchBlacklist = ['logs','.git']
