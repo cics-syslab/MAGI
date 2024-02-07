@@ -23,7 +23,7 @@ MAGI is a python framework for generating programming assignments and autograder
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.10
 
 ### Installation
   
