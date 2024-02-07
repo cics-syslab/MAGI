@@ -38,8 +38,8 @@ else:
 
 import code_editor
 st.write("## Download Documentation")
-if os.path.exists("output/documentation.md"):
-    code_editor.code_editor(open("output/documentation.md").read(),lang="markdown")
+if os.path.exists("output/misc/documentation.md"):
+    code_editor.code_editor(open("output/misc/documentation.md").read(),lang="markdown")
 
 
 # with col1:

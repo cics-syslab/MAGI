@@ -99,6 +99,27 @@ def generate_autograder(output_dir: str | Path) -> None:
 
     logging.info(f'Autograder successfully generated to {output_dir}')
 
+def reset_output_dir(output_dir: str) -> None:
+    """
+    Reset the output directory to its initial state.
+
+    : param output_dir: The output directory to reset.
+    : return: None
+    """
+    if not output_dir:
+        raise Exception("No output directory provided")
+
+    if not op.isdir(output_dir):
+        logging.warning(f'Output directory {output_dir} does not exist, no need to reset.')
+        return
+
+    shutil.rmtree(output_dir)
+    logging.info(f'Output directory {output_dir} reset.')
+    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(op.join(output_dir, "source"), exist_ok=True)
+    os.makedirs(op.join(output_dir, "solution"), exist_ok=True)
+    os.makedirs(op.join(output_dir, "misc"), exist_ok=True)
+
 
 def generate_output(output_parent_dir: str = None) -> None:
     """
@@ -128,7 +149,7 @@ def generate_output(output_parent_dir: str = None) -> None:
     AddonManager.generate()
     make_zip(output_dir/"solution", "solution")
     AddonManager.after_generate()
-    generate_documentation(op.join(output_dir, "documentation.md"))
+    generate_documentation(op.join(output_dir/"misc", "documentation.md"))
 
 
 def generate_documentation(file_path: str) -> None:
@@ -147,7 +168,7 @@ def generate_documentation(file_path: str) -> None:
     if not docs:
         return
 
-    doc_string = f"# {SettingManager.BaseSettings.project_name} \n {SettingManager.BaseSettings.project_description} \n"
+    doc_string = f"# {SettingManager.BaseSettings.project_name} \n \n {SettingManager.BaseSettings.project_description} \n"
 
     doc_string += "\n".join(docs)
     with open(file_path, "w+", encoding="utf-8") as f:
