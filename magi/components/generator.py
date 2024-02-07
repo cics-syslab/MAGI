@@ -95,7 +95,7 @@ def generate_autograder(output_dir: str | Path) -> None:
             shutil.copytree(Directories.SRC_PATH / "plugins" / enabled_plugin,
                             output_source_dir / "plugins" / enabled_plugin)
     make_zip(output_source_dir, "autograder")
-    make_zip(output_dir/"solution", "solution")
+    
 
     logging.info(f'Autograder successfully generated to {output_dir}')
 
@@ -118,7 +118,7 @@ def generate_output(output_parent_dir: str = None) -> None:
     output_dir = Path(output_parent_dir)
 
     shutil.rmtree(output_dir / "source", ignore_errors=True)
-
+    os.makedirs(output_dir / "solution", exist_ok=True)
     AddonManager.before_generate()
 
     shutil.copytree(Directories.TEMPLATE_DIR / "source", output_dir / "source")
@@ -126,6 +126,7 @@ def generate_output(output_parent_dir: str = None) -> None:
     generate_autograder(output_dir)
 
     AddonManager.generate()
+    make_zip(output_dir/"solution", "solution")
     AddonManager.after_generate()
     generate_documentation(op.join(output_dir, "documentation.md"))
 

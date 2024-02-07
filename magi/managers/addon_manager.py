@@ -100,12 +100,11 @@ def update_enabled_module() -> Module | None:
         enabled_module = _name_to_modules[SettingManager.BaseSettings.enabled_module]
         pm.register(enabled_module.imported_object)
         return enabled_module
-
     logging.error(f"Error loading module {SettingManager.BaseSettings.enabled_module}", exc_info=True)
     # raise ValueError(f"Error loading module {SettingManager.BaseSettings.enabled_module}")
     SettingManager.BaseSettings.enabled_module = "None"
     enabled_module = None
-
+    
     return None
 
 

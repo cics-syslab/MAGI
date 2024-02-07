@@ -17,6 +17,7 @@ class ClientServerSocket:
         template = env.get_template('client.c')
         output = template.render()
         from magi.managers import InfoManager
+        print(InfoManager.Directories.OUTPUT_DIR)
         with open(InfoManager.Directories.OUTPUT_DIR / "solution" / "client.c", "w+") as f:
             f.write(output)
 

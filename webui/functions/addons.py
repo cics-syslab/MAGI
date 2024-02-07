@@ -1,6 +1,10 @@
 import os
+from time import sleep
 
 from jinja2 import Environment, PackageLoader, select_autoescape
+
+from streamlit import session_state
+
 
 env = Environment(
     loader=PackageLoader("webui"),
@@ -33,26 +37,32 @@ def get_addon_page_path(addon):
 
 
 def update_pages():
-    from streamlit import session_state
-    if "updating" in session_state:
-        while session_state.updating:
-            pass
-    session_state["updating"] = True
+    update_addon_lock = session_state.update_addon_lock
     SettingManager = session_state.SettingManager
     AddonManager = session_state.AddonManager
     InfoManager = session_state.InfoManager
-    files = os.listdir(InfoManager.Directories.SRC_PATH / "webui" / "pages")
+    with update_addon_lock:
+        print("Updating pages")
+        
+        files = os.listdir(InfoManager.Directories.SRC_PATH / "webui" / "pages")
+        # print("enabled module", AddonManager.enabled_module.name)
+        # print("enabled plugins", AddonManager.enabled_plugins)
+        # print("files", files)
 
-    for file in files:
-        if file.startswith("1_"):
-            addon_name = file.split(".")[0][2:]
-            if addon_name != SettingManager.BaseSettings.enabled_module:
-                os.remove(os.path.join("webui", "pages", file))
-        elif file.startswith("2_"):
-            addon_name = file.split(".")[0][2:]
-            if addon_name not in SettingManager.BaseSettings.enabled_plugins:
-                os.remove(os.path.join("webui", "pages", file))
-
-    for addon in [AddonManager.enabled_module] + AddonManager.enabled_plugins:
-        render_addon_page(addon)
-    session_state["updating"] = False
+        for file in files:
+            if file.startswith("1_"):
+                addon_name = file.split(".")[0][2:]
+                if addon_name != SettingManager.BaseSettings.enabled_module:
+                    os.remove(os.path.join("webui", "pages", file))
+            elif file.startswith("2_"):
+                addon_name = file.split(".")[0][2:]
+                if addon_name not in SettingManager.BaseSettings.enabled_plugins:
+                    os.remove(os.path.join("webui", "pages", file))
+        # otherwise, the pages will be updated too quickly and streamlit will not be able to keep up
+        # sleep(0.1)
+        for addon in [AddonManager.enabled_module] + AddonManager.enabled_plugins:
+            print("Rendering addon page", addon)
+            render_addon_page(addon)
+        
+        
+        print("Pages updated")

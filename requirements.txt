@@ -2,3 +2,5 @@ jinja2
 streamlit
 dacite
 pluggy
+streamlit_code_editor
+streamlit-file-browser

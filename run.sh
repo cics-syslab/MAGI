@@ -13,4 +13,4 @@ else
 fi
 
 # Run your Python script
-python3 -m streamlit run webui/Hello.py
+python3 -m streamlit run webui/Hello.py 

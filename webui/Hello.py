@@ -4,10 +4,11 @@ import sys
 import streamlit as st
 from streamlit import session_state
 
-st.set_page_config(
-    page_title="Hello",
-    page_icon="👋",
-)
+# st.set_page_config(
+#     page_title="Hello",
+#     page_icon="👋",
+#     layout="wide",
+# )
 from functions.session import init_session
 
 init_session()
