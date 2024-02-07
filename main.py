@@ -4,12 +4,6 @@ import time
 from logging import handlers
 
 
-# GUI will only be started for development purposes
-def start_gui():
-    from gui.app import start_app
-    start_app()
-
-
 def setup():
     pass
 
@@ -37,12 +31,6 @@ def main():
     elif args.autograder:
         from magi.components.grader import grade_submission
         grade_submission()
-    elif args.mock:
-        pass
-    else:
-        start_gui()
-        from magi.managers import SettingManager
-        SettingManager.save_settings()
 
 
 if __name__ == '__main__':
