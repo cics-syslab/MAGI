@@ -75,13 +75,13 @@ def grade_submission():
     # rejected.
     missing_file = check_submitted_files(submission_files, submission_dir)
     if missing_file:
-        if SettingManager.BaseSettings.strict_file_checking
+        if SettingManager.BaseSettings.strict_file_checking:
             TestManager.fail_all(f"Missing file(s): {', '.join(missing_file)}")
             TestManager.output_result(str(Directories.RESULT_JSON_PATH))
             return
         else:
             TestManager.output_global_message(f"Missing file(s): {', '.join(missing_file)}")
-            
+
     if SettingManager.BaseSettings.allow_all_file:
         shutil.copytree(submission_dir, Directories.WORK_DIR, dirs_exist_ok=True)
     else:
