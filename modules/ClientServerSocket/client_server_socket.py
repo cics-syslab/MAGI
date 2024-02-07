@@ -39,6 +39,9 @@ class ClientServerSocket:
         sample_question = sample_question
         sample_answer = subprocess.run([sys.executable, "-m", "QA.py", sample_question], cwd= "modules/ClientServerSocket",stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout
         doc = template.render(sample_question=sample_question, sample_answer=sample_answer, magic_str=Config.magic_str, question_format = Config.question_format)
+        print(f"first character: {doc[0]}")
+        print(f"second character: {doc[1]}")
+        print(f"third character: {doc[2]}")
         return doc
         
 

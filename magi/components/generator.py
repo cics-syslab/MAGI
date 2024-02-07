@@ -167,7 +167,7 @@ def generate_documentation(file_path: str) -> None:
 
     if not docs:
         return
-
+    
     doc_string = f"# {SettingManager.BaseSettings.project_name} \n \n {SettingManager.BaseSettings.project_description} \n \n"
 
     doc_string += "\n".join(docs)

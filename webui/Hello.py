@@ -46,3 +46,4 @@ for addon in AddonManager.available_modules:
 st.write("### Plugins")
 for plugin in AddonManager.available_plugins:
     st.write(plugin.name)
+    
