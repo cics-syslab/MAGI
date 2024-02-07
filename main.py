@@ -1,11 +1,16 @@
 import argparse
 import logging
+from pathlib import Path
 import time
 from logging import handlers
 
 
 def setup():
-    pass
+    required_dirs = ['logs', 'workdir', 'settings', 'modules', 'plugins']
+    app_path = Path(__file__).resolve().parent
+    for d in required_dirs:
+        if not app_path.joinpath(d).exists():
+            app_path.joinpath(d).mkdir()
 
 
 def main():
