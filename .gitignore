@@ -6,7 +6,6 @@
 **.pyc
 
 
-venv/
 output/
 logs/
 settings/
