@@ -34,14 +34,22 @@ if os.path.exists("output/solution.zip"):
     st.download_button("Download solution.zip", open("output/solution.zip", mode="rb"), "solution.zip",type="primary")
     event = st_file_browser("output/solution", key = "solution.zip")
 else:
-    st.warning("Solution not found")
+    st.warning("No solution was generated")
 
 import code_editor
 st.write("## Download Documentation")
 if os.path.exists("output/misc/documentation.md"):
+    st.download_button("Download documentation.md", open("output/misc/documentation.md", mode="rb"), "documentation.md",type="primary")
     code_editor.code_editor(open("output/misc/documentation.md").read(),lang="markdown")
+else:
+    st.warning("No documentation was generated")
 
-
+st.write("## Download Solution")
+if os.path.exists("output/misc.zip"):
+    st.download_button("Download misc.zip", open("output/misc.zip", mode="rb"), "misc.zip",type="primary")
+    event = st_file_browser("output/misc", key = "misc.zip")
+else:
+    st.warning("No additional file was generated")
 # with col1:
 #     st.write("## Autograder")
 # with col2:

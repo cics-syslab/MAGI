@@ -32,12 +32,10 @@ def run_test(port, rounds, points_for_hello=0, points_for_goodbye=0, points_per_
 
     server = subprocess.Popen([sys.executable, "server.py", "--port", str(port), "--rounds", str(rounds),
                                "--points-for-hello", str(points_for_hello), "--points-for-goodbye",
-                               str(points_for_goodbye), "--points-per-test", str(points_per_test), "--json"],
-                              cwd=str(Directories.SRC_PATH / "modules" / "ClientServerSocket"
-                                      ))
+                               str(points_for_goodbye), "--points-per-test", str(points_per_test), "--json",
+                               "-M", Config.magic_str],
+                              cwd=str(Directories.SRC_PATH / "modules" / "ClientServerSocket"))
 
-    # server_thread = threading.Thread(target=server.run)
-    # server_thread.start()
     sleep(3)  # Wait for server to initialize
 
     cmd = ["./client", "richards@cs.umass.edu", str(port), "127.0.0.1"]

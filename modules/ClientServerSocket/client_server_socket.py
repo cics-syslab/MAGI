@@ -1,3 +1,4 @@
+import os
 from magi.common.addon import hookimpl
 from .config import Config
 from .grader import grade
@@ -20,6 +21,13 @@ class ClientServerSocket:
         with open(InfoManager.Directories.OUTPUT_DIR / "solution" / "client.c", "w+") as f:
             f.write(output)
         shutil.copyfile("modules/ClientServerSocket/QA.py", InfoManager.Directories.OUTPUT_DIR / "solution" / "QA.py")
+        os.makedirs(InfoManager.Directories.OUTPUT_DIR / "misc" / "server", exist_ok=True)
+        shutil.copyfile("modules/ClientServerSocket/QA.py", InfoManager.Directories.OUTPUT_DIR / "misc" / "server" / "QA.py")
+        shutil.copyfile("modules/ClientServerSocket/server.py", InfoManager.Directories.OUTPUT_DIR / "misc" / "server" / "server.py")
+        template = env.get_template('run.sh.jinja')
+        output = template.render(magic_str=Config.magic_str)
+        with open(InfoManager.Directories.OUTPUT_DIR / "misc" / "server" / "run.sh", "w+") as f:
+            f.write(output)
 
     @hookimpl
     def generate_documentation(self):

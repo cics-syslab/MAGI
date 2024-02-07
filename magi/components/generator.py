@@ -121,7 +121,7 @@ def reset_output_dir(output_dir: str) -> None:
     os.makedirs(op.join(output_dir, "misc"), exist_ok=True)
 
 
-def generate_output(output_parent_dir: str = None) -> None:
+def generate_output(output_dir: str = None) -> None:
     """
     Generate the all project files under the given output directory. 
 
@@ -129,28 +129,28 @@ def generate_output(output_parent_dir: str = None) -> None:
     : return: None
     """
     from magi.managers import AddonManager
-    if output_parent_dir is None:
-        output_parent_dir = SettingManager.BaseSettings.output_dir
+    if output_dir is None:
+        output_dir = SettingManager.BaseSettings.output_dir
 
     # Save the settings before generating the output, useful for GUI
     SettingManager.save_settings()
-
+    
+    reset_output_dir(output_dir)
     # output_dir = create_output_dir(output_parent_dir)
-    output_dir = Path(output_parent_dir)
-
-    shutil.rmtree(output_dir / "source", ignore_errors=True)
-    os.makedirs(output_dir / "solution", exist_ok=True)
+    output_dir = Path(output_dir)
     AddonManager.before_generate()
 
-    shutil.copytree(Directories.TEMPLATE_DIR / "source", output_dir / "source")
+    shutil.copytree(Directories.TEMPLATE_DIR / "source", output_dir / "source", dirs_exist_ok=True)
 
     generate_autograder(output_dir)
 
     AddonManager.generate()
-    make_zip(output_dir/"solution", "solution")
+    if len(os.listdir(output_dir / "solution")) != 0:
+        make_zip(output_dir/"solution", "solution")
     AddonManager.after_generate()
     generate_documentation(op.join(output_dir/"misc", "documentation.md"))
-
+    if len(os.listdir(output_dir / "misc")) != 0:
+        make_zip(output_dir/"misc", "misc")
 
 def generate_documentation(file_path: str) -> None:
     """
@@ -168,7 +168,7 @@ def generate_documentation(file_path: str) -> None:
     if not docs:
         return
 
-    doc_string = f"# {SettingManager.BaseSettings.project_name} \n \n {SettingManager.BaseSettings.project_description} \n"
+    doc_string = f"# {SettingManager.BaseSettings.project_name} \n \n {SettingManager.BaseSettings.project_description} \n "
 
     doc_string += "\n".join(docs)
     with open(file_path, "w+", encoding="utf-8") as f:
