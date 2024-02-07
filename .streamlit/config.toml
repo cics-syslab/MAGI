@@ -1,0 +1,8 @@
+
+[runner]
+fastReruns = false 
+magicEnabled = false
+
+
+[server]
+enableCORS = false

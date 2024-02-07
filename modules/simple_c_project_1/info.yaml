@@ -1,7 +1,0 @@
-name: Very Simple C Project 1
-version: 1.0
-author: anonymous
-author_email:
-description: A minimal module example
-documentation: readme.md 
-dependencies: [gtest]

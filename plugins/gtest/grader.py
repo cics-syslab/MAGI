@@ -1,27 +1,37 @@
 #!/usr/bin/python3
-import json
 import os
 import subprocess
-import sys
+from dataclasses import dataclass
 from xml.dom import minidom
 
 import yaml
 
-from core.managers import TestManager
-from core.utils.code_runner import run
+from magi.common import gradescope
+from magi.common.gradescope import TestCase
+from magi.managers import TestManager
 
 
-p = subprocess.Popen(['timeout', '2m', "./" + test['file'], "--gtest_output=xml:" + out_name,
-                                  "--gtest_filter=" + test['class'] + "." + test['name']], stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+@dataclass
+class XmlTestCase:
+    name: str
+    status: str
+    time: str
+    classname: str
+    failed_msg: str = ""
+
+    def updateFailedMsg(self, msg: str):
+        self.failed_msg = msg
+
+    def __str__(self):
+        return f"{self.name} {self.status} {self.time} {self.classname} {self.failed_msg}"
 
 
-class TestSuite:
+class XmlTestSuite:
     def __init__(self, xml_file_path: str):
         # Load XML Document
         self.xmldoc = minidom.parse(xml_file_path)
         self.tests, self.failures, self.disabled, self.errors, self.timestamp, \
-        self.time, self.name, self.nodes = self._get_test_suite()
+            self.time, self.name, self.nodes = self._get_test_suite()
 
     def _get_test_suite(self):
         itemlist = self.xmldoc.getElementsByTagName('testsuites')
@@ -41,7 +51,7 @@ class TestSuite:
         status = node.attributes['status'].value
         time = node.attributes['time'].value
         classname = node.attributes['classname'].value
-        testdata = TestCase(name, status, time, classname)
+        testdata = XmlTestCase(name, status, time, classname)
 
         fails = node.getElementsByTagName("failure")
         if fails:
@@ -64,10 +74,6 @@ class TestSuite:
         print("Failures:    " + str(self.failures))
         print("Errors:      " + str(self.errors))
         print("Disabled:    " + str(self.disabled))
-
-class GTest:
-    def __init__():
-        pass
 
 
 def write_failed_test(fname: str, testname: str, points: str) -> None:
@@ -106,42 +112,62 @@ def grade_all(test_file_name: str) -> None:
     with open(test_file_name, 'r') as file:
         tests = yaml.load(file, Loader=yaml.FullLoader)
 
-    # Just in case the tests have already been run, we remove them so they won't interfere with this iteration
-    if os.path.exists("../../autograder/results/results_parts"):
-        os.remove("../../autograder/results/results_parts")
+    from magi.managers.info_manager import Directories
+    import logging
 
-    # Must keep the file open while writing all parts to it
-    with open("../../autograder/results/results_parts", 'w') as parts_file:
-        # Iterate through each gtest
-        for test in tests['tests']:
-            # define the output name for the gtest xml file, as gtest can only export in xml, no python API yet
-            out_name = "../../autograder/source/" + test['file'] + "_" + test['class'] + "_" + test['name'] + ".xml"
+    TEMP_DIR = Directories.WORK_DIR / "gtest_temp"
+    os.makedirs(TEMP_DIR, exist_ok=True)
+    from magi.utils.code_runner import Popen
+    # TODO: seperate Make
+    Popen(["make"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=Directories.WORK_DIR.as_posix()).communicate()
+    for test in tests['tests']:
+        # define the output name for the gtest xml file, as gtest can only export in xml, no python API yet
+        xml_name = test['file'] + "_" + test['class'] + "_" + test['name'] + ".xml"
+        out_name = TEMP_DIR / xml_name
 
-            print("Running: " + test['name'])
+        logging.debug(f"Running: {test['name']}")
 
-            # In case we are running the autograder again, we want to remove any existing XML files which may be present
-            if os.path.exists(out_name):
-                os.remove(out_name)
+        # In case we are running the autograder again, we want to remove any existing XML files which may be present
+        if os.path.exists(out_name):
+            os.remove(out_name)
 
-            # Run the individual gtest using the following console command (subprocess is how you can run system commands from python)
-            p = subprocess.Popen(['timeout', '2m', "./" + test['file'], "--gtest_output=xml:" + out_name,
-                                  "--gtest_filter=" + test['class'] + "." + test['name']], stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE)
+        # Run the individual gtest using the following console command (subprocess is how you can run system commands from python)
+
+        gtest_filter = test['class'] + "." + test['name']
+        gtest_output = "xml:" + str(out_name)
+        try:
+
+            p = Popen(["./" + test['file'], f"--gtest_output={gtest_output}", f"--gtest_filter={gtest_filter}"],
+                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=Directories.WORK_DIR)
             # Get stdout and stderr
             out, err = p.communicate()
-            # gtest outputs 0 if test succeeds, 1 otherwise
-            print("Test return code: " + str(p.returncode))
-            # If the xml fails to generate, the test fails to execute (possibly due to segfault)
-            if not os.path.exists(out_name):
-                print("test failed")
-                # Write a generic failed XML file so that we can treat it the same as other tests with one function
-                write_failed_test(out_name, test['name'], test['points'])
-            # Grade the test based on the XML file
-            results = grade(out_name, test['points']) if "verbose" not in test else grade(out_name, test['points'],
-                                                                                          test['verbose'])
-            # Write our json to the file
-            parts_file.write(results)
+            # gtest outputs 0 if test succeeds, 1 otherwise, 124 if timeout
+            logging.debug(f"Test {test['name']} returned {p.returncode}")
+            if p.returncode != 0:
+                logging.warning(f"Test {test['name']} returned {p.returncode}")
+        except Exception as e:
+            logging.error(f"Error running test {test['name']}: {e}", exc_info=True)
 
-    # Convert all results parts files to one big JSON needed for gradescope
-    writeToOutput("../../autograder/results/results_parts")
+        # If the xml fails to generate, the test fails to execute (possibly due to segfault)
+        if not os.path.exists(out_name):
+            logging.warning(f"Test {test['name']} failed to execute")
+            # Write a generic failed XML file so that we can treat it the same as other tests with one function
+            write_failed_test(out_name, test['name'], test['points'])
+        xml_test_suite = XmlTestSuite(str(out_name))
+        xml_test_cases = xml_test_suite.gather_data()
 
+        for xml_test_case in xml_test_cases:
+            test_case = TestCase(name=xml_test_case.name, max_score=test['points'])
+            test_case.visibility = gradescope.Visibility.VISIBLE if 'visible' not in test or test[
+                'visible'] else gradescope.Visibility.AFTER_PUBLISHED
+            if xml_test_case.status == "error":
+                test_case.fail_test(xml_test_case.failed_msg)
+            else:
+                test_case.pass_test(xml_test_case.failed_msg)
+            TestManager.add_test(test_case)
+
+from magi._private.hookspecs import hookimpl
+@hookimpl
+def grade():
+    from .config import Config
+    grade_all(Config.test_list_file)

@@ -1,7 +1,6 @@
 import unittest
 
-
-from core.components.project_file_generator import process_distribution_version
+from magi.components.project_file_generator import process_distribution_version
 
 
 class TestDistributionVersionProcessor(unittest.TestCase):

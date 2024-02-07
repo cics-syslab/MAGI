@@ -4,13 +4,26 @@
 
 MAGI is a python framework for generating programming assignments and autograders for Gradescope, with extensible modules and plugins.
 
+![Windows Badge](https://img.shields.io/badge/Windows-Supported-green)
+![macOS Badge](https://img.shields.io/badge/macOS-Supported-green)
+![Linux Badge](https://img.shields.io/badge/Linux-Supported-green)
+![x86 Badge](https://img.shields.io/badge/x86-Supported-green)
+![x64 Badge](https://img.shields.io/badge/x64-Supported-green)
+| Platform/Architecture | Status        |
+|-----------------------|---------------|
+| Windows               | Supported     |
+| macOS                 | Supported     |
+| Linux                 | Supported     |
+| x86                   | Supported     |
+| x64                   | Supported     |
+| ARM                   | Not Supported |
 ---
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.10
 
 ### Installation
   
@@ -51,22 +64,20 @@ python main.py
 
 The interface is organized into tabs, with two default tabs: Preview and Basic Settings. When you enable different modules or plugins, their respective settings (if available) will appear in newly created tabs.
 
-
-
 ### Basic Settings
 
 This page includes the generic information about the assignment and overall settings. The attributes are listed below,
   
-- Project Name: 
+- Project Name:
 The title for the project and also the name shown on the generated material such as the documentation.
 
-- Project Desc: 
+- Project Desc:
 Optional. A paragraph long brief description for the project. Could be a scenario or something related.
 
-- Submission Files: 
+- Submission Files:
 A list of file required for submission. In case of the student's submission doesn't include one or more files in the list, the autograder will not run or produce the test result but throws an error message to notify the student.
 
-- Enabled Module: 
+- Enabled Module:
 Choose the module you wish to use. Please note that modules are mutually exclusive, allowing only one module to be enabled at a time.
 
   List of modules currently available:
@@ -74,7 +85,7 @@ Choose the module you wish to use. Please note that modules are mutually exclusi
   
 <!-- - [Thread Project Engine](https://github.com/nightdawnex/gsgen/tree/main/modules/ThreadingProjectEngine) -->
 
-- Enabled Plugins: 
+- Enabled Plugins:
 Select the plugins you want to use. You can enable multiple plugins simultaneously.
 
   List of Plugins currently available:

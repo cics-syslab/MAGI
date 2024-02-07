@@ -1,0 +1,12 @@
+{
+  "question_format": "a+b+c",
+  "qa": "",
+  "points_for_connect": 30,
+  "points_for_disconnect": 30,
+  "points_for_question_answer": 3,
+  "question_count": 100,
+  "basic_test": false,
+  "basic_test_points": 30,
+  "port": -1,
+  "magic_str": "cs230"
+}

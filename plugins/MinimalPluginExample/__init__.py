@@ -1,0 +1,1 @@
+from .minimal_plugin_example import MinimalPluginExample
