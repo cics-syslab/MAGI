@@ -9,4 +9,4 @@ magicEnabled = false
 
 [server]
 enableCORS = false
-folderWatchBlacklist = ['/home/kcc/MAGI/logs']
+folderWatchBlacklist = ['logs','.git']

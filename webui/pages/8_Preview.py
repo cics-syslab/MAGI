@@ -5,13 +5,26 @@ import os
 from streamlit_file_browser import st_file_browser
 from webui.functions.session import init_session
 import json
+import time 
 
-init_session()
+init_session(preview_page=True)
 SettingManager = session_state.SettingManager
 AddonManager = session_state.AddonManager
 InfoManager = session_state.InfoManager
 
 st.write("# Preview")
+
+if not session_state.get("output_generated", False):
+    with st.spinner('Wait for generation...'):
+        from magi.components import generator
+
+        generator.generate_output("output")
+        time.sleep(2)
+
+session_state["output_generated"] = True
+st.write("## Test Solution")
+uploaded_file = st.file_uploader("Choose a file", type="zip")
+
 grading_progress_region = st.empty()
 result_region = st.empty()
 
@@ -68,11 +81,15 @@ def grade_zip_file(zip_file_path: str | os.PathLike[str]):
 
     show_test_results()
 
+if uploaded_file is not None:
+    bytes_data = uploaded_file.getvalue()
+    if uploaded_file.file_id+"tested" not in st.session_state:
+        st.session_state[uploaded_file.file_id+"tested"] = True        
+        with open("output/submission.zip", "wb") as f:
+            f.write(bytes_data)
+        grade_zip_file("output/submission.zip")
+    
 
-with st.spinner('Wait for generation...'):
-    from magi.components import generator
-
-    generator.generate_output("output")
 
 
 st.write("## Download Autograder")

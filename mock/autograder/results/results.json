@@ -5,59 +5,35 @@
     "extra_data": {},
     "tests": [
         {
-            "score": 10,
-            "max_score": 10,
+            "score": 30,
+            "max_score": 30,
             "visibility": "visible",
             "output": "Successfully connected",
             "name": "Test case 0",
             "status": ""
         },
         {
-            "score": 10,
-            "max_score": 10,
+            "score": 3,
+            "max_score": 3,
             "visibility": "visible",
-            "output": "Test Case: 612 + 504 ...... SUCCESS",
+            "output": "Test Case: 500 + 846 ...... SUCCESS",
             "name": "Test case 1",
             "status": ""
         },
         {
-            "score": 10,
-            "max_score": 10,
+            "score": 3,
+            "max_score": 3,
             "visibility": "visible",
-            "output": "Reached end of tests",
+            "output": "Test Case: 106 + 574 ...... SUCCESS",
             "name": "Test case 2",
             "status": ""
         },
         {
-            "score": 30,
-            "max_score": 30,
+            "score": 3,
+            "max_score": 3,
             "visibility": "visible",
-            "output": "Successfully connected",
+            "output": "Test Case: 356 * 463 ...... SUCCESS",
             "name": "Test case 3",
-            "status": ""
-        },
-        {
-            "score": 3,
-            "max_score": 3,
-            "visibility": "visible",
-            "output": "Test Case: 205 + 339 ...... SUCCESS",
-            "name": "Test case 4",
-            "status": ""
-        },
-        {
-            "score": 3,
-            "max_score": 3,
-            "visibility": "visible",
-            "output": "Test Case: 744 - 322 ...... SUCCESS",
-            "name": "Test case 5",
-            "status": ""
-        },
-        {
-            "score": 3,
-            "max_score": 3,
-            "visibility": "visible",
-            "output": "Test Case: 567 - 842 ...... SUCCESS",
-            "name": "Test case 6",
             "status": ""
         },
         {
@@ -65,7 +41,7 @@
             "max_score": 30,
             "visibility": "visible",
             "output": "Reached end of tests",
-            "name": "Test case 7",
+            "name": "Test case 4",
             "status": ""
         }
     ],
