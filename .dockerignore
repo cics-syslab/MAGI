@@ -24,3 +24,9 @@ docs/
 .gitignore
 Dockerfile
 
+modules/PointerProjectEngine/
+modules/ThreadingProjectEngine/
+
+plugins/email_notice
+plugins/gtest
+plugins/make_c
