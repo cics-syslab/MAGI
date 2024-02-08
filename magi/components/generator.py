@@ -6,6 +6,7 @@ import os
 import os.path as op
 import shutil
 from pathlib import Path
+import time
 
 from magi.managers import SettingManager
 from magi.managers.info_manager import Directories
@@ -136,6 +137,7 @@ def generate_output(output_dir: str = None) -> None:
     SettingManager.save_settings()
     
     reset_output_dir(output_dir)
+    time.sleep(1)
     # output_dir = create_output_dir(output_parent_dir)
     output_dir = Path(output_dir)
     AddonManager.before_generate()

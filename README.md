@@ -19,14 +19,31 @@ MAGI is a python framework for generating programming assignments and autograder
 | ARM                   | Not Supported |
 ---
 
-## Getting Started
+## Quick Start
 
-### Prerequisites
+The easiest way to get started with our application is by using our pre-built Docker image.
 
-- Python 3.10
+```bash
+docker run -d --name magi -p 8501:8501 -v ./settings:/app/settings ghcr.io/cics-syslab/magi:latest
+```
 
-### Installation
-  
+### Docker Compose
+```yaml
+version: '3'
+services:
+  magi:
+    image: ghcr.io/cics-syslab/magi:latest
+    volume:
+      - ${pwd}/settings:/app/settings
+    network_mode: bridge
+    ports:
+      - "8501:8501"
+```
+
+## Building from Source
+
+If you prefer to build the application from source, follow the instructions in the [Building from Source](#building-from-source) page.
+<!-- 
 1. Download the release and unzip it
 
     ```bash
@@ -51,15 +68,16 @@ MAGI is a python framework for generating programming assignments and autograder
     ```bash
     python main.py 
     # python3 main.py in some unix os
-    ```
+    ``` -->
 
 ## Usage
 
-Start the gui
+Access the web interface through http://host:port
+<!-- Start the gui
+
 
 ```bash
-python main.py 
-# python3 main.py in some unix os
+
 ```
 
 The interface is organized into tabs, with two default tabs: Preview and Basic Settings. When you enable different modules or plugins, their respective settings (if available) will appear in newly created tabs.
@@ -85,20 +103,20 @@ Choose the module you wish to use. Please note that modules are mutually exclusi
   
 <!-- - [Thread Project Engine](https://github.com/nightdawnex/gsgen/tree/main/modules/ThreadingProjectEngine) -->
 
-- Enabled Plugins:
+<!-- - Enabled Plugins:
 Select the plugins you want to use. You can enable multiple plugins simultaneously.
 
-  List of Plugins currently available:
+  List of Plugins currently available: -->
 
-### Preview
+<!-- ### Preview
 
 On the preview page, you can choose where to generate the output project files.
 
-The files will be generated in a folder named after the project. If the folder already exists, it will be appended with the current time.
+The files will be generated in a folder named after the project. If the folder already exists, it will be appended with the current time. -->
 
-### Upload the autograder to Gradescope
+### Upload the autograder to Gradescope 
 
-In gradescope, select Ubuntu-22.04 as base image and upload the generated zip file.
+In gradescope, select Ubuntu-22.04 as base image and upload the generated zip file. 
 
 <!-- For more detailed usage instructions, please refer to the [User Guide](link-to-user-guide.md). -->
 <!-- ---
@@ -117,7 +135,7 @@ For support or to provide feedback, please raise an issue on our [GitHub reposit
 
 ## License
 
-NetGuardian is released under the [MIT License](LICENSE).
+MAGI is released under the [MIT License](LICENSE).
 
 ---
 

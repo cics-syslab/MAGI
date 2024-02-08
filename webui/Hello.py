@@ -13,14 +13,11 @@ from functions.session import init_session
 
 init_session()
 
-st.write("# Welcome to Streamlit! 👋")
+st.write("# Welcome to MAGI")
 
-st.markdown(
-    """
-    Streamlit is an open-source app framework built specifically for
-    Machine Learning and Data Science projects.
-"""
-)
+st.write("This is the web interface for MAGI.")
+
+st.write("## Debug Information")
 st.markdown(
     """
     # Path
