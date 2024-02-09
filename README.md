@@ -20,6 +20,9 @@ MAGI is a python framework for generating programming assignments and autograder
 | x64                   | Supported     |
 | ARM                   | Supported with limited feature |
 ---
+## Documentation
+
+For detailed documentation, please visit our [GitHub Wiki](https://github.com/cics-syslab/MAGI/wiki).
 
 ## Quick Start
 
@@ -45,17 +48,17 @@ services:
 
 ## Building from Source
 
-If you prefer to build the application from source, follow the instructions in the [Build](https://github.com/cics-syslab/MAGI/wiki/Build) page.
+If you prefer to build the application from source, follow the instructions in the [Build](https://github.com/cics-syslab/MAGI/wiki/Build).
 
 ## Usage
 
 Access the web interface through http://host:port
 
-For detailed usage instructions, please refer to the [Usage page](https://github.com/cics-syslab/MAGI/wiki/Usage).
+For detailed usage instructions, please refer to [Usage](https://github.com/cics-syslab/MAGI/wiki/Usage).
 
 ## Contributing
 
-We welcome contributions! Please check out our [Contributing page](https://github.com/cics-syslab/MAGI/wiki/Contributing) for guidelines. 
+We welcome contributions! Please check out our [Contributing](https://github.com/cics-syslab/MAGI/wiki/Contributing) page for guidelines. 
 
 ---
 
@@ -80,6 +83,6 @@ Special thanks to the community and everyone who contributed to making this proj
 ## Changelog
 
 
-For a detailed changelog, refer to the [Changelog page](https://github.com/cics-syslab/MAGI/wiki/Changelog).
+For a detailed changelog, refer to [Changelog](https://github.com/cics-syslab/MAGI/wiki/Changelog).
 
 ---
