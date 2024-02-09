@@ -23,10 +23,10 @@ This module supports generating following files:
 
 - [x] **Autograder**
 - [x] **Documentation**
-- [x] **Solution[^1]**
+- [x] **Solution[^solution]**
 - [ ] **Starter Code**
 
-[^1]A sample solution is generated, utilizing the `QA.py` to solve the problem. Instructors are encouraged to implement
+[^solution]A sample solution is generated, utilizing the `QA.py` to solve the problem. Instructors are encouraged to implement
 and test the native solving algorithm in C by modifying the `void solve_question(char* question, char* answer)` function
 in the generated `client.c` file.
 
