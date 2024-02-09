@@ -19,14 +19,14 @@ programming concepts, client-server architecture, and applying logical reasoning
 
 ## Supported Features
 
-This module supports generating following files:
+This module supports[^1] generating following files:
 
 - [x] **Autograder**
 - [x] **Documentation**
-- [x] [^solution]**Solution**
+- [x] **Solution**
 - [ ] **Starter Code**
 
-[^solution]A sample solution is generated, utilizing the `QA.py` to solve the problem. Instructors are encouraged to implement
+[^1]A sample solution is generated, utilizing the `QA.py` to solve the problem. Instructors are encouraged to implement
 and test the native solving algorithm in C by modifying the `void solve_question(char* question, char* answer)` function
 in the generated `client.c` file.
 
