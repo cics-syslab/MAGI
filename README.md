@@ -4,6 +4,8 @@
 
 MAGI is a python framework for generating programming assignments and autograders for Gradescope, with extensible modules and plugins.
 
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
 ![Windows Badge](https://img.shields.io/badge/Windows-Supported-green)
 ![macOS Badge](https://img.shields.io/badge/macOS-Supported-green)
 ![Linux Badge](https://img.shields.io/badge/Linux-Supported-green)
@@ -16,7 +18,7 @@ MAGI is a python framework for generating programming assignments and autograder
 | Linux                 | Supported     |
 | x86                   | Supported     |
 | x64                   | Supported     |
-| ARM                   | Not Supported |
+| ARM                   | Supported with limited feature |
 ---
 
 ## Quick Start
@@ -42,33 +44,7 @@ services:
 
 ## Building from Source
 
-If you prefer to build the application from source, follow the instructions in the [Build](build) page.
-<!-- 
-1. Download the release and unzip it
-
-    ```bash
-    wget https://github.com/cics-syslab/MAGI/releases/tag/{version}
-    unzip {version}.zip
-    ```
-
-1. Navigate to the directory
-
-    ```bash
-    cd MAGI
-    ```
-
-1. Install Dependencies
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-1. Start the Program
-
-    ```bash
-    python main.py 
-    # python3 main.py in some unix os
-    ``` -->
+If you prefer to build the application from source, follow the instructions in the [Build](https://github.com/cics-syslab/MAGI/wiki/Build) page.
 
 ## Usage
 
@@ -147,10 +123,7 @@ Special thanks to the community and everyone who contributed to making this proj
 
 ## Changelog
 
-- **1.0:** Fix issues with some upstream updates.
 
-- **0.5:** Initial release.
-
-<!-- For a detailed changelog, refer to the [CHANGELOG.md](link-to-changelog.md). -->
+For a detailed changelog, refer to the [Changelog page](https://github.com/cics-syslab/MAGI/wiki/Changelog).
 
 ---
