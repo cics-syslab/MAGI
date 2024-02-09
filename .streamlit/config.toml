@@ -1,6 +1,6 @@
 [logger]
 
-level = "debug"
+level = "info"
 
 [runner]
 fastReruns = false
