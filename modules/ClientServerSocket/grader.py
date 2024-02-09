@@ -9,7 +9,7 @@ from magi.common.gradescope import Result, Visibility
 from magi.managers import TestManager
 from magi.managers.info_manager import Directories
 from magi.utils.serialization import load_dataclass_from_file
-from . import Config
+from .config import Config
 
 
 def compile_student_code():

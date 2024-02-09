@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional, List
 
-from magi._private.singleton import overwrite_singleton
+from magi.utils.singleton import overwrite_singleton
 
 
 @overwrite_singleton

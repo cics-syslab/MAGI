@@ -37,10 +37,10 @@ class ClientServerSocket:
     @hookimpl
     def generate_documentation(self):
         template = env.get_template('documentation.md.jinja')
-        from . import Config
+        from .config import Config
         import subprocess
         import sys
-        from magi.managers import SettingsManager
+        from magi.managers import SettingManager
         sample_question = subprocess.run([sys.executable, "-m", "QA.py"], cwd="modules/ClientServerSocket",
                                          stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                          text=True).stdout
@@ -50,7 +50,7 @@ class ClientServerSocket:
                                        stderr=subprocess.PIPE, text=True).stdout
         doc = template.render(sample_question=sample_question, sample_answer=sample_answer, magic_str=Config.magic_str,
                               question_format=Config.question_format,
-                              project_name=SettingsManager.BaseSettings.project_name)
+                              project_name=SettingManager.BaseSettings.project_name)
         return doc
 
     @hookimpl
