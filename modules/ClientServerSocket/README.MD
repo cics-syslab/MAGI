@@ -23,8 +23,8 @@ This module comes with several features to aid in teaching, learning, and evalua
 
 - [x] **Autograder**
 - [x] **Documentation**
-- [x] **Solution**[^1]
-- [] **Starter Code**
+- [x] **Solution[^1]**
+- [ ] **Starter Code**
 
 [^1]A sample solution is generated, utilizing the `QA.py` to solve the problem. Instructors are encouraged to implement
 and test the native solving algorithm in C by modifying the `void solve_question(char* question, char* answer)` function
