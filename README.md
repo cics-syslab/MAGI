@@ -4,6 +4,8 @@
 
 MAGI is a python framework for generating programming assignments and autograders for Gradescope, with extensible modules and plugins.
 
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
 ![Windows Badge](https://img.shields.io/badge/Windows-Supported-green)
 ![macOS Badge](https://img.shields.io/badge/macOS-Supported-green)
 ![Linux Badge](https://img.shields.io/badge/Linux-Supported-green)
