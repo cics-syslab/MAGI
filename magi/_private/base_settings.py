@@ -5,7 +5,7 @@ from typing import List
 @dataclass
 class BaseSettings:
     project_name: str = ""
-    project_description: str = field(default_factory=str, metadata={"text_area": True})
+    project_description: str = field(default_factory=str, metadata={"text_area": True, "help": "A optional short description of the project."})
     strict_file_checking: bool = field(default=False, metadata={"help": "When enabled, student not submitting all required files will not be graded."})
     allow_all_file: bool = field(default=True, metadata={"help": "Allow all files to be uploaded, when disabled, only files in the submission_files list will be allowed."})
     submission_files: List[str] = field(default_factory=list)

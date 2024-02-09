@@ -13,6 +13,7 @@ update_addon_lock = session_state.update_addon_lock
 st.markdown("# Base Settings")
 generate_ui_for_dataclass(SettingManager.BaseSettings)
 
+st.markdown("*Submission files are temporarily disabled*")
 
 def update_enabled_module():
     print(f"Updating enabled module from {SettingManager.BaseSettings.enabled_module} to {session_state.enabled_module}")
@@ -24,7 +25,6 @@ def update_enabled_module():
         update_pages()
     print(f"Enabled module: {SettingManager.BaseSettings.enabled_module}")
 
-print("rendering base settings")
 # selection for module
 st.write("## Modules")
 module_options = ["None"] + AddonManager.get_available_module_names()
