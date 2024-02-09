@@ -19,7 +19,7 @@ programming concepts, client-server architecture, and applying logical reasoning
 
 ## Supported Features
 
-This module comes with several features to aid in teaching, learning, and evaluating:
+This module supports generating following files:
 
 - [x] **Autograder**
 - [x] **Documentation**
