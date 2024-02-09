@@ -33,15 +33,15 @@ before submitting.
 
 You will implement a network client that will communicate to a remote server in the C programming language. The server
 implements a simple protocol that requires your client to send your **netid@umass.edu** email. After you do this then
-the server will respond to your client with a series of simple math problems that your client will need to solve (how
-you solve the math problems is up to you). The steps are outlined as follows:
+the server will respond to your client with a series of simple problems that your client will need to solve (how
+you solve the problems is up to you). The steps are outlined as follows:
 
 Your client will be expected to conduct the following procedure:
 
 - Step 1: Open a TCP stream socket
 - Step 2: Connect to the remote server on the specified port number
 - Step 3: Send your SPIRE ID to the server in the following format: NETID@umass.edu
-- Step 4: Receive the first math problem
+- Step 4: Receive the first problem
 - Step 5: Send the CORRECT solution to the server (Server will drop connection if it is wrong)
 - Step 6: Continue steps 4 and 5 for a random amount of times (No less than 300, but no more than 2000)
 - Step 7: Once step 6 is completed, you will receive a 64-byte string (flag) that is unique to your NetID. Once you
@@ -80,7 +80,7 @@ to anyone with a Linux (vagrant) or Mac distribution!
 
 # **Protocol Requirements**
 
-To capture the flag from the math bot server you must combine your understanding of the socket API functions and an
+To capture the flag from the {{ project_name }} server you must combine your understanding of the socket API functions and an
 application-layer protocol known as **math speak** which is as follows:
 
 When you first connect to the server you must identify yourself. In particular, you must send the following string:
@@ -89,8 +89,8 @@ When you first connect to the server you must identify yourself. In particular, 
 |:--------------------------------|
 
 This string must be **exactly** as we describe above - network protocols are very specific. You must replace <NETID>
-with your UMass **NetID**. By sending the identification string it will initiate the math bot server to start sending
-you math problems. You will immediately receive a "status" message with the following format:
+with your UMass **NetID**. By sending the identification string it will initiate the {{ project_name }} server to start sending
+you problems. You will immediately receive a "status" message with the following format:
 
 `{{ magic_str}} STATUS {{ question_format }}\n`
 
@@ -98,17 +98,17 @@ This status message includes a simple arithmetic operation. An example of an act
 
 `{{ magic_str}} STATUS {{ sample_question }}\n`
 
-You will need to implement functionality in your client that will compute the math problem provided in the server's
-status message. After you do that you need to send a response back to the math bot server that is formatted like this:
+You will need to implement functionality in your client that will compute the problem provided in the server's
+status message. After you do that you need to send a response back to the {{ project_name }} server that is formatted like this:
 
 `{{ magic_str}} <ANSWER>\n`
 
-You must replace <ANSWER> with the answer to the math problem. Here is an example:
+You must replace <ANSWER> with the answer to the problem. Here is an example:
 
 `{{ magic_str}} {{ sample_answer }}\n`
 
-With your response back to the server, the server will then repeatedly send you hundreds of math problems that your
-client must solve. Your client will need to solve each of the status math problems until you receive the response with
+With your response back to the server, the server will then repeatedly send you hundreds of problems that your
+client must solve. Your client will need to solve each of the status problems until you receive the response with
 the flag:
 
 `{{ magic_str}} <FLAG> BYE\n`
@@ -152,10 +152,10 @@ Here is a list of hints and suggestions that will help you in completing this as
 1. Make sure the messages you send to the server are *exactly* as stated above. Do not add any extra spaces or
    additional newlines (just the one that is at the end of the message) - any extra bytes will cause a failure in
    communication.
-1. Figure out how to extract the math problems, evaluate them, and send back the correct result. Pay careful attention
+1. Figure out how to extract the problems, evaluate them, and send back the correct result. Pay careful attention
    to division - we expect the result to be truncated. For example, if your client is asked to solve "200 / 3" you must
    respond with "66" as the result, not "66.66666" or "67".
-1. Figure out how you can identify when your client is done solving math problems.
+1. Figure out how you can identify when your client is done solving problems.
 1. Make sure your compiled client accepts the command line arguments exactly as we described above. If it does not, the
    autograder on Gradescope will give you a 0.
 1. Print the final message so you can see the flag and verify that you have implemented the client properly. Do not
@@ -172,7 +172,7 @@ Here is a list of hints and suggestions that will help you in completing this as
 This assignment is a bit different than the past assignments. You will need to submit only the client.c file mentioned
 above to Gradescope. The autograder will try to compile your C code and it will then run a local server (the same as the
 public server) to see if your client passes the tests. The tests are simple: (1) connect to the server, (2) solve the
-math problems, and (3) capture the flag. If you are able to do this successfully you will successfully complete this
+problems, and (3) capture the flag. If you are able to do this successfully you will successfully complete this
 assignment. The total number of points for this project is 1000 (it doesn't mean that it has more weight than other
 projects).
 
