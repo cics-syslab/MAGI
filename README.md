@@ -21,7 +21,7 @@ MAGI is a python framework for generating programming assignments and autograder
 
 ## Quick Start
 
-The easiest way to get started with our application is by using our pre-built Docker image.
+The easiest way to get started with our application is by using our pre-built [Docker](https://www.docker.com/) image.
 
 ```bash
 docker run -d --name magi -p 8501:8501 -v ./settings:/app/settings ghcr.io/cics-syslab/magi:latest
@@ -42,7 +42,7 @@ services:
 
 ## Building from Source
 
-If you prefer to build the application from source, follow the instructions in the [Building from Source](#building-from-source) page.
+If you prefer to build the application from source, follow the instructions in the [Build](build) page.
 <!-- 
 1. Download the release and unzip it
 
