@@ -86,3 +86,6 @@ Special thanks to the community and everyone who contributed to making this proj
 For a detailed changelog, refer to [Changelog](https://github.com/cics-syslab/MAGI/wiki/Changelog).
 
 ---
+
+<!-- TODO: Code of Conduct -->
+<!-- TODO: Creative Commons license -->
