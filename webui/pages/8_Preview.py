@@ -110,8 +110,13 @@ def download_section(title, file_path, download_label, content_label=None, key=N
         if content_label:
             st.write(f"### {content_label}")
         if 'zip' in file_path:  # For zip files, show file browser
+            content_dir = os.path.join(os.path.dirname(file_path),actual_folder) if actual_folder else file_path[:-4]
+            if not os.path.exists(content_dir):
+                st.warning(f"{content_label} not found.")
+                return
+            
             with st.container(border=True):
-                st_file_browser(os.path.join(os.path.dirname(file_path),actual_folder) if actual_folder else file_path[:-4], key=key)
+                st_file_browser(content_dir, key=key)
         else:  # For other file types, potentially show content directly
             if extra_action:
                 extra_action(file_path)
