@@ -3,10 +3,10 @@
 level = "debug"
 
 [runner]
-fastReruns = false 
+fastReruns = false
 magicEnabled = false
 
 
 [server]
 enableCORS = false
-folderWatchBlacklist = ['logs','.git']
+folderWatchBlacklist = ['logs', '.git']

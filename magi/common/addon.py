@@ -21,7 +21,6 @@ class AddonSpec:
     def before_generate(self):
         pass
 
-
     @hookspec
     def generate(self):
         """Hook for generating functionality."""

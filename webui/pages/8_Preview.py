@@ -1,13 +1,14 @@
+import json
+import os
+import time
+
 import code_editor
 import streamlit as st
 from streamlit import session_state
-import os
 from streamlit_file_browser import st_file_browser
-from webui.functions.session import init_session
-import json
-import time
 
 from magi.components.grader import grade_zip_submission
+from webui.functions.session import init_session
 
 init_session(preview_page=True)
 SettingManager = session_state.SettingManager
@@ -77,17 +78,19 @@ def grade_zip_file(zip_file_path: str | os.PathLike[str]):
             grade_zip_submission(zip_file_path)
     show_test_results()
 
+
 def check_uploaded_file(uploaded_file):
     if uploaded_file is not None:
         bytes_data = uploaded_file.getvalue()
-        if uploaded_file.file_id+"tested" not in st.session_state:
-            st.session_state[uploaded_file.file_id+"tested"] = True
+        if uploaded_file.file_id + "tested" not in st.session_state:
+            st.session_state[uploaded_file.file_id + "tested"] = True
             with open("output/submission.zip", "wb") as f:
                 f.write(bytes_data)
             grade_zip_file("output/submission.zip")
 
 
-def download_section(title, file_path, download_label, content_label=None, key=None, extra_action=None, actual_folder=None):
+def download_section(title, file_path, download_label, content_label=None, key=None, extra_action=None,
+                     actual_folder=None):
     """Display a section for downloading files and showing their contents if available.
 
     Args:
@@ -101,8 +104,8 @@ def download_section(title, file_path, download_label, content_label=None, key=N
     st.write(f"## {title}")
     if not os.path.exists(file_path):
         st.warning(f"{title} not found.")
-        return 
-    
+        return
+
     with open(file_path, "rb") as file:
         st.download_button(download_label, file, file_path.split('/')[-1], type="primary")
 
@@ -110,17 +113,17 @@ def download_section(title, file_path, download_label, content_label=None, key=N
         if content_label:
             st.write(f"### {content_label}")
         if 'zip' in file_path:  # For zip files, show file browser
-            content_dir = os.path.join(os.path.dirname(file_path),actual_folder) if actual_folder else file_path[:-4]
+            content_dir = os.path.join(os.path.dirname(file_path), actual_folder) if actual_folder else file_path[:-4]
             if not os.path.exists(content_dir):
                 st.warning(f"{content_label} not found.")
                 return
-            
+
             with st.container(border=True):
                 st_file_browser(content_dir, key=key)
         else:  # For other file types, potentially show content directly
             if extra_action:
                 extra_action(file_path)
-        
+
 
 def show_code_editor(file_path):
     """Display a code editor with the contents of the given file.
@@ -130,6 +133,7 @@ def show_code_editor(file_path):
     """
     with open(file_path, "r") as file:
         code_editor.code_editor(file.read(), lang="markdown")
+
 
 # Download sections
 download_section(
@@ -147,7 +151,8 @@ download_section(
     download_label="Download solution.zip",
     content_label="Solution Contents",
     key="solution.zip",
-    extra_action=lambda _: grade_zip_file("output/solution.zip") if st.button("Test autograder with generated solution") else None
+    extra_action=lambda _: grade_zip_file("output/solution.zip") if st.button(
+        "Test autograder with generated solution") else None
 )
 
 download_section(
@@ -166,4 +171,3 @@ download_section(
 )
 
 check_uploaded_file(uploaded_file)
-

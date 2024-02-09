@@ -78,7 +78,8 @@ def generate_ui_for_dataclass(dataclass_obj):
                               help=field.metadata.get("help"))
 
         elif field_type == bool:
-            st.checkbox(f"{field_display_name} (bool)", on_change=update_data, value=getattr(dataclass_obj, field_name, False),
+            st.checkbox(f"{field_display_name} (bool)", on_change=update_data,
+                        value=getattr(dataclass_obj, field_name, False),
                         args=(dataclass_obj, field_name, field_id), key=field_id, help=field.metadata.get("help"))
         else:
             st.text(f"Field '{field_display_name}' has an unsupported type: {field_type}")

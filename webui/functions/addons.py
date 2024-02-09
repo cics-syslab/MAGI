@@ -2,9 +2,7 @@ import os
 from time import sleep
 
 from jinja2 import Environment, PackageLoader, select_autoescape
-
 from streamlit import session_state
-
 
 env = Environment(
     loader=PackageLoader("webui"),
@@ -43,7 +41,7 @@ def update_pages():
     InfoManager = session_state.InfoManager
     with update_addon_lock:
         print("Updating pages")
-        
+
         files = os.listdir(InfoManager.Directories.SRC_PATH / "webui" / "pages")
         # print("enabled module", AddonManager.enabled_module.name)
         # print("enabled plugins", AddonManager.enabled_plugins)
@@ -63,6 +61,5 @@ def update_pages():
         for addon in [AddonManager.enabled_module] + AddonManager.enabled_plugins:
             print("Rendering addon page", addon)
             render_addon_page(addon)
-        
-        
+
         print("Pages updated")

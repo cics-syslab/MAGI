@@ -104,7 +104,7 @@ def update_enabled_module() -> Module | None:
     # raise ValueError(f"Error loading module {SettingManager.BaseSettings.enabled_module}")
     SettingManager.BaseSettings.enabled_module = "None"
     enabled_module = None
-    
+
     return None
 
 

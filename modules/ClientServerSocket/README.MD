@@ -1,16 +1,23 @@
 # Client Server Socket
-The `Client-Server Socket` module is designed for teaching networking concepts through practical application. It provides an engaging way for students to learn about socket programming by implementing a client in C that interacts with a server via socket connections. This module encompasses establishing a connection, performing a handshake, and responding to server-sent questions, thereby offering a comprehensive hands-on experience in network programming.
+
+The `Client-Server Socket` module is designed for teaching networking concepts through practical application. It
+provides an engaging way for students to learn about socket programming by implementing a client in C that interacts
+with a server via socket connections. This module encompasses establishing a connection, performing a handshake, and
+responding to server-sent questions, thereby offering a comprehensive hands-on experience in network programming.
 
 ## Project Requirement
 
-To successfully complete this module, students are required to develop a client capable of establishing a connection with a remote server and accurately solving questions received from the server. This involves understanding socket programming concepts, client-server architecture, and applying logical reasoning to solve the presented problems.
+To successfully complete this module, students are required to develop a client capable of establishing a connection
+with a remote server and accurately solving questions received from the server. This involves understanding socket
+programming concepts, client-server architecture, and applying logical reasoning to solve the presented problems.
 
 ## Key Learning Outcomes:
+
 - Establishing a socket connection with a server.
 - Understanding and implementing the handshake protocol.
 - Solving algorithmic questions sent by the server.
-## Supported Features
 
+## Supported Features
 
 This module comes with several features to aid in teaching, learning, and evaluating:
 
@@ -19,18 +26,25 @@ This module comes with several features to aid in teaching, learning, and evalua
 - [x] **Solution**[^1]
 - [] **Starter Code**
 
-[^1]A sample solution is generated, utilizing the `QA.py` to solve the problem. Instructors are encouraged to implement and test the native solving algorithm in C by modifying the `void solve_question(char* question, char* answer)` function in the generated `client.c` file.
+[^1]A sample solution is generated, utilizing the `QA.py` to solve the problem. Instructors are encouraged to implement
+and test the native solving algorithm in C by modifying the `void solve_question(char* question, char* answer)` function
+in the generated `client.c` file.
 
 ## Additional Feature: Server Deployment for Testing
 
-- **Misc - Server**: Contains a server implementation that instructors can deploy to provide students with a real-time testing environment. Students can interact with this server to test their client code. To run the server, execute the `run.sh` script within the server folder.
+- **Misc - Server**: Contains a server implementation that instructors can deploy to provide students with a real-time
+  testing environment. Students can interact with this server to test their client code. To run the server, execute
+  the `run.sh` script within the server folder.
 
 ## Configuration
-- **Question Format**: Specifies the format of questions that will be sent to the client, such as "operand operator operand", indicating questions like "number + number" or "number - number".
+
+- **Question Format**: Specifies the format of questions that will be sent to the client, such as "operand operator
+  operand", indicating questions like "number + number" or "number - number".
 
 - **Testcase Visibility**: Controls whether test cases are visible to students before the due date.
 
-- **Magic String**: A predefined string that each message between the client and server starts with, facilitating a unique protocol for message handling.
+- **Magic String**: A predefined string that each message between the client and server starts with, facilitating a
+  unique protocol for message handling.
 
 - **Points for Connect**: The number of points awarded for successfully establishing a connection with the server.
 
@@ -40,19 +54,24 @@ This module comes with several features to aid in teaching, learning, and evalua
 
 - **Question Count**: Total number of questions the server will send to the client.
 
-- **Port**: The port number used for the server-client communication. If set to -1, a default or random port will be used.
+- **Port**: The port number used for the server-client communication. If set to -1, a default or random port will be
+  used.
 
-- **Basic Test**: A boolean flag that, when true, enables a preliminary test consisting of one question to verify the server-client sanity.
+- **Basic Test**: A boolean flag that, when true, enables a preliminary test consisting of one question to verify the
+  server-client sanity.
 
 - **Basic Test Points**: Points awarded for passing the basic test.
 
 ### QA.py
 
-To facilitate the generation of questions and evaluation of answers, instructors must provide algorithms within QA.py file:
+To facilitate the generation of questions and evaluation of answers, instructors must provide algorithms within QA.py
+file:
 
 - ```generateQuestion() ```
-  This function is responsible for randomly generating questions based on the question_format. These questions are sent to the client for solving.
+  This function is responsible for randomly generating questions based on the question_format. These questions are sent
+  to the client for solving.
 
 - ```solveQuestion()```
-  Acts as the solver for the questions generated by generateQuestion(). It parses the question string, computes the answer, and returns the expected result. The client's response must match this answer for the test to pass.
+  Acts as the solver for the questions generated by generateQuestion(). It parses the question string, computes the
+  answer, and returns the expected result. The client's response must match this answer for the test to pass.
 

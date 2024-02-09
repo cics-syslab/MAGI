@@ -2,7 +2,8 @@
 
 ## Description
 
-MAGI is a python framework for generating programming assignments and autograders for Gradescope, with extensible modules and plugins.
+MAGI is a python framework for generating programming assignments and autograders for Gradescope, with extensible
+modules and plugins.
 
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
@@ -11,15 +12,16 @@ MAGI is a python framework for generating programming assignments and autograder
 ![Linux Badge](https://img.shields.io/badge/Linux-Supported-green)
 ![x86 Badge](https://img.shields.io/badge/x86-Supported-green)
 ![x64 Badge](https://img.shields.io/badge/x64-Supported-green)
-| Platform/Architecture | Status        |
+| Platform/Architecture | Status |
 |-----------------------|---------------|
-| Windows               | Supported     |
-| macOS                 | Supported     |
-| Linux                 | Supported     |
-| x86                   | Supported     |
-| x64                   | Supported     |
-| ARM                   | Supported with limited feature |
+| Windows | Supported |
+| macOS | Supported |
+| Linux | Supported |
+| x86 | Supported |
+| x64 | Supported |
+| ARM | Supported with limited feature |
 ---
+
 ## Documentation
 
 For detailed documentation, please visit our [GitHub Wiki](https://github.com/cics-syslab/MAGI/wiki).
@@ -33,6 +35,7 @@ docker run -d --name magi -p 8501:8501 -v ./settings:/app/settings ghcr.io/cics-
 ```
 
 ### Docker Compose
+
 ```yaml
 version: '3'
 services:
@@ -48,7 +51,8 @@ services:
 
 ## Building from Source
 
-If you prefer to build the application from source, follow the instructions in the [Build](https://github.com/cics-syslab/MAGI/wiki/Build).
+If you prefer to build the application from source, follow the instructions in
+the [Build](https://github.com/cics-syslab/MAGI/wiki/Build).
 
 ## Usage
 
@@ -58,13 +62,15 @@ For detailed usage instructions, please refer to [Usage](https://github.com/cics
 
 ## Contributing
 
-We welcome contributions! Please check out our [Contributing](https://github.com/cics-syslab/MAGI/wiki/Contributing) page for guidelines. 
+We welcome contributions! Please check out our [Contributing](https://github.com/cics-syslab/MAGI/wiki/Contributing)
+page for guidelines.
 
 ---
 
 ## Support & Feedback
 
-For support or to provide feedback, please raise an issue on our [GitHub repository](https://github.com/cics-syslab/MAGI/issues).
+For support or to provide feedback, please raise an issue on
+our [GitHub repository](https://github.com/cics-syslab/MAGI/issues).
 
 ---
 
@@ -81,7 +87,6 @@ Special thanks to the community and everyone who contributed to making this proj
 ---
 
 ## Changelog
-
 
 For a detailed changelog, refer to [Changelog](https://github.com/cics-syslab/MAGI/wiki/Changelog).
 

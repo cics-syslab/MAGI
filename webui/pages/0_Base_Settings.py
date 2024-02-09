@@ -15,8 +15,10 @@ generate_ui_for_dataclass(SettingManager.BaseSettings)
 
 st.markdown("*Submission files are temporarily disabled*")
 
+
 def update_enabled_module():
-    print(f"Updating enabled module from {SettingManager.BaseSettings.enabled_module} to {session_state.enabled_module}")
+    print(
+        f"Updating enabled module from {SettingManager.BaseSettings.enabled_module} to {session_state.enabled_module}")
     with st.spinner("Loading..."):
         with update_addon_lock:
             SettingManager.BaseSettings.enabled_module = session_state.enabled_module
@@ -24,6 +26,7 @@ def update_enabled_module():
             SettingManager.save_settings()
         update_pages()
     print(f"Enabled module: {SettingManager.BaseSettings.enabled_module}")
+
 
 # selection for module
 st.write("## Modules")

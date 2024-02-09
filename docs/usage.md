@@ -1,5 +1,3 @@
-
-
 #### File Structure
 
 The file structure emulates the gradescope environment under the subdirectory.

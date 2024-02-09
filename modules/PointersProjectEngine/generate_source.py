@@ -1,9 +1,11 @@
 import os
 import re
 import sys
+
 from jinja2 import Environment, FileSystemLoader
-from .config import Config
 from magi._private.hookspecs import hookimpl
+
+from .config import Config
 
 
 @hookimpl
@@ -38,6 +40,7 @@ def generate_code(template_file, output_file, variables):
     with open(output_file, "w") as file:
         file.write(rendered_code)
     print(f"{output_file} generated successfully.")
+
 
 if __name__ == "__main__":
     # Get variables from Config class

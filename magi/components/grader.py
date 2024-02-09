@@ -65,7 +65,7 @@ def grade_submission():
     from magi.managers.info_manager import Directories
     from magi.managers import AddonManager, TestManager
     TestManager.reset()
-    
+
     submission_files = SettingManager.BaseSettings.submission_files
     submission_dir = Directories.SUBMISSION_DIR
     os.makedirs(Directories.WORK_DIR, exist_ok=True)
@@ -94,6 +94,7 @@ def grade_submission():
     logging.debug("Finished grading, outputting result")
     TestManager.output_result(str(Directories.RESULT_JSON_PATH))
 
+
 def grade_zip_submission(zip_file_path: str | Path):
     """
     Start the grading process for zip submission
@@ -102,12 +103,12 @@ def grade_zip_submission(zip_file_path: str | Path):
     # decompress the zip file to submission directory
     from zipfile import ZipFile
     from magi.managers.info_manager import Directories
-    from magi.managers import SettingManager
 
     with ZipFile(zip_file_path, 'r') as zip_ref:
         zip_ref.extractall(Directories.SUBMISSION_DIR)
-    
+
     grade_submission()
+
 
 if __name__ == "__main__":
     grade_submission()

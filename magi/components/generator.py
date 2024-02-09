@@ -5,8 +5,8 @@ import logging
 import os
 import os.path as op
 import shutil
-from pathlib import Path
 import time
+from pathlib import Path
 
 from magi.managers import SettingManager
 from magi.managers.info_manager import Directories
@@ -96,9 +96,9 @@ def generate_autograder(output_dir: str | Path) -> None:
             shutil.copytree(Directories.SRC_PATH / "plugins" / enabled_plugin,
                             output_source_dir / "plugins" / enabled_plugin)
     make_zip(output_source_dir, "autograder")
-    
 
     logging.info(f'Autograder successfully generated to {output_dir}')
+
 
 def reset_output_dir(output_dir: str) -> None:
     """
@@ -135,7 +135,7 @@ def generate_output(output_dir: str = None) -> None:
 
     # Save the settings before generating the output, useful for GUI
     SettingManager.save_settings()
-    
+
     reset_output_dir(output_dir)
     time.sleep(1)
     # output_dir = create_output_dir(output_parent_dir)
@@ -148,11 +148,12 @@ def generate_output(output_dir: str = None) -> None:
 
     AddonManager.generate()
     if len(os.listdir(output_dir / "solution")) != 0:
-        make_zip(output_dir/"solution", "solution")
+        make_zip(output_dir / "solution", "solution")
     AddonManager.after_generate()
-    generate_documentation(op.join(output_dir/"misc", "documentation.md"))
+    generate_documentation(op.join(output_dir / "misc", "documentation.md"))
     if len(os.listdir(output_dir / "misc")) != 0:
-        make_zip(output_dir/"misc", "misc")
+        make_zip(output_dir / "misc", "misc")
+
 
 def generate_documentation(file_path: str) -> None:
     """
@@ -169,7 +170,7 @@ def generate_documentation(file_path: str) -> None:
 
     if not docs:
         return
-    
+
     doc_string = f"# {SettingManager.BaseSettings.project_name} \n \n {SettingManager.BaseSettings.project_description} \n \n"
 
     doc_string += "\n".join(docs)

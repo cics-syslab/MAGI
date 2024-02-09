@@ -12,6 +12,7 @@ test_cases = []
 test_cases_by_name = {}
 anonymous_counter: int = 0
 
+
 def reset():
     global score, execution_time, output, extra_data, test_cases, test_cases_by_name, anonymous_counter
     score = 0
@@ -21,7 +22,8 @@ def reset():
     test_cases = []
     test_cases_by_name = {}
     anonymous_counter = 0
-    
+
+
 def output_global_message(msg: str):
     global output
     output += "\n" + msg

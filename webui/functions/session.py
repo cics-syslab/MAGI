@@ -1,11 +1,9 @@
-
-
 import threading
+
 import streamlit as st
 from streamlit import session_state
 
 from .addons import update_pages
-
 
 
 def init_session(preview_page=False):
@@ -23,11 +21,11 @@ def init_session(preview_page=False):
         session_state["AddonManager"] = AddonManager
         session_state["TestManager"] = TestManager
         session_state["InfoManager"] = InfoManager
-    
+
     # print(session_state["AddonManager"]._name_to_modules["ClientServerSocket"].loaded)
     if not preview_page:
         session_state["output_generated"] = False
-    
+
     update_pages()
     session_state["SettingManager"].save_settings()
     st.markdown(

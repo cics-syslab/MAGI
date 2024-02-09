@@ -1,6 +1,7 @@
-import jinja2
-import os
 import logging
+import os
+
+import jinja2
 
 
 def render_template(template_path, context, output_path=None, ):

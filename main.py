@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
 
+
 def setup():
     required_dirs = ['logs', 'workdir', 'settings', 'modules', 'plugins']
     app_path = Path(__file__).resolve().parent
@@ -10,8 +11,6 @@ def setup():
 
 
 def main():
-    
-
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--setup", action="store_true")
     parser.add_argument("-t", "--test", action="store_true", help="Run self tests")
@@ -33,7 +32,7 @@ def main():
     formatter = logging.Formatter(log_format)
     th.setFormatter(formatter)
     logging.getLogger().addHandler(th)
-    
+
     if args.autograder:
         from magi.components.grader import grade_submission
         grade_submission()

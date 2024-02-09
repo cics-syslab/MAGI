@@ -1,11 +1,14 @@
 import os
+import shutil
+
+import jinja2
+
 from magi.common.addon import hookimpl
 from .config import Config
 from .grader import grade
-import jinja2
-import shutil
 
 env = jinja2.Environment(loader=jinja2.FileSystemLoader('modules/ClientServerSocket/templates'))
+
 
 class ClientServerSocket:
     def __init__(self):
@@ -22,8 +25,10 @@ class ClientServerSocket:
             f.write(output)
         shutil.copyfile("modules/ClientServerSocket/QA.py", InfoManager.Directories.OUTPUT_DIR / "solution" / "QA.py")
         os.makedirs(InfoManager.Directories.OUTPUT_DIR / "misc" / "server", exist_ok=True)
-        shutil.copyfile("modules/ClientServerSocket/QA.py", InfoManager.Directories.OUTPUT_DIR / "misc" / "server" / "QA.py")
-        shutil.copyfile("modules/ClientServerSocket/server.py", InfoManager.Directories.OUTPUT_DIR / "misc" / "server" / "server.py")
+        shutil.copyfile("modules/ClientServerSocket/QA.py",
+                        InfoManager.Directories.OUTPUT_DIR / "misc" / "server" / "QA.py")
+        shutil.copyfile("modules/ClientServerSocket/server.py",
+                        InfoManager.Directories.OUTPUT_DIR / "misc" / "server" / "server.py")
         template = env.get_template('run.sh.jinja')
         output = template.render(magic_str=Config.magic_str)
         with open(InfoManager.Directories.OUTPUT_DIR / "misc" / "server" / "run.sh", "w+") as f:
@@ -36,12 +41,17 @@ class ClientServerSocket:
         import subprocess
         import sys
         from magi.managers import SettingsManager
-        sample_question = subprocess.run([sys.executable, "-m", "QA.py"], cwd= "modules/ClientServerSocket",stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout
+        sample_question = subprocess.run([sys.executable, "-m", "QA.py"], cwd="modules/ClientServerSocket",
+                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                         text=True).stdout
         sample_question = sample_question
-        sample_answer = subprocess.run([sys.executable, "-m", "QA.py", sample_question], cwd= "modules/ClientServerSocket",stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout
-        doc = template.render(sample_question=sample_question, sample_answer=sample_answer, magic_str=Config.magic_str, question_format = Config.question_format, project_name=SettingsManager.BaseSettings.project_name)
+        sample_answer = subprocess.run([sys.executable, "-m", "QA.py", sample_question],
+                                       cwd="modules/ClientServerSocket", stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE, text=True).stdout
+        doc = template.render(sample_question=sample_question, sample_answer=sample_answer, magic_str=Config.magic_str,
+                              question_format=Config.question_format,
+                              project_name=SettingsManager.BaseSettings.project_name)
         return doc
-        
 
     @hookimpl
     def grade(self):

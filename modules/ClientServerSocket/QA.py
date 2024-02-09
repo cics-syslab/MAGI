@@ -1,7 +1,4 @@
 import random
-import string
-
-import numpy as np
 
 
 def generate_question() -> str:
@@ -11,7 +8,6 @@ def generate_question() -> str:
 
     question = str(rand1) + " " + operator + " " + str(rand2)
     return question
-
 
 
 def solve_question(question: str) -> str:
