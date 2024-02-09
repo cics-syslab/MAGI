@@ -23,7 +23,7 @@ This module supports generating following files:
 
 - [x] **Autograder**
 - [x] **Documentation**
-- [x] **Solution[^solution]**
+- [x] [^solution]**Solution**
 - [ ] **Starter Code**
 
 [^solution]A sample solution is generated, utilizing the `QA.py` to solve the problem. Instructors are encouraged to implement
