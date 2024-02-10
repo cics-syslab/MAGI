@@ -40,7 +40,7 @@ docker run -d --name magi -p 8501:8501 -v ./settings:/app/settings ghcr.io/cics-
 version: '3'
 services:
   magi:
-    name: magi
+    container_name: magi
     image: ghcr.io/cics-syslab/magi:latest
     volume:
       - ${pwd}/settings:/app/settings
