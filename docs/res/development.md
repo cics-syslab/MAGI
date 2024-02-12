@@ -3,8 +3,6 @@ existing module and the framework. Refer to the main readme.
 
 ## Setup
 
-You will need to setup the environment as same as you
-
 always no stdout since we need that for logging
 
 info shown to student needs to be in output field

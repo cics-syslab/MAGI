@@ -17,5 +17,3 @@ The file structure emulates the gradescope environment under the subdirectory.
 - starter.zip (not implemented yet)
 
   starter code that needs to be provided to student
-
-do not place files in windows and run in wsl!!!!
