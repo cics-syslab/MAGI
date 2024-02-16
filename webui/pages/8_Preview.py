@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import os
 import time
@@ -100,6 +102,7 @@ def download_section(title, file_path, download_label, content_label=None, key=N
         content_label (str, optional): The label for the content section. Defaults to None.
         key (str, optional): The key for the file browser or content display. Defaults to None.
         extra_action (function, optional): An optional function to execute after the download button. Defaults to None.
+        actual_folder (str, optional): The actual folder to be displayed if the file is a zip file. Defaults to None.
     """
     st.write(f"## {title}")
     if not os.path.exists(file_path):
@@ -108,6 +111,9 @@ def download_section(title, file_path, download_label, content_label=None, key=N
 
     with open(file_path, "rb") as file:
         st.download_button(download_label, file, file_path.split('/')[-1], type="primary")
+
+    if extra_action:
+        extra_action(file_path)
 
     with st.container():
         if content_label:
@@ -120,9 +126,6 @@ def download_section(title, file_path, download_label, content_label=None, key=N
 
             with st.container(border=True):
                 st_file_browser(content_dir, key=key)
-        else:  # For other file types, potentially show content directly
-            if extra_action:
-                extra_action(file_path)
 
 
 def show_code_editor(file_path):
@@ -131,6 +134,7 @@ def show_code_editor(file_path):
     Args:
         file_path (str): The path to the file to be displayed in the code editor.
     """
+    st.write("### Preview Documentation")
     with open(file_path, "r") as file:
         code_editor.code_editor(file.read(), lang="markdown")
 
