@@ -4,11 +4,11 @@ import logging
 import os
 import os.path as op
 from typing import List
+
 import pluggy
 
-from magi.common.addon import Module, Plugin
+from magi.common.addon import AddonSpec, Module, Plugin
 from magi.managers.info_manager import Directories
-from magi.common.addon import AddonSpec
 
 logging = logging.getLogger('AddonManager')
 pm = pluggy.PluginManager("magi")
@@ -156,7 +156,6 @@ def update_enabled_plugins() -> List[Plugin]:
 #         else:
 #             logging.debug(f"Addon {addon.name} does not have {attr},skipped")
 #     return rtn
-
 
 
 def before_generating():

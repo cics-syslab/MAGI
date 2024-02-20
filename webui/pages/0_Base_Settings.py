@@ -38,9 +38,11 @@ st.selectbox("Select module", module_options, module_index, on_change=update_ena
 
 def update_enabled_plugins(changed_plugin_name):
     with update_addon_lock:
-        if session_state[changed_plugin_name] and changed_plugin_name not in SettingManager.BaseSettings.enabled_plugins:
+        if session_state[
+            changed_plugin_name] and changed_plugin_name not in SettingManager.BaseSettings.enabled_plugins:
             SettingManager.BaseSettings.enabled_plugins.append(changed_plugin_name)
-        elif not session_state[changed_plugin_name] and changed_plugin_name in SettingManager.BaseSettings.enabled_plugins:
+        elif not session_state[
+            changed_plugin_name] and changed_plugin_name in SettingManager.BaseSettings.enabled_plugins:
             SettingManager.BaseSettings.enabled_plugins.remove(changed_plugin_name)
 
         AddonManager.update_enabled_plugins()

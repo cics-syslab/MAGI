@@ -30,7 +30,6 @@ def compile_code():
     #     TestManager.fail_all("Compile Failed")
 
 
-
 def before_grading():
     compile_code()
 

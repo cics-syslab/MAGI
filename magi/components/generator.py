@@ -5,7 +5,6 @@ import os
 import os.path as op
 import shutil
 from pathlib import Path
-import zipfile
 
 from magi.managers import SettingManager
 from magi.managers.info_manager import Directories
@@ -181,7 +180,6 @@ def generate_output(output_dir: str = None) -> None:
 
     if len(os.listdir(output_dir / "solution")) != 0:
         make_zip(output_dir / "solution", "solution")
-    
 
     if len(os.listdir(output_dir / "misc")) != 0:
         make_zip(output_dir / "misc", "misc")
@@ -189,7 +187,6 @@ def generate_output(output_dir: str = None) -> None:
     if len(os.listdir(output_dir / "dist")) != 0:
         make_zip(output_dir / "dist", "dist")
 
-    generate_documentation(output_dir/"documentation.md")
+    generate_documentation(output_dir / "documentation.md")
 
     logging.info(f'Files successfully generated to {output_dir}')
-

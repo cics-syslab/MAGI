@@ -22,4 +22,3 @@ class Config:
     makefile: str = field(default="plugins/C_CPP/Makefile",
                           metadata={"excluded_from_ui": True,
                                     "file_editor": "plugins/C_CPP/Makefile"})
-

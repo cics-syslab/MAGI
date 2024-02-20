@@ -4,8 +4,8 @@ import os
 import os.path as op
 from dataclasses import is_dataclass, dataclass
 
-from magi.utils.serialization import dump_dataclass_to_file, load_dataclass_from_file
 from magi.common.base_settings import BaseSettings
+from magi.utils.serialization import dump_dataclass_to_file, load_dataclass_from_file
 
 logging = logging.getLogger('SettingManager')
 
@@ -34,8 +34,6 @@ def load_or_create(filepath: str, cls):
         instance = cls()
         dump_dataclass_to_file(instance, filepath)
     return instance
-
-
 
 
 addon_settings = {}

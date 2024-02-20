@@ -1,6 +1,6 @@
 from __future__ import annotations
-import io
 
+import io
 import json
 import os
 import time
@@ -93,7 +93,7 @@ def check_uploaded_file(uploaded_file):
             grade_zip_file("output/submission.zip")
 
 
-def download_section(title, file_path, download_label, 
+def download_section(title, file_path, download_label,
                      extra_action=None, file_browser_directory=None):
     """Display a section for downloading files and showing their contents if available.
 
@@ -137,6 +137,7 @@ def show_code_editor(file_path):
     with open(file_path, "r") as file:
         code_editor.code_editor(file.read(), lang="markdown")
 
+
 # download_section(
 #     title="Download All",
 #     file_path="output/all.zip",
@@ -155,8 +156,10 @@ def create_filtered_zip_in_memory(directory, allowed_extensions):
     memory_zip.seek(0)  # Move to the beginning of the BytesIO object
     return memory_zip
 
+
 st.write("## Download All")
-st.download_button("Download All Files", create_filtered_zip_in_memory("output", (".zip", ".md")), "all.zip", type="primary")
+st.download_button("Download All Files", create_filtered_zip_in_memory("output", (".zip", ".md")), "all.zip",
+                   type="primary")
 
 # Download sections
 download_section(
