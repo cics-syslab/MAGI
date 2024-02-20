@@ -35,7 +35,7 @@ logging = logging.getLogger("Generator")
 #     return output_dir
 
 
-def make_zip(target_dir: str | Path, zip_file_name: str, allowed_extension: list[str] = None) -> None:
+def make_zip(target_dir: str | Path, zip_file_name: str) -> None:
     """
     Pack the directory into a zip file in its parent directory.
 
@@ -49,15 +49,7 @@ def make_zip(target_dir: str | Path, zip_file_name: str, allowed_extension: list
         raise NotADirectoryError()
     if not isinstance(target_dir, Path):
         target_dir = Path(target_dir)
-
-    if not allowed_extension:
-        shutil.make_archive(str(target_dir.parent / zip_file_name), 'zip', target_dir)
-    # else:
-    #     with zipfile.ZipFile(str(target_dir.parent / f"{zip_file_name}.zip"), 'w') as zipf:
-    #         for root, dirs, files in os.walk(target_dir):
-    #             for file in files:
-    #                 if file.endswith(tuple(allowed_extension)):
-    #                     zipf.write(op.join(root, file), op.relpath(op.join(root, file), target_dir))
+    shutil.make_archive(str(target_dir.parent / zip_file_name), 'zip', target_dir)
 
     logging.info(f'{target_dir} packed to {op.join(target_dir.parent, f"{zip_file_name}.zip")}')
 
