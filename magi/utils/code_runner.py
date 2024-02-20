@@ -3,7 +3,6 @@ from functools import wraps
 from subprocess import Popen as original_popen
 from subprocess import run as original_run
 
-from magi.common.env import Env
 
 logging = logging.getLogger(__name__)
 
@@ -11,26 +10,34 @@ logging = logging.getLogger(__name__)
 def alter_cmd(cmd):
     # add the program prefix as needed
 
-    # check if cmd is a string or a list
-    if not isinstance(cmd, str):
-        cmd = " ".join(cmd)
-    cmd = ["sh", "-c" + "echo running; &&" + cmd]
+    if type(cmd) == str:
+        cmd = cmd.split()
+    # cmd.insert(0, "sudo")
+
     return cmd
 
 
 # TODO: add block internet access after implementing it
-# TODO: setup such as creating student user
 # TODO: setup timeout 
 def alter_arguments(args, kwargs):
     logging.debug(f"altering arguments {args} {kwargs}")
-    # check the environment first, if in local mode, then do nothing
-    if not (Env.in_docker or Env.in_gradescope):
-        return args, kwargs
-    if args:
-        args[0] = alter_cmd(args[0])
+    
+    def get_uid():
+        try:
+            uid = int(original_run(["id", "-u", "student"], capture_output=True, check=True, text=True).stdout.strip())
+            return uid
+        except Exception as e:
+            return 0
+    uid = get_uid()
+
+    if "args" in kwargs:
+        kwargs["args"] = alter_cmd(kwargs["args"])
     else:
-        kwargs["cmd"] = alter_cmd(kwargs["cmd"])
-    kwargs["user"] = "student"
+        new_arg= alter_cmd(args[0])
+        args = (new_arg, *args[1:])
+    
+    if uid != 0:
+        kwargs["user"] = uid
     return args, kwargs
 
 
