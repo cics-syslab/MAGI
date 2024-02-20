@@ -24,7 +24,7 @@ def remove_existing_submission_files(submission_files: list, workdir: str | Path
             logging.debug(f"Removed existing file {submission_file_path} for grading")
 
 
-def check_submitted_files(submission_files: list, submission_dir: str | Path):
+def check_submitted_files(submission_files: list, submission_dir: str | Path) -> list[str]:
     """
     Check if all submission presents in the submission, returns a list of missing files
 
@@ -40,7 +40,7 @@ def check_submitted_files(submission_files: list, submission_dir: str | Path):
     return missed_file
 
 
-def move_submission_files(submission_files: list, workdir: str | Path, submission_dir: str | Path):
+def move_submission_files(submission_files: list, workdir: str | Path, submission_dir: str | Path) -> None:
     """
     Move the submitted files to the project files directory
 
@@ -58,7 +58,7 @@ def move_submission_files(submission_files: list, workdir: str | Path, submissio
     logging.debug(f"Moved submitted files to {workdir}")
 
 
-def grade_submission():
+def grade_submission() -> None:
     """
     Start the grading process
     """
@@ -88,14 +88,17 @@ def grade_submission():
     else:
         move_submission_files(submission_files, Directories.WORK_DIR, submission_dir)
     logging.debug("Finished moving submission files, starting grading")
-
-    AddonManager.grade()
+    try:
+        AddonManager.grade()
+    except Exception as e:
+        logging.error("Error occurred during grading", exc_info=True)
+        TestManager.fail_all(str(e))
 
     logging.debug("Finished grading, outputting result")
     TestManager.output_result()
 
 
-def grade_zip_submission(zip_file_path: str | Path):
+def grade_zip_submission(zip_file_path: str | Path) -> None:
     """
     Start the grading process for zip submission
     """

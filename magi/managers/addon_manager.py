@@ -159,7 +159,7 @@ def update_enabled_plugins() -> List[Plugin]:
 
 
 # TODO: implement setup for each addon
-def setup(self):
+def setup():
     pass
 
 
@@ -177,9 +177,17 @@ def generate():
 
 
 def grade():
-    pm.hook.before_grading()
-    pm.hook.grade()
-    pm.hook.after_grading()
+    from . import TestManager
+    grading_steps = [
+        pm.hook.before_grading,
+        pm.hook.grade,
+        pm.hook.after_grading,
+    ]
+    for step in grading_steps:
+        if TestManager.status.all_failed:
+            logging.info("All failed, skipping grading")
+            return
+        step()
 
 
 def generate_documentation():
