@@ -177,9 +177,9 @@ download_section(
 
 download_section(
     title="Download Starter Code",
-    file_path="output/starter.zip",
-    download_label="Download starter.zip",
-    file_browser_directory="starter"
+    file_path="output/dist.zip",
+    download_label="Download dist.zip",
+    file_browser_directory="dist"
 )
 
 download_section(
