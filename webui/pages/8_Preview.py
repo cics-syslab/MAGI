@@ -116,7 +116,7 @@ def download_section(title, file_path, download_label,
         extra_action(file_path)
 
     if file_browser_directory:
-        st.write(f"### {file_path} Contents")
+        st.write(f"### {file_path.split('/')[-1]} Contents")
 
         content_dir = os.path.join(os.path.dirname(file_path), file_browser_directory)
         if not os.path.exists(content_dir):
