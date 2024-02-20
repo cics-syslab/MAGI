@@ -1,6 +1,7 @@
 import os
 import shutil
-
+import subprocess
+import sys
 import jinja2
 
 from magi.common.addon import hookimpl
@@ -37,9 +38,6 @@ class ClientServerSocket:
     @hookimpl
     def generate_documentation(self):
         template = env.get_template('documentation.md.jinja')
-        from .config import Config
-        import subprocess
-        import sys
         from magi.managers import SettingManager
         sample_question = subprocess.run([sys.executable, "-m", "QA.py"], cwd="modules/ClientServerSocket",
                                          stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
