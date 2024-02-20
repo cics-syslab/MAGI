@@ -18,7 +18,7 @@ class Config:
                                                                                        "half_width": True})
     
     exec_name: str = field(default="a.out", metadata={"help": "The name of the output executable when using CMAKE",
-                                                        "half_width": True, "ui_args":{"disabled":True}})
+                                                        "half_width": True})
     provide_student_makefile: bool = field(default=False,
                                            metadata={"help": "Provide students with a Makefile in starter code"})
     makefile: str = field(default="plugins/C_CPP/Makefile",
