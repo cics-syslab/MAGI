@@ -52,7 +52,8 @@ def move_submission_files(submission_files: list, workdir: str | Path, submissio
         submission_file_path = op.join(workdir, submission_file)
         submitted_file_path = op.join(submission_dir, submission_file)
         shutil.copy2(submitted_file_path, submission_file_path)
-    # TODO: add moving of unmentioned files, add tweaks to allow such files, add tweaks to disallow specific files, add basic filter to skip files such as .git
+    # TODO: add moving of unmentioned files, add tweaks to allow such files, add tweaks to disallow specific files,
+    #  add basic filter to skip files such as .git
 
     logging.debug(f"Moved submitted files to {workdir}")
 
@@ -76,12 +77,11 @@ def grade_submission():
     # rejected.
     missing_file = check_submitted_files(submission_files, submission_dir)
     if missing_file:
+        TestManager.output_global_message(f"Missing file(s): {', '.join(missing_file)}")
         if SettingManager.BaseSettings.strict_file_checking:
-            TestManager.fail_all(f"Missing file(s): {', '.join(missing_file)}")
-            TestManager.output_result(str(Directories.RESULT_JSON_PATH))
+            TestManager.fail_all()
+            TestManager.output_result()
             return
-        else:
-            TestManager.output_global_message(f"Missing file(s): {', '.join(missing_file)}")
 
     if SettingManager.BaseSettings.allow_all_file:
         shutil.copytree(submission_dir, Directories.WORK_DIR, dirs_exist_ok=True)
@@ -92,7 +92,7 @@ def grade_submission():
     AddonManager.grade()
 
     logging.debug("Finished grading, outputting result")
-    TestManager.output_result(str(Directories.RESULT_JSON_PATH))
+    TestManager.output_result()
 
 
 def grade_zip_submission(zip_file_path: str | Path):
