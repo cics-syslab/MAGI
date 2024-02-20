@@ -1,44 +1,61 @@
-import logging
+from __future__ import annotations
 
-from magi.common.gradescope import TestCase
+import logging
+from pathlib import Path
+from typing import Optional
+
+from magi.common.gradescope import TestCase, Result
 
 logging = logging.getLogger("TestManager")
 
-score: float = 0
-execution_time: float = 0
-output: str = ""
-extra_data = {}
-test_cases = []
-test_cases_by_name = {}
-anonymous_counter: int = 0
+
+class Status:
+    def __init__(self):
+        self.score: float = 0
+        self.execution_time: float = 0
+        self.output: str = ""
+        self.extra_data = {}
+        self.test_cases: list[TestCase] = []
+        self.test_cases_by_name = {}
+        self.anonymous_counter: int = 0
+        self.all_failed: bool = False  # if True, the total score and Testcases will be zero
+
+
+status = Status()
 
 
 def reset():
-    global score, execution_time, output, extra_data, test_cases, test_cases_by_name, anonymous_counter
-    score = 0
-    execution_time = 0
-    output = ""
-    extra_data = {}
-    test_cases = []
-    test_cases_by_name = {}
-    anonymous_counter = 0
+    """
+    A helper function to reset the status when using Webui, should never be called by the Addon
+    """
+    global status
+    status = Status()
 
 
 def output_global_message(msg: str):
-    global output
-    output += "\n" + msg
+    if status.output:
+        status.output += "\n"
+
+    status.output += msg
     logging.info("Test output: " + msg)
 
 
-def add_test(test_case: TestCase):
-    global anonymous_counter
+def add_test(test_case: Optional[TestCase]) -> TestCase:
+    """
+    Add a test case to the status, and return the test case
+    If no test case is provided, a new test case will be created
+
+    :param test_case: The test case to add
+    :return: The test case
+
+    """
     if test_case is None:
         test_case = TestCase()
-    if test_case.name is None or len(test_case.name) == 0:
-        test_case.name = f"Test case {anonymous_counter}"
-        anonymous_counter += 1
+    if not test_case.name:
+        test_case.name = f"Test case {status.anonymous_counter}"
+        status.anonymous_counter += 1
 
-    test_cases.append(test_case)
+    status.test_cases.append(test_case)
     # if test_case.name:
     #     if test_case.name in self.test_cases_by_name:
     #         logging.warning(f"Test case with name {test_case.name} already exists")
@@ -46,37 +63,37 @@ def add_test(test_case: TestCase):
     return test_case
 
 
-def new_test(*args, **kwargs):
+def new_test(*args, **kwargs) -> TestCase:
     return add_test(TestCase(*args, **kwargs))
 
 
-def fail_all(msg: str):
-    global score
+def fail_all(msg: Optional[str] = "") -> None:
     output_global_message(msg)
-    for test_case in test_cases:
-        test_case.score = 0
-        test_case.status = "failed"
-    score = 0
+    status.all_failed = True
 
 
-def get_testcase_by_name(name: str):
-    return test_cases_by_name.get(name)
+def get_testcase_by_name(name: str) -> Optional[TestCase]:
+    return status.test_cases_by_name.get(name)
 
 
-def output_result(result_path: str) -> None:
+def output_result(result_path: Optional[str | Path] = None) -> None:
     """
     Write the result to the result file
 
     :param result_path: The path to the result file
     :return: None
     """
-    global output
-    from magi.common.gradescope import Result
+    if not result_path:
+        from magi.managers import InfoManager
+        result_path = InfoManager.Directories.RESULT_JSON_PATH
+
     from magi.utils.serialization import dump_dataclass_to_file
     result = Result()
-    result.output += output
-    for test in test_cases:
+    result.output += status.output
+
+    for test in status.test_cases:
         result.tests.append(test)
-    if len(test_cases) == 0:
+
+    if status.all_failed:
         result.score = 0
     dump_dataclass_to_file(result, result_path)
