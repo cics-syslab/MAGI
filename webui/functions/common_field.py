@@ -1,6 +1,7 @@
 import dataclasses
 import os.path
 from dataclasses import Field
+from enum import Enum
 
 import streamlit as st
 from code_editor import code_editor
@@ -17,25 +18,34 @@ def update_data(data_object, field_name, field_id):
     setattr(data_object, field_name, st.session_state[field_id])
 
 
-def generate_ui_for_dataclass(dataclass_obj):
+def create_ui_for_dataclass(dataclass_obj):
     # Create a dictionary to store user inputs
     inputs = {}
-
+    columns = None
+    column_count = 0
     # Iterate over the fields in the dataclass
     for field in dataclasses.fields(dataclass_obj):
-        field_display_name = attribute_name_convention(field)
         field_name = field.name
-        if "display_name" in field.metadata:
-            field_display_name = field.metadata["display_name"]
-
         field_type = field.type
-        field_id = id(field)
 
         if field.metadata.get("file_editor"):
-            generate_ui_code_editor(field.metadata["file_editor"])
+            create_ui_for_code_editor(field.metadata["file_editor"])
             continue
 
         if field.metadata.get("excluded_from_ui", False):
+            continue
+
+
+        if field.metadata.get("half_width", False):
+            if not columns:
+                columns = st.columns(2)
+            container = columns[column_count % 2]
+            column_count += 1
+        else:
+            container = st
+
+        if field_type in [int, float, str, bool]:
+            create_ui_for_basic_field(field, dataclass_obj, container)
             continue
 
         # if hasattr(field_type, '__origin__') and field_type.__origin__ == list:
@@ -58,37 +68,84 @@ def generate_ui_for_dataclass(dataclass_obj):
         #         st.text(f"List of '{element_type}' not supported")
         #     continue
 
-        # Generate appropriate Streamlit widget based on the field type
-        if field_type == int:
-            st.number_input(f"{field_display_name} (int)", step=1, on_change=update_data,
-                            value=getattr(dataclass_obj, field_name, 0),
-                            args=(dataclass_obj, field_name, field_id), key=field_id, help=field.metadata.get("help"))
-        elif field_type == float:
-            st.number_input(f"{field_display_name} (float)", step=0.1, on_change=update_data,
-                            value=getattr(dataclass_obj, field_name, 0),
-                            args=(dataclass_obj, field_name, field_id), key=field_id, help=field.metadata.get("help"))
-        elif field_type == str:
-            if field.metadata.get("text_area"):
-                st.text_area(f"{field_display_name} (str)", value=getattr(dataclass_obj, field_name, ""), key=field_id,
-                             on_change=update_data, args=(dataclass_obj, field_name, field_id),
-                             help=field.metadata.get("help"))
-            else:
-                st.text_input(f"{field_display_name} (str)", value=getattr(dataclass_obj, field_name, ""), key=field_id,
-                              on_change=update_data, args=(dataclass_obj, field_name, field_id),
-                              help=field.metadata.get("help"))
+        if not hasattr(field_type, '__origin__') and issubclass(field_type, Enum):
+            create_selector_for_enum_field(field, dataclass_obj, container)
+            continue
 
-        elif field_type == bool:
-            st.checkbox(f"{field_display_name} (bool)", on_change=update_data,
-                        value=getattr(dataclass_obj, field_name, False),
-                        args=(dataclass_obj, field_name, field_id), key=field_id, help=field.metadata.get("help"))
-        else:
-            st.text(f"Field '{field_display_name}' has an unsupported type: {field_type}")
+        st.text(f"Field '{field_name}' has an unsupported type: {field_type}")
 
     # Return the inputs dictionary
     return inputs
 
 
-def generate_ui_for_dataclass_list(parent_dataclass, parent_field_name, field_id, list_object, dataclass_cls):
+
+
+def create_ui_for_basic_field(field, dataclass_obj, container=st):
+    # Extract common field properties
+    field_display_name = attribute_name_convention(field)
+    field_name = field.name
+    field_value = getattr(dataclass_obj, field_name, None)
+    field_id = id(field)
+    field_help = field.metadata.get("help")
+    extra_ui_args = field.metadata.get("ui_args", {})
+
+    # Define a dictionary to map field types to their respective UI components and properties
+    ui_components = {
+        int: {"component": container.number_input, "args": {"step": 1, "value": 0}},
+        float: {"component": container.number_input, "args": {"step": 0.1, "value": 0.0}},
+        str: {"component": container.text_input if not field.metadata.get("text_area") else container.text_area,
+              "args": {"value": ""}},
+        bool: {"component": container.checkbox, "args": {"value": False}},
+    }
+
+    # Get the appropriate UI component and arguments for the field type
+    ui_component = ui_components.get(field.type)
+    if ui_component:
+        # Update the common args for the UI component
+        ui_args = ui_component["args"].copy()
+        ui_args.update({
+            "label": f"{field_display_name} ({field.type.__name__})",
+            "key": field_id,
+            "on_change": update_data,
+            "args": (dataclass_obj, field_name, field_id),
+            "help": field_help,
+        })
+        # If the field value is not None, update it in ui_args
+        if field_value is not None:
+            ui_args["value"] = field_value
+
+        ui_args.update(extra_ui_args)
+
+        # Display the UI component
+        ui_component["component"](**ui_args)
+
+
+def create_selector_for_enum_field(field, dataclass_obj, container=st):
+    field_display_name = attribute_name_convention(field)
+    field_name = field.name
+    field_value = getattr(dataclass_obj, field_name, None)
+    field_value_index = 0
+    if field_value in field.type:
+        field_value_index = list(field.type).index(field_value)
+    
+    
+    field_id = id(field)
+    field_help = field.metadata.get("help")
+    extra_ui_args = field.metadata.get("ui_args", {})
+
+    container.selectbox(
+        f"{field_display_name}",
+        options=list(field.type),
+        index=field_value_index,
+        format_func=lambda x: x.value,  # Display enum values nicely
+        on_change=update_data,
+        args=(dataclass_obj, field_name, field_id),
+        key=field_id,
+        help=field_help,
+        **extra_ui_args
+    )
+
+def create_ui_for_dataclass_list(parent_dataclass, parent_field_name, field_id, list_object, dataclass_cls):
     if not list_object:
         list_object = []
     if field_id not in st.session_state:
@@ -109,14 +166,14 @@ def generate_ui_for_dataclass_list(parent_dataclass, parent_field_name, field_id
 
     for i, obj in enumerate(list_object):
         with st.container(border=True):
-            generate_ui_for_dataclass(obj)
+            create_ui_for_dataclass(obj)
             st.button(f"X", on_click=remove_object_callback, args=(i,))
     with st.container(border=False):
-        generate_ui_for_dataclass(new_object)
+        create_ui_for_dataclass(new_object)
         st.button(f"+", on_click=add_object_callback)
 
 
-def generate_ui_code_editor(file_path):
+def create_ui_for_code_editor(file_path):
     ace_props = {"style": {"borderRadius": "0px 0px 8px 8px"}}
     info_bar = {
         "name": "language info",

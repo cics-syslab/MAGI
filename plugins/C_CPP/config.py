@@ -14,11 +14,13 @@ class CompileMethod(str, Enum):
 @dataclass
 class Config:
     # TODO: select with a dropdown
-    compile_method: CompileMethod = CompileMethod.INSTRUCTOR_MAKE
+    compile_method: CompileMethod = field(default=CompileMethod.STUDENT_MAKE,metadata={"help": "The method to use for compiling the code",
+                                                                                       "half_width": True})
+    
+    exec_name: str = field(default="a.out", metadata={"help": "The name of the output executable when using CMAKE",
+                                                        "half_width": True, "ui_args":{"disabled":True}})
     provide_student_makefile: bool = field(default=False,
                                            metadata={"help": "Provide students with a Makefile in starter code"})
-    exec_name: str = field(default="a.out", metadata={"help": "The name of the output executable when using CMAKE"
-                                                      })
     makefile: str = field(default="plugins/C_CPP/Makefile",
                           metadata={"excluded_from_ui": True,
                                     "file_editor": "plugins/C_CPP/Makefile"})

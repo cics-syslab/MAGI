@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit import session_state
 
 from webui.functions.addons import update_pages
-from webui.functions.common_field import generate_ui_for_dataclass
+from webui.functions.common_field import create_ui_for_dataclass
 from webui.functions.session import init_session
 
 init_session()
@@ -11,7 +11,7 @@ AddonManager = session_state.AddonManager
 update_addon_lock = session_state.update_addon_lock
 
 st.markdown("# Base Settings")
-generate_ui_for_dataclass(SettingManager.BaseSettings)
+create_ui_for_dataclass(SettingManager.BaseSettings)
 
 st.markdown("*Submission files are temporarily disabled*")
 
