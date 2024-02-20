@@ -34,9 +34,6 @@ class Directories:
     # if this path exist, assume we are in gradescope/a container
     if (Path("/autograder")).exists():
         AUTOGRADER_ROOT = Path("/autograder")
-    # this is for local testing
-    elif SRC_PATH.parent.name == "autograder":
-        AUTOGRADER_ROOT = SRC_PATH.parent
     else:
         AUTOGRADER_ROOT = SRC_PATH / "mock" / "autograder"
 

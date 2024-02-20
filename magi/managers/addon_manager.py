@@ -4,16 +4,14 @@ import logging
 import os
 import os.path as op
 from typing import List
+import pluggy
 
 from magi.common.addon import Module, Plugin
 from magi.managers.info_manager import Directories
-
-logging = logging.getLogger('AddonManager')
-import pluggy
-
-pm = pluggy.PluginManager("magi")
 from magi.common.addon import AddonSpec
 
+logging = logging.getLogger('AddonManager')
+pm = pluggy.PluginManager("magi")
 pm.add_hookspecs(AddonSpec)
 
 
