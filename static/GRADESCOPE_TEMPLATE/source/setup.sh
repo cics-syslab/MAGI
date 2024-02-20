@@ -24,26 +24,6 @@ check_and_set_python() {
 check_and_set_python
 
 
-install_and_setup_gtest() {
-    # Install libgtest-dev and cmake
-    apt-get install -y build-essential libgtest-dev cmake || { echo "Error installing libgtest-dev and cmake"; exit 1; }
-
-    # Go to the gtest source directory and build gtest
-    cd /usr/src/gtest || { echo "Error navigating to /usr/src/gtest"; exit 1; }
-    cmake CMakeLists.txt && make || { echo "Error building gtest"; exit 1; }
-
-    # Copy .a files to /usr/lib if they exist
-    shopt -s nullglob
-    files=(*.a)
-    if [[ ${#files[@]} -gt 0 ]]; then
-        cp *.a /usr/lib || { echo "Error copying .a files to /usr/lib"; exit 1; }
-    else
-        echo "No .a files to copy."
-    fi
-}
-
-
-install_and_setup_gtest
 
 # Install MAGI dependencies
 if [[ -f "/autograder/source/requirements.txt" ]]; then
@@ -54,4 +34,4 @@ else
 fi
 
 cd /autograder/source
-python3 /autograder/source/main.py --setup
+python3 scripts/setup.py
