@@ -16,9 +16,8 @@ class Config:
     # files: dict = field(default_factory=dict)
     exec_name: str = ""
     # TODO: select with a dropdown
-    compile_method: str = CompileMethod.INSTRUCTOR_MAKE
-    makefile: CompileMethod = field(default_factory=str,
+    compile_method: CompileMethod = CompileMethod.INSTRUCTOR_MAKE
+    makefile: str = field(default="",
                           metadata={"excluded_from_ui": True, "file_editor": "plugins/CCompile/Makefile"})
-
-
-
+    provide_student_makefile: bool = field(default=False, metadata={"help": "Provide students with a Makefile in starter code"})
+    
