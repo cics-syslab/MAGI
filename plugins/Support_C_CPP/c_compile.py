@@ -4,8 +4,6 @@ from magi.managers.info_manager import Directories
 from .config import Config, CompileMethod
 
 
-# from magi.managers import TestManager
-
 # need chdir back or we will have a problem
 def compile_with_makefile():
     owd = os.getcwd()
@@ -33,7 +31,6 @@ def compile_code():
 
 
 
-@hookimpl
 def before_grading():
     compile_code()
 
