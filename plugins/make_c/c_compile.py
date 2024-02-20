@@ -32,10 +32,6 @@ def compile_code():
     #     TestManager.fail_all("Compile Failed")
 
 
-import pluggy
-
-hookimpl = pluggy.HookimplMarker("magi")
-
 
 @hookimpl
 def before_grading():
