@@ -9,26 +9,19 @@ from magi.common.gradescope import Result, Visibility
 from magi.managers import TestManager
 from magi.managers.info_manager import Directories
 from magi.utils.serialization import load_dataclass_from_file
+from magi.utils import code_runner
 from .config import Config
 
 
 def compile_student_code():
-    cmd = shlex.split('gcc client.c -o client')
-    with subprocess.Popen(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE, cwd=Directories.WORK_DIR) as gcc:
-        out, err = gcc.communicate()
-    return gcc.returncode, out.decode(), err.decode()
+    pass 
+    # cmd = shlex.split('gcc client.c -o client')
+    # with subprocess.Popen(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE, cwd=Directories.WORK_DIR) as gcc:
+    #     out, err = gcc.communicate()
+    # return gcc.returncode, out.decode(), err.decode()
 
 
 def run_test(port, rounds, points_for_hello=0, points_for_goodbye=0, points_per_test=3):
-    # from .server import Server
-    # server = Server(port=port, number_of_problems=rounds, timeout=1.0, directory='.',
-    #                 points_for_hello=points_for_hello, points_for_goodbye=points_for_goodbye,
-    #                 points_per_test=points_per_test, create_json=True, continue_on_failure=True,
-    #                 store_history=False, magic_string=Config.magic_str)\
-    # (port=args.port, verbosity=args.verbosity, number_of_problems=args.rounds, timeout=1.0,
-    # directory=args.directory, points_for_hello=args.points_for_hello,
-    # points_for_goodbye=args.points_for_goodbye, points_per_test=3, create_json=True,
-    # continue_on_failure=args.continue_on_failure, store_history=False)
 
     server = subprocess.Popen([sys.executable, "server.py", "--port", str(port), "--rounds", str(rounds),
                                "--points-for-hello", str(points_for_hello), "--points-for-goodbye",
@@ -39,7 +32,7 @@ def run_test(port, rounds, points_for_hello=0, points_for_goodbye=0, points_per_
     sleep(3)  # Wait for server to initialize
 
     cmd = ["./client", "richards@cs.umass.edu", str(port), "127.0.0.1"]
-    with subprocess.Popen(cmd, cwd=Directories.WORK_DIR) as cli:
+    with code_runner.Popen(cmd, cwd=Directories.WORK_DIR) as cli:
         try:
             out, err = cli.communicate(timeout=15)
         except subprocess.TimeoutExpired:
@@ -51,10 +44,10 @@ def run_test(port, rounds, points_for_hello=0, points_for_goodbye=0, points_per_
 
 
 def grade():
-    compile_status, compile_out, compile_err = compile_student_code()
-    if compile_status != 0:
-        TestManager.output_global_message(f"Compilation failed with error: {compile_err}\n{compile_out}")
-        return
+    # compile_status, compile_out, compile_err = compile_student_code()
+    # if compile_status != 0:
+    #     TestManager.output_global_message(f"Compilation failed with error: {compile_err}\n{compile_out}")
+    #     return
 
     port = Config.port if Config.port != -1 else random.randint(10000, 20000)
 
