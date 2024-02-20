@@ -1,8 +1,10 @@
 from __future__ import annotations
+import io
 
 import json
 import os
 import time
+import zipfile
 
 import code_editor
 import streamlit as st
@@ -24,7 +26,7 @@ if not session_state.get("output_generated", False):
         from magi.components import generator
 
         generator.generate_output("output")
-        time.sleep(2)
+        time.sleep(1)
 
 session_state["output_generated"] = True
 st.write("## Test Solution")
@@ -91,22 +93,20 @@ def check_uploaded_file(uploaded_file):
             grade_zip_file("output/submission.zip")
 
 
-def download_section(title, file_path, download_label, content_label=None, key=None, extra_action=None,
-                     actual_folder=None):
+def download_section(title, file_path, download_label, 
+                     extra_action=None, file_browser_directory=None):
     """Display a section for downloading files and showing their contents if available.
 
     Args:
         title (str): The title of the section.
         file_path (str): The path to the file to be downloaded.
         download_label (str): The label for the download button.
-        content_label (str, optional): The label for the content section. Defaults to None.
-        key (str, optional): The key for the file browser or content display. Defaults to None.
         extra_action (function, optional): An optional function to execute after the download button. Defaults to None.
-        actual_folder (str, optional): The actual folder to be displayed if the file is a zip file. Defaults to None.
+        file_browser (str, optional): Display a file browser for the given folder content. Defaults to None.
     """
     st.write(f"## {title}")
     if not os.path.exists(file_path):
-        st.warning(f"{title} not found.")
+        st.warning(f"{title} not found. It might not have been generated, check with the addon.")
         return
 
     with open(file_path, "rb") as file:
@@ -115,17 +115,16 @@ def download_section(title, file_path, download_label, content_label=None, key=N
     if extra_action:
         extra_action(file_path)
 
-    with st.container():
-        if content_label:
-            st.write(f"### {content_label}")
-        if 'zip' in file_path:  # For zip files, show file browser
-            content_dir = os.path.join(os.path.dirname(file_path), actual_folder) if actual_folder else file_path[:-4]
-            if not os.path.exists(content_dir):
-                st.warning(f"{content_label} not found.")
-                return
+    if file_browser_directory:
+        st.write(f"### {file_path} Contents")
 
-            with st.container(border=True):
-                st_file_browser(content_dir, key=key)
+        content_dir = os.path.join(os.path.dirname(file_path), file_browser_directory)
+        if not os.path.exists(content_dir):
+            st.warning(f"{file_browser_directory} not found.")
+            return
+
+        with st.container(border=True):
+            st_file_browser(content_dir, key=content_dir)
 
 
 def show_code_editor(file_path):
@@ -138,30 +137,54 @@ def show_code_editor(file_path):
     with open(file_path, "r") as file:
         code_editor.code_editor(file.read(), lang="markdown")
 
+# download_section(
+#     title="Download All",
+#     file_path="output/all.zip",
+#     download_label="Download all files"
+# )
+def create_filtered_zip_in_memory(directory, allowed_extensions):
+    memory_zip = io.BytesIO()
+    with zipfile.ZipFile(memory_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                # Check if the file extension is in the allowed list
+                if file.endswith(allowed_extensions):
+                    file_path = os.path.join(root, file)
+                    # Add the file to the zip archive
+                    zipf.write(file_path, os.path.relpath(file_path, directory))
+    memory_zip.seek(0)  # Move to the beginning of the BytesIO object
+    return memory_zip
+
+st.write("## Download All")
+st.download_button("Download All Files", create_filtered_zip_in_memory("output", (".zip", ".md")), "all.zip", type="primary")
 
 # Download sections
 download_section(
     title="Download Autograder",
     file_path="output/autograder.zip",
     download_label="Download autograder.zip",
-    content_label="Autograder Contents",
-    key="autograder.zip",
-    actual_folder="source"
+    file_browser_directory="source"
 )
 
 download_section(
     title="Download Solution",
     file_path="output/solution.zip",
     download_label="Download solution.zip",
-    content_label="Solution Contents",
-    key="solution.zip",
     extra_action=lambda _: grade_zip_file("output/solution.zip") if st.button(
-        "Test autograder with generated solution") else None
+        "Test autograder with generated solution") else None,
+    file_browser_directory="solution"
+)
+
+download_section(
+    title="Download Starter Code",
+    file_path="output/starter.zip",
+    download_label="Download starter.zip",
+    file_browser_directory="starter"
 )
 
 download_section(
     title="Download Documentation",
-    file_path="output/misc/documentation.md",
+    file_path="output/documentation.md",
     download_label="Download documentation.md",
     extra_action=show_code_editor
 )
@@ -170,8 +193,7 @@ download_section(
     title="Download Misc Files",
     file_path="output/misc.zip",
     download_label="Download misc.zip",
-    content_label="Misc Contents",
-    key="misc.zip"
+    file_browser_directory="misc"
 )
 
 check_uploaded_file(uploaded_file)

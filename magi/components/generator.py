@@ -5,6 +5,7 @@ import os
 import os.path as op
 import shutil
 from pathlib import Path
+import zipfile
 
 from magi.managers import SettingManager
 from magi.managers.info_manager import Directories
@@ -34,7 +35,7 @@ logging = logging.getLogger("Generator")
 #     return output_dir
 
 
-def make_zip(target_dir: str | Path, zip_file_name: str) -> None:
+def make_zip(target_dir: str | Path, zip_file_name: str, allowed_extension: list[str] = None) -> None:
     """
     Pack the directory into a zip file in its parent directory.
 
@@ -49,9 +50,16 @@ def make_zip(target_dir: str | Path, zip_file_name: str) -> None:
     if not isinstance(target_dir, Path):
         target_dir = Path(target_dir)
 
-    shutil.make_archive(str(target_dir.parent / zip_file_name), 'zip', target_dir)
+    if not allowed_extension:
+        shutil.make_archive(str(target_dir.parent / zip_file_name), 'zip', target_dir)
+    # else:
+    #     with zipfile.ZipFile(str(target_dir.parent / f"{zip_file_name}.zip"), 'w') as zipf:
+    #         for root, dirs, files in os.walk(target_dir):
+    #             for file in files:
+    #                 if file.endswith(tuple(allowed_extension)):
+    #                     zipf.write(op.join(root, file), op.relpath(op.join(root, file), target_dir))
 
-    logging.info(f'Autograder packed to {op.join(target_dir.parent, f"{zip_file_name}.zip")}')
+    logging.info(f'{target_dir} packed to {op.join(target_dir.parent, f"{zip_file_name}.zip")}')
 
 
 def generate_autograder(output_dir: str | Path) -> None:
@@ -99,6 +107,17 @@ def generate_autograder(output_dir: str | Path) -> None:
     logging.info(f'Autograder successfully generated to {output_dir}')
 
 
+def reset_dir(dir_path: Path) -> None:
+    for file in dir_path.iterdir():
+        if file.name == ".gitkeep":
+            continue
+
+        if file.is_file():
+            file.unlink()
+        else:
+            shutil.rmtree(file)
+
+
 def reset_output_dir() -> None:
     """
     Reset the output directory to its initial state.
@@ -107,23 +126,19 @@ def reset_output_dir() -> None:
     """
     from magi.managers import InfoManager
     output_dir = InfoManager.Directories.OUTPUT_DIR
-    shutil.rmtree(output_dir)
+    reset_dir(output_dir)
     logging.info(f'Output directory {output_dir} reset.')
-    os.makedirs(output_dir, exist_ok=True)
-    os.makedirs(op.join(output_dir, "source"), exist_ok=True)
-    os.makedirs(op.join(output_dir, "solution"), exist_ok=True)
-    os.makedirs(op.join(output_dir, "misc"), exist_ok=True)
+    for subdir in ["source", "solution", "starter", "misc"]:
+        os.makedirs(op.join(output_dir, subdir), exist_ok=True)
 
 
 def reset_workdir() -> None:
     from magi.managers import InfoManager
-
     workdir = InfoManager.Directories.WORK_DIR
-    shutil.rmtree(workdir)
-    workdir.mkdir()
+    reset_dir(workdir)
 
 
-def generate_documentation(file_path: str) -> None:
+def generate_documentation(file_path: str | Path) -> None:
     """
     Generate the documentation for the project, and write it to the given file path.
 
@@ -170,10 +185,19 @@ def generate_output(output_dir: str = None) -> None:
     shutil.copytree(Directories.TEMPLATE_DIR / "source", output_dir / "source", dirs_exist_ok=True)
     generate_autograder(output_dir)
     AddonManager.generate()
+    AddonManager.after_generating()
 
     if len(os.listdir(output_dir / "solution")) != 0:
         make_zip(output_dir / "solution", "solution")
-    AddonManager.after_generating()
-    generate_documentation(op.join(output_dir / "misc", "documentation.md"))
+    
+
     if len(os.listdir(output_dir / "misc")) != 0:
         make_zip(output_dir / "misc", "misc")
+
+    if len(os.listdir(output_dir / "starter")) != 0:
+        make_zip(output_dir / "starter", "starter")
+
+    generate_documentation(output_dir/"documentation.md")
+
+    logging.info(f'Files successfully generated to {output_dir}')
+
