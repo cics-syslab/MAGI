@@ -4,3 +4,4 @@ dacite==1.8.1
 pluggy==1.4.0
 streamlit_code_editor==0.1.10
 streamlit-file-browser==3.2.3
+numpy

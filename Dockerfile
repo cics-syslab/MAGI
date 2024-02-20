@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt
 COPY ./ /app
 VOLUME /app/settings
 
-RUN python3 main.py --setup
+RUN python3 scripts/setup.py
 
 RUN chmod +x /app/run.sh
 ENTRYPOINT ["/app/run.sh"]
