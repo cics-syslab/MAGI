@@ -18,7 +18,7 @@ class AddonSpec:
         self.config = None
 
     @hookspec
-    def before_generate(self):
+    def before_generating(self):
         pass
 
     @hookspec
@@ -26,7 +26,7 @@ class AddonSpec:
         """Hook for generating functionality."""
 
     @hookspec
-    def after_generate(self):
+    def after_generating(self):
         """Hook for actions after generating."""
 
     @hookspec

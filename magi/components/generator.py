@@ -165,7 +165,7 @@ def generate_output(output_dir: str = None) -> None:
     reset_output_dir()
     reset_workdir()
     output_dir = Path(output_dir)
-    AddonManager.before_generate()
+    AddonManager.before_generating()
 
     shutil.copytree(Directories.TEMPLATE_DIR / "source", output_dir / "source", dirs_exist_ok=True)
     generate_autograder(output_dir)
@@ -173,7 +173,7 @@ def generate_output(output_dir: str = None) -> None:
 
     if len(os.listdir(output_dir / "solution")) != 0:
         make_zip(output_dir / "solution", "solution")
-    AddonManager.after_generate()
+    AddonManager.after_generating()
     generate_documentation(op.join(output_dir / "misc", "documentation.md"))
     if len(os.listdir(output_dir / "misc")) != 0:
         make_zip(output_dir / "misc", "misc")

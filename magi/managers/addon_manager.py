@@ -158,21 +158,16 @@ def update_enabled_plugins() -> List[Plugin]:
 #     return rtn
 
 
-# TODO: implement setup for each addon
-def setup():
-    pass
+
+def before_generating():
+    pm.hook.before_generating()
 
 
-def before_generate():
-    pm.hook.before_generate()
-
-
-def after_generate():
-    pm.hook.after_generate()
+def after_generating():
+    pm.hook.after_generating()
 
 
 def generate():
-    # print(dir(pm.hook))
     return pm.hook.generate()
 
 
