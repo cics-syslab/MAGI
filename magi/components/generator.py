@@ -120,7 +120,7 @@ def reset_output_dir() -> None:
     output_dir = InfoManager.Directories.OUTPUT_DIR
     reset_dir(output_dir)
     logging.info(f'Output directory {output_dir} reset.')
-    for subdir in ["source", "solution", "starter", "misc"]:
+    for subdir in ["source", "solution", "dist", "misc"]:
         os.makedirs(op.join(output_dir, subdir), exist_ok=True)
 
 
@@ -186,8 +186,8 @@ def generate_output(output_dir: str = None) -> None:
     if len(os.listdir(output_dir / "misc")) != 0:
         make_zip(output_dir / "misc", "misc")
 
-    if len(os.listdir(output_dir / "starter")) != 0:
-        make_zip(output_dir / "starter", "starter")
+    if len(os.listdir(output_dir / "dist")) != 0:
+        make_zip(output_dir / "dist", "dist")
 
     generate_documentation(output_dir/"documentation.md")
 
