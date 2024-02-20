@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-import datetime
 import logging
 import os
 import os.path as op
 import shutil
-import time
 from pathlib import Path
 
 from magi.managers import SettingManager
@@ -17,7 +15,8 @@ logging = logging.getLogger("Generator")
 # def create_output_dir(output_parent_dir: str) -> str:
 #     """
 #     Create the output directory for the project files, and return the path to it.
-#     To avoid overwriting the existing output directory when the directory existed, the output directory will be named with the current date and time.
+#     To avoid overwriting the existing output directory when the directory existed,
+#     the output directory will be named with the current date and time.
 #
 #     : param output_parent_dir: The parent directory to create the output directory in.
 #     : return: The path to the output directory.
@@ -116,6 +115,14 @@ def reset_output_dir() -> None:
     os.makedirs(op.join(output_dir, "misc"), exist_ok=True)
 
 
+def reset_workdir() -> None:
+    from magi.managers import InfoManager
+
+    workdir = InfoManager.Directories.WORK_DIR
+    shutil.rmtree(workdir)
+    workdir.mkdir()
+
+
 def generate_documentation(file_path: str) -> None:
     """
     Generate the documentation for the project, and write it to the given file path.
@@ -140,13 +147,6 @@ def generate_documentation(file_path: str) -> None:
 
     return
 
-
-def reset_workdir() -> None:
-    from magi.managers import InfoManager
-
-    workdir = InfoManager.Directories.WORK_DIR
-    shutil.rmtree(workdir)
-    workdir.mkdir()
 
 def generate_output(output_dir: str = None) -> None:
     """
