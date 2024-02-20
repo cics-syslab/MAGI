@@ -14,25 +14,25 @@ from magi.managers.info_manager import Directories
 logging = logging.getLogger("Generator")
 
 
-def create_output_dir(output_parent_dir: str) -> str:
-    """
-    Create the output directory for the project files, and return the path to it. 
-    To avoid overwriting the existing output directory when the directory existed, the output directory will be named with the current date and time.
-    
-    : param output_parent_dir: The parent directory to create the output directory in.
-    : return: The path to the output directory.
-    """
-    if not output_parent_dir:
-        raise Exception("No output directory provided")
-
-    output_dir = op.join(output_parent_dir, SettingManager.BaseSettings.project_name)
-    if os.path.isdir(output_dir):
-        logging.warning(f'Output directory {output_dir} already exists, will be renamed with current date and time.')
-        output_dir = output_dir + "-" + datetime.datetime.now().strftime('%y%m%d%H%M%S')
-
-    logging.critical(f'Files will be produced to: {output_dir}')
-
-    return output_dir
+# def create_output_dir(output_parent_dir: str) -> str:
+#     """
+#     Create the output directory for the project files, and return the path to it.
+#     To avoid overwriting the existing output directory when the directory existed, the output directory will be named with the current date and time.
+#
+#     : param output_parent_dir: The parent directory to create the output directory in.
+#     : return: The path to the output directory.
+#     """
+#     if not output_parent_dir:
+#         raise Exception("No output directory provided")
+#
+#     output_dir = op.join(output_parent_dir, SettingManager.BaseSettings.project_name)
+#     if os.path.isdir(output_dir):
+#         logging.warning(f'Output directory {output_dir} already exists, will be renamed with current date and time.')
+#         output_dir = output_dir + "-" + datetime.datetime.now().strftime('%y%m%d%H%M%S')
+#
+#     logging.critical(f'Files will be produced to: {output_dir}')
+#
+#     return output_dir
 
 
 def make_zip(target_dir: str | Path, zip_file_name: str) -> None:
@@ -100,59 +100,20 @@ def generate_autograder(output_dir: str | Path) -> None:
     logging.info(f'Autograder successfully generated to {output_dir}')
 
 
-def reset_output_dir(output_dir: str) -> None:
+def reset_output_dir() -> None:
     """
     Reset the output directory to its initial state.
 
-    : param output_dir: The output directory to reset.
     : return: None
     """
-    if not output_dir:
-        raise Exception("No output directory provided")
-
-    if not op.isdir(output_dir):
-        logging.warning(f'Output directory {output_dir} does not exist, no need to reset.')
-        return
-
+    from magi.managers import InfoManager
+    output_dir = InfoManager.Directories.OUTPUT_DIR
     shutil.rmtree(output_dir)
     logging.info(f'Output directory {output_dir} reset.')
     os.makedirs(output_dir, exist_ok=True)
     os.makedirs(op.join(output_dir, "source"), exist_ok=True)
     os.makedirs(op.join(output_dir, "solution"), exist_ok=True)
     os.makedirs(op.join(output_dir, "misc"), exist_ok=True)
-
-
-def generate_output(output_dir: str = None) -> None:
-    """
-    Generate the all project files under the given output directory. 
-
-    : param output_parent_dir: The parent directory to create the output directory in.
-    : return: None
-    """
-    from magi.managers import AddonManager
-    if output_dir is None:
-        output_dir = SettingManager.BaseSettings.output_dir
-
-    # Save the settings before generating the output, useful for GUI
-    SettingManager.save_settings()
-
-    reset_output_dir(output_dir)
-    time.sleep(1)
-    # output_dir = create_output_dir(output_parent_dir)
-    output_dir = Path(output_dir)
-    AddonManager.before_generate()
-
-    shutil.copytree(Directories.TEMPLATE_DIR / "source", output_dir / "source", dirs_exist_ok=True)
-
-    generate_autograder(output_dir)
-
-    AddonManager.generate()
-    if len(os.listdir(output_dir / "solution")) != 0:
-        make_zip(output_dir / "solution", "solution")
-    AddonManager.after_generate()
-    generate_documentation(op.join(output_dir / "misc", "documentation.md"))
-    if len(os.listdir(output_dir / "misc")) != 0:
-        make_zip(output_dir / "misc", "misc")
 
 
 def generate_documentation(file_path: str) -> None:
@@ -178,3 +139,41 @@ def generate_documentation(file_path: str) -> None:
         f.write(doc_string)
 
     return
+
+
+def reset_workdir() -> None:
+    from magi.managers import InfoManager
+
+    workdir = InfoManager.Directories.WORK_DIR
+    shutil.rmtree(workdir)
+    workdir.mkdir()
+
+def generate_output(output_dir: str = None) -> None:
+    """
+    Generate the all project files under the given output directory.
+
+    : param output_parent_dir: The parent directory to create the output directory in.
+    : return: None
+    """
+    from magi.managers import AddonManager
+    if output_dir is None:
+        output_dir = SettingManager.BaseSettings.output_dir
+
+    # Save the settings before generating the output, useful for GUI
+    SettingManager.save_settings()
+
+    reset_output_dir()
+    reset_workdir()
+    output_dir = Path(output_dir)
+    AddonManager.before_generate()
+
+    shutil.copytree(Directories.TEMPLATE_DIR / "source", output_dir / "source", dirs_exist_ok=True)
+    generate_autograder(output_dir)
+    AddonManager.generate()
+
+    if len(os.listdir(output_dir / "solution")) != 0:
+        make_zip(output_dir / "solution", "solution")
+    AddonManager.after_generate()
+    generate_documentation(op.join(output_dir / "misc", "documentation.md"))
+    if len(os.listdir(output_dir / "misc")) != 0:
+        make_zip(output_dir / "misc", "misc")
