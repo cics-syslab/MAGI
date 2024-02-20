@@ -13,11 +13,13 @@ class CompileMethod(str, Enum):
 @SettingManager.register
 @dataclass
 class Config:
-    # files: dict = field(default_factory=dict)
-    exec_name: str = ""
     # TODO: select with a dropdown
     compile_method: CompileMethod = CompileMethod.INSTRUCTOR_MAKE
-    makefile: str = field(default="",
-                          metadata={"excluded_from_ui": True, "file_editor": "plugins/CCompile/Makefile"})
-    provide_student_makefile: bool = field(default=False, metadata={"help": "Provide students with a Makefile in starter code"})
-    
+    provide_student_makefile: bool = field(default=False,
+                                           metadata={"help": "Provide students with a Makefile in starter code"})
+    exec_name: str = field(default="a.out", metadata={"help": "The name of the output executable when using CMAKE"
+                                                      })
+    makefile: str = field(default="plugins/C_CPP/Makefile",
+                          metadata={"excluded_from_ui": True,
+                                    "file_editor": "plugins/C_CPP/Makefile"})
+

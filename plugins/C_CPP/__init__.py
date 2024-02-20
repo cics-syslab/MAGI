@@ -1,3 +1,2 @@
-from .c_compile import Config
-
+from .c_cpp import C_CPP
 
