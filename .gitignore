@@ -17,4 +17,4 @@ webui/pages/1_*.py
 webui/pages/2_*.py
 webui/pages/scratch.py
 
-mock/autograder/results/
+mock/autograder/results/Z*
