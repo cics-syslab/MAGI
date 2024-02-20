@@ -18,8 +18,8 @@ def render_template(template_path, context, output_path=None, ):
     with open(template_path) as f:
         template = jinja2.Template(f.read())
         result = template.render(context)
-        with open(output_path, 'w') as f:
-            f.write(result)
+        with open(output_path, 'w') as output_file:
+            output_file.write(result)
 
     return output_path
 
