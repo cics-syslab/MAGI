@@ -8,10 +8,11 @@ magi_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if magi_directory not in sys.path:
     sys.path.append(magi_directory)
 
+app_path = Path(__file__).resolve().parent.parent
 
 def check_directory():
     optional_dirs = ['logs', 'workdir', 'settings', 'modules', 'plugins']
-    app_path = Path(__file__).resolve().parent
+    
     for d in optional_dirs:
         if not app_path.joinpath(d).exists():
             app_path.joinpath(d).mkdir()
@@ -19,11 +20,10 @@ def check_directory():
     required_directories = ['magi']
     for d in required_directories:
         if not app_path.joinpath(d).exists():
-            raise FileNotFoundError(f"Required directory {d} not found")
+            raise FileNotFoundError(f"Required directory {app_path.joinpath(d)} not found")
 
 
 def check_addons_setup():
-    app_path = Path(__file__).resolve().parent
     all_setup_files = []
     for t in ['module', 'plugin']:
         if not app_path.joinpath(t + 's').exists():
@@ -42,6 +42,7 @@ def check_addons_setup():
 
 def setup():
     check_directory()
+    check_addons_setup()
     print("MAGI setup complete")
 
 if __name__ == "__main__":
