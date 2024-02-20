@@ -59,7 +59,7 @@ def update_pages():
         # otherwise, the pages will be updated too quickly and streamlit will not be able to keep up
         sleep(0.1)
         for addon in [AddonManager.enabled_module] + AddonManager.enabled_plugins:
-            print("Rendering addon page", addon)
+            print("Rendering addon page: ", addon.name)
             render_addon_page(addon)
 
         print("Pages updated")
