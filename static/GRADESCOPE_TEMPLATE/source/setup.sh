@@ -23,7 +23,8 @@ check_and_set_python() {
 
 check_and_set_python
 
-
+useradd -ms /bin/bash student
+chmod -R u-r /autograder
 
 # Install MAGI dependencies
 if [[ -f "/autograder/source/requirements.txt" ]]; then

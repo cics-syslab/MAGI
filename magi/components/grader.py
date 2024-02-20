@@ -5,6 +5,7 @@ import os
 import os.path as op
 import shutil
 from pathlib import Path
+import subprocess
 
 logging = logging.getLogger("Grader")
 
@@ -70,6 +71,7 @@ def grade_submission() -> None:
     submission_files = SettingManager.BaseSettings.submission_files
     submission_dir = Directories.SUBMISSION_DIR
     os.makedirs(Directories.WORK_DIR, exist_ok=True)
+    subprocess.run(["chmod", "-R", "777", Directories.WORK_DIR])
     # Remove existing submission files
     remove_existing_submission_files(submission_files, Directories.WORK_DIR)
 
