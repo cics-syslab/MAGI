@@ -2,7 +2,9 @@ from magi.managers import AddonManager
 
 
 def setup_grader():
+
     AddonManager.setup()
+    
     pass
 
 

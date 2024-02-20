@@ -3,11 +3,18 @@ from pathlib import Path
 
 
 def setup():
-    required_dirs = ['logs', 'workdir', 'settings', 'modules', 'plugins']
+    optional_dirs = ['logs', 'workdir', 'settings', 'modules', 'plugins']
     app_path = Path(__file__).resolve().parent
-    for d in required_dirs:
+    for d in optional_dirs:
         if not app_path.joinpath(d).exists():
             app_path.joinpath(d).mkdir()
+    
+    required_directories = ['static', 'magi']
+    for d in required_directories:
+        if not app_path.joinpath(d).exists():
+            raise FileNotFoundError(f"Required directory {d} not found")
+
+    
 
 
 def main():
