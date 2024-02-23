@@ -12,7 +12,7 @@ class Config:
     item_name: str = "Item"  # The name of the item you are working with (i.e. file, animal, etc)
     item_type: str = "Item Type"  # The struct type your item is named
     linked_list_name: str = "Linked_List"  # Linked list to store your items, each being a "node"
-    # For the main.c template, these are the default values:
+    # For the main.c templates, these are the default values:
     descriptor_1: str = "Descriptor1"  # First choice of an adjective describing a given item
     descriptor_2: str = "Descriptor2"  # Second choice of an adjective describing a given item
     item_1: str = "Item1"  # The name of your first item
