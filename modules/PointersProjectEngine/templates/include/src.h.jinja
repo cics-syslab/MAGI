@@ -24,11 +24,11 @@ struct {{ item_type }} {
   char* {{ container_name }};
 };
 
-int {{ container_name }}_add({{ container_type }} {{ project_name }}[], int number_of_{{ container_name }}, {{ item_type }} {{ item_name }}[],
+int {{ container_name }}_add({{ container_type }} {{ cluster_name }}[], int number_of_{{ container_name }}, {{ item_type }} {{ item_name }}[],
                  int number_of_{{ item_name }}, const char* {{ item_name }}_name);
-{{ item_type }}* {{ container_name }}_remove({{ container_type }} {{ project_name }}[], int number_of_{{ container_name }},
+{{ item_type }}* {{ container_name }}_remove({{ container_type }} {{ cluster_name }}[], int number_of_{{ container_name }},
                           const char* {{ container_name }}, const char* {{ item_name }}_name);
-{{ item_type }}* {{ container_name }}_change({{ container_type }} {{ project_name }}[], int number_of_{{ container_name }},
+{{ item_type }}* {{ container_name }}_change({{ container_type }} {{ cluster_name }}[], int number_of_{{ container_name }},
                           {{ item_type }} {{ item_name }}[], int number_of_{{ item_name }},
                           const char* {{ item_name }}_name, const char* old_{{ container_name }},
                           const char* new_{{ container_name }});

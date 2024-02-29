@@ -13,9 +13,9 @@ class Config:
     item_type: str = "Item"  # The struct type your item is named
     node_type: str = "Node"  # node to store your items, each being a "node"
     # For the main.c templates, these are the default values:
-    descriptor_1: str = "Descriptor1"  # First choice of an adjective describing a given item
-    descriptor_2: str = "Descriptor2"  # Second choice of an adjective describing a given item
-    item_1: str = "item1"  # The name of your first item
-    item_2: str = "item2"  # The name of your second item
-    item_3: str = "item3"  # The name of your third item
+    container1: str = "Container1"  # First choice of an adjective describing a given item
+    container2: str = "Container2"  # Second choice of an adjective describing a given item
+    item1: str = "item1"  # The name of your first item
+    item2: str = "item2"  # The name of your second item
+    item3: str = "item3"  # The name of your third item
     cluster_name: str = "ClusterName"

@@ -1,20 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include <{{ project_name }}.h>
+// #include <{{ cluster_name }}.h>
 #include <src.h>
 
 int main() {
-  char* names[5] = {"{{ descriptor1 }}", "{{ descriptor2 }}", "{{ item1 }}", "{{ item2 }}", "{{ item3 }}"};
-  {{ container_name }} {{ project_name }}[2];
-  {{ container_type }} {{ item_name }}s[4];
-  {{ project_name }}[0].name = (char*)malloc(4); // however, note that the malloc arguments are different, 
+  char* names[5] = {"{{ container1 }}", "{{ container2 }}", "{{ item1 }}", "{{ item2 }}", "{{ item3 }}"};
+  {{ container_type }} {{ cluster_name }}[2];
+  {{ item_type }} {{ item_name }}s[4];
+  {{ cluster_name }}[0].name = (char*)malloc(4); // however, note that the malloc arguments are different, 
   // ... so use string length (strlen(name) + 1)
-  strcpy({{ project_name }}[0].name, names[0]);
-  {{ project_name }}[0].list = NULL;
-  {{ project_name }}[1].name = (char*)malloc(5);
-  strcpy({{ project_name }}[1].name, names[1]);
-  {{ project_name }}[1].list = NULL;
+  strcpy({{ cluster_name }}[0].name, names[0]);
+  {{ cluster_name }}[0].list = NULL;
+  {{ cluster_name }}[1].name = (char*)malloc(5);
+  strcpy({{ cluster_name }}[1].name, names[1]);
+  {{ cluster_name }}[1].list = NULL;
 
   {{ item_name }}s[0].{{ container_name }} = (char*)malloc(4);
   {{ item_name }}s[0].{{ item_name }}_name = (char*)malloc(5);
@@ -35,102 +35,102 @@ int main() {
 
   int result;
   printf("\n=======  Test {{ container_name }}_add  ========\n\n");
-  result = {{ container_name }}_add({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}");
+  result = {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}");
   printf("The result should be 1 and your result is %i\n", result);
   printf(
-      "The first item in {{ container_name }} '{{ descriptor1 }}' is {{ item1 }}. In your {{ project_name }}, it is %s.\n",
-      ({{ project_name }}[0].list)->{{ item_name }}->{{ item_name }}_name);
+      "The first item in {{ container_name }} '{{ container1 }}' is {{ item1 }}. In your {{ cluster_name }}, it is %s.\n",
+      ({{ cluster_name }}[0].list)->{{ item_name }}->{{ item_name }}_name);
 
-  result = {{ container_name }}_add({{ project_name }}, 2, {{ item_name }}s, 4, "Apple");
+  result = {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}s, 4, "Apple");
   printf("The result should be 0 and your result is %i\n", result);
 
-  result = {{ container_name }}_add({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item2 }}");
+  result = {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}s, 4, "{{ item2 }}");
   printf("The result should be 1 and your result is %i\n", result);
   printf(
-      "The Second item in {{ container_name }} '{{ descriptor1 }}' is {{ item2 }}. In your {{ project_name }}, it is %s.\n",
-      ({{ project_name }}[0].list)->next->{{ item_name }}->{{ item_name }}_name);
+      "The Second item in {{ container_name }} '{{ container1 }}' is {{ item2 }}. In your {{ cluster_name }}, it is %s.\n",
+      ({{ cluster_name }}[0].list)->next->{{ item_name }}->{{ item_name }}_name);
   printf(
-      "The first item in {{ container_name }} '{{ descriptor2 }}' is {{ item2 }}. In your {{ project_name }}, it is %s.\n",
-      ({{ project_name }}[1].list)->{{ item_name }}->{{ item_name }}_name);
+      "The first item in {{ container_name }} '{{ container2 }}' is {{ item2 }}. In your {{ cluster_name }}, it is %s.\n",
+      ({{ cluster_name }}[1].list)->{{ item_name }}->{{ item_name }}_name);
 
   printf("\n=======  Test {{ container_name }}_remove  ========\n\n");
 
-  {{ container_type }}* result_{{ item_name }} = {{ container_name }}_remove({{ project_name }}, 2, "{{ descriptor1 }}", "{{ item2 }}");
+  {{ item_type }}* result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "{{ container1 }}", "{{ item2 }}");
   int comparison_result = (result_{{ item_name }} == &{{ item_name }}s[1]);
   printf(
       "The comparison result should be 1 because the returned {{ item_name }} should be "
       "the second {{ item_name }} in the {{ item_name }} list. Your result is %i.\n",
       comparison_result);
 
-  result_{{ item_name }} = {{ container_name }}_remove({{ project_name }}, 2, "{{ descriptor1 }}", "{{ item2 }}");
+  result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "{{ container1 }}", "{{ item2 }}");
   printf(
-      "The returned result of removing {{ descriptor1 }} {{ item2 }} again should be NULL(nil). Your "
+      "The returned result of removing {{ container1 }} {{ item2 }} again should be NULL(nil). Your "
       "result is %p.\n",
       result_{{ item_name }});
 
-  result_{{ item_name }} = {{ container_name }}_remove({{ project_name }}, 2, "{{ descriptor2 }}", "{{ item2 }}");
+  result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "{{ container2 }}", "{{ item2 }}");
   comparison_result = (result_{{ item_name }} == &{{ item_name }}s[2]);
   printf(
       "The comparison result should be 1 because the returned {{ item_name }} should be "
       "the third {{ item_name }} in the {{ item_name }} list. Your result is %i.\n",
       comparison_result);
   printf(
-      "The {{ project_name }}[1].list should be NULL(nil) because the {{ container_name }} {{ descriptor2 }} has "
+      "The {{ cluster_name }}[1].list should be NULL(nil) because the {{ container_name }} {{ container2 }} has "
       "no item. Your result is %p.\n",
-      {{ project_name }}[1].list);
+      {{ cluster_name }}[1].list);
 
   printf("\n=======  Test {{ container_name }}_change  ========\n\n");
 
-  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ descriptor2 }}", "{{ descriptor1 }}");
+  result_{{ item_name }} = {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ container2 }}", "{{ container1 }}");
   comparison_result = (result_{{ item_name }} == &{{ item_name }}s[3]);
   printf(
       "The comparison result should be 1 because the returned {{ item_name }} should be "
       "the forth {{ item_name }} in the {{ item_name }} list. Your result is %i.\n",
       comparison_result);
   printf(
-      "The {{ container_name }} of {{ item1 }} should be changed to '{{ descriptor1 }}', and your {{ item1 }}'s "
+      "The {{ container_name }} of {{ item1 }} should be changed to '{{ container1 }}', and your {{ item1 }}'s "
       "{{ container_name }} is '%s'.\n",
       {{ item_name }}s[3].{{ container_name }});
 
-  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ descriptor2 }}", "{{ descriptor1 }}");
+  result_{{ item_name }} = {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ container2 }}", "{{ container1 }}");
   printf(
-      "The returned result of changing {{ item1 }} from '{{ descriptor2 }}' to '{{ descriptor1 }}' should be "
+      "The returned result of changing {{ item1 }} from '{{ container2 }}' to '{{ container1 }}' should be "
       "NULL(nil). Your result is %p.\n",
       result_{{ item_name }});
 
-  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ descriptor1 }}", "Old");
+  result_{{ item_name }} = {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ container1 }}", "Old");
   printf(
-      "The returned result of changing {{ item1 }} from '{{ descriptor2 }}' to 'Old' should be "
-      "NULL(nil) because there is no {{ container_name }} Old in the {{ project_name }}. Your result "
+      "The returned result of changing {{ item1 }} from '{{ container2 }}' to 'Old' should be "
+      "NULL(nil) because there is no {{ container_name }} Old in the {{ cluster_name }}. Your result "
       "is %p.\n",
       result_{{ item_name }});
 
-  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item2 }}", "{{ descriptor2 }}", "{{ descriptor1 }}");
+  result_{{ item_name }} = {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}s, 4, "{{ item2 }}", "{{ container2 }}", "{{ container1 }}");
   printf(
-      "The returned result of changing {{ item2 }} from '{{ descriptor2 }}' to '{{ descriptor1 }}' should be "
+      "The returned result of changing {{ item2 }} from '{{ container2 }}' to '{{ container1 }}' should be "
       "NULL(nil). Your result is %p.\n",
       result_{{ item_name }});
   printf(
-      "The {{ container_name }} of {{ item2 }} should not be changed from '{{ descriptor2 }}' since the list "
-      "aleady has {{ item2 }} in {{ container_name }} '{{ descriptor1 }}'. Your result {{ container_name }} is '%s'.\n",
+      "The {{ container_name }} of {{ item2 }} should not be changed from '{{ container2 }}' since the list "
+      "aleady has {{ item2 }} in {{ container_name }} '{{ container1 }}'. Your result {{ container_name }} is '%s'.\n",
       {{ item_name }}s[2].{{ container_name }});
 
-  result_{{ item_name }} = {{ container_name }}_change({{ project_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ descriptor1 }}", "{{ descriptor2 }}");
+  result_{{ item_name }} = {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}s, 4, "{{ item1 }}", "{{ container1 }}", "{{ container2 }}");
   comparison_result = (result_{{ item_name }} == &{{ item_name }}s[0]);
   printf(
       "The comparison result should be 1 because the returned {{ item_name }} should be "
       "the first {{ item_name }} in the {{ item_name }} list. Your result is %i.\n",
       comparison_result);
   printf(
-      "The {{ container_name }} of {{ item1 }} should be changed to '{{ descriptor2 }}', and your {{ item1 }}'s "
+      "The {{ container_name }} of {{ item1 }} should be changed to '{{ container2 }}', and your {{ item1 }}'s "
       "{{ container_name }} is '%s'.\n",
       {{ item_name }}s[0].{{ container_name }});
-  printf("{{ item1 }} should be the first item of {{ project_name }}[1]. Your result is %s.\n",
-         ({{ project_name }}[1].list)->{{ item_name }}->{{ item_name }}_name);
+  printf("{{ item1 }} should be the first item of {{ cluster_name }}[1]. Your result is %s.\n",
+         ({{ cluster_name }}[1].list)->{{ item_name }}->{{ item_name }}_name);
   printf(
-      "The {{ project_name }}[0].list should be NULL(nil) because the {{ container_name }} {{ descriptor1 }} has "
+      "The {{ cluster_name }}[0].list should be NULL(nil) because the {{ container_name }} {{ container1 }} has "
       "no item. Your result is %p.\n",
-      {{ project_name }}[0].list);
+      {{ cluster_name }}[0].list);
 
   return 0;
 }
