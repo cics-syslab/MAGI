@@ -1,2 +1,1 @@
-from .config import Config
-from .grader import grade
+from .gtest import gtest
