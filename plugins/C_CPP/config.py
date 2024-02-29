@@ -23,3 +23,4 @@ class Config:
     makefile: str = field(default="plugins/C_CPP/Makefile",
                           metadata={"excluded_from_ui": True,
                                     "file_editor": "plugins/C_CPP/Makefile"})
+    ensure_dirs: list[str] = field(default_factory=lambda: ["include", "src", "test", "obj","lib"])

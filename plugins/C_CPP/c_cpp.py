@@ -13,6 +13,9 @@ class C_CPP:
     def before_grading(self):
         from magi.managers.info_manager import Directories
         from magi.managers import TestManager
+        for dir in Config.ensure_dirs:
+            os.makedirs(Directories.WORK_DIR / dir, exist_ok=True)
+            
         if Config.compile_method == CompileMethod.INSTRUCTOR_MAKE:
             p = subprocess.run(["make"], cwd=Directories.WORK_DIR, capture_output=True)
         elif Config.compile_method == CompileMethod.STUDENT_MAKE:
