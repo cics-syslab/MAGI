@@ -36,7 +36,7 @@ def generate_code(template_file, output_file, variables):
 if __name__ == "__main__":
     # Get variables from Config class
     variables = {
-        "PROJECT_NAME": Config.project_name,
+        "PROJECT_NAME": Config.cluster_name,
         "DESCRIPTOR1": Config.descriptor_1,
         "DESCRIPTOR2": Config.descriptor_2,
         "ITEM1": Config.item_1,

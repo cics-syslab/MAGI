@@ -2,34 +2,34 @@
 #ifndef __{{ project_name }}
 #define __{{ project_name }}
 
-typedef struct {{ container_name }} {{ container_name }};
-typedef struct {{ linked_list_name }} {{ linked_list_name }};
 typedef struct {{ container_type }} {{ container_type }};
+typedef struct {{ node_type }} {{ node_type }};
+typedef struct {{ item_type }} {{ item_type }};
 
 // Represents a {{ container_name }}.
-struct {{ container_name }} {
+struct {{ container_type }} {
   char* name;
-  {{ linked_list_name }}* list;
+  {{ node_type }}* list;
 };
 
 // Represents a node in the linked list.
-struct {{ linked_list_name }} {
-  {{ container_type }}* {{ item_name }};
-  {{ linked_list_name }}* next;
+struct {{ node_type }} {
+  {{ item_type }}* {{ item_name }};
+  {{ node_type }}* next;
 };
 
 // Represents a {{ item_name }} and its {{ container_name }}.
-struct {{ container_type }} {
+struct {{ item_type }} {
   char* {{ item_name }}_name;
   char* {{ container_name }};
 };
 
-int {{ container_name }}_add({{ container_name }} {{ project_name }}[], int number_of_{{ container_name }}, {{ container_type }} {{ item_name }}[],
+int {{ container_name }}_add({{ container_type }} {{ project_name }}[], int number_of_{{ container_name }}, {{ item_type }} {{ item_name }}[],
                  int number_of_{{ item_name }}, const char* {{ item_name }}_name);
-{{ container_type }}* {{ container_name }}_remove({{ container_name }} {{ project_name }}[], int number_of_{{ container_name }},
+{{ item_type }}* {{ container_name }}_remove({{ container_type }} {{ project_name }}[], int number_of_{{ container_name }},
                           const char* {{ container_name }}, const char* {{ item_name }}_name);
-{{ container_type }}* {{ container_name }}_change({{ container_name }} {{ project_name }}[], int number_of_{{ container_name }},
-                          {{ container_type }} {{ item_name }}[], int number_of_{{ item_name }},
+{{ item_type }}* {{ container_name }}_change({{ container_type }} {{ project_name }}[], int number_of_{{ container_name }},
+                          {{ item_type }} {{ item_name }}[], int number_of_{{ item_name }},
                           const char* {{ item_name }}_name, const char* old_{{ container_name }},
                           const char* new_{{ container_name }});
 

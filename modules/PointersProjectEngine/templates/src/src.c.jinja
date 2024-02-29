@@ -1,27 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// #include <{{ project_name }}.h>
+// #include <{{ cluster_name }}.h>
 #include <src.h>
 
 // PRIVATE_BEGIN
 #define MAX_LENGTH 1024
 // PRIVATE_END
 
-int {{ container_name }}_add({{ container_type }} {{ project_name }}[], int number_of_{{ container_name }}, {{ item_type }} {{ item_name }}[],
+int {{ container_name }}_add({{ container_type }} {{ cluster_name }}[], int number_of_{{ container_name }}, {{ item_type }} {{ item_name }}[],
                  int number_of_{{ item_name }}, const char* {{ item_name }}_name) {
   // PRIVATE_BEGIN
   int modified = 0;
   for (int i = 0; i < number_of_{{ item_name }}; i++) {
     if (strncmp({{ item_name }}[i].{{ item_name }}_name, {{ item_name }}_name, MAX_LENGTH) == 0) {
-      {{ linked_list_name }}* newNode = ({{ linked_list_name }}*)(malloc(sizeof({{ linked_list_name }})));
+      {{ node_type }}* newNode = ({{ node_type }}*)(malloc(sizeof({{ node_type }})));
       newNode->{{ item_name }} = &{{ item_name }}[i];
       for (int j = 0; j < number_of_{{ container_name }}; j++) {
-        if (strncmp({{ project_name }}[j].name, newNode->{{ item_name }}->{{ container_name }}, MAX_LENGTH) ==
+        if (strncmp({{ cluster_name }}[j].name, newNode->{{ item_name }}->{{ container_name }}, MAX_LENGTH) ==
             0) {
           // add node into this {{ container_name }}
-          {{ linked_list_name }}* preNode = NULL;
-          {{ linked_list_name }}* curNode = {{ project_name }}[j].list;
+          {{ node_type }}* preNode = NULL;
+          {{ node_type }}* curNode = {{ cluster_name }}[j].list;
           while (curNode && strncmp(newNode->{{ item_name }}->{{ item_name }}_name,
                                     curNode->{{ item_name }}->{{ item_name }}_name, MAX_LENGTH) > 0) {
             preNode = curNode;
@@ -37,7 +37,7 @@ int {{ container_name }}_add({{ container_type }} {{ project_name }}[], int numb
           if (preNode != NULL) {
             preNode->next = newNode;
           } else {
-            _PROJECT_NAME_[j].list = newNode;
+            {{ cluster_name }}[j].list = newNode;
           }
           modified = 1;
         }
@@ -53,13 +53,13 @@ return 0;
   // PUBLIC_END */
 }
 
-{{ item_type }}* {{ container_name }}_remove({{ container_type }} {{ project_name }}[], int number_of_{{ container_name }},
+{{ item_type }}* {{ container_name }}_remove({{ container_type }} {{ cluster_name }}[], int number_of_{{ container_name }},
                           const char* {{ container_name }}, const char* {{ item_name }}_name) {
   // PRIVATE_BEGIN
   for (int j = 0; j < number_of_{{ container_name }}; j++) {
-    if (strncmp({{ project_name }}[j].name, {{ container_name }}, MAX_LENGTH) == 0) {
-      {{ linked_list_name }}* preNode = NULL;
-      {{ linked_list_name }}* curNode = {{ project_name }}[j].list;
+    if (strncmp({{ cluster_name }}[j].name, {{ container_name }}, MAX_LENGTH) == 0) {
+      {{ node_type }}* preNode = NULL;
+      {{ node_type }}* curNode = {{ cluster_name }}[j].list;
       while (curNode &&
              strncmp({{ item_name }}_name, curNode->{{ item_name }}->{{ item_name }}_name, MAX_LENGTH) != 0) {
         preNode = curNode;
@@ -70,7 +70,7 @@ return 0;
         if (preNode) {
           preNode->next = curNode->next;
         } else {
-          {{ project_name }}[j].list = curNode->next;
+          {{ cluster_name }}[j].list = curNode->next;
         }
         {{ item_type }}* result = curNode->{{ item_name }};
         free(curNode);
@@ -88,7 +88,7 @@ return NULL;
   // PUBLIC_END */
 }
 
-{{ item_type }}* {{ container_name }}_change({{ container_name }} {{ project_name }}[], int number_of_{{ container_name }},
+{{ item_type }}* {{ container_name }}_change({{ container_type }} {{ cluster_name }}[], int number_of_{{ container_name }},
                           {{ item_type }} {{ item_name }}s[], int number_of_{{ item_name }}s, // translates to: FileData files[], int number_of_files,
                           const char* {{ item_name }}_name, const char* old_{{ container_name }}, // const char* file_name, const char* old_category,
                           // categories vs category
@@ -100,7 +100,7 @@ return NULL;
   {{ item_type }}* target_{{ item_name }} = NULL;
 
   for (int j = 0; j < number_of_{{ container_name }}; j++) {
-    if (strncmp({{ project_name }}[j].name, new_{{ container_name }}, MAX_LENGTH) == 0) {
+    if (strncmp({{ cluster_name }}[j].name, new_{{ container_name }}, MAX_LENGTH) == 0) {
       exist = 1;
       break;
     }
@@ -123,9 +123,9 @@ return NULL;
 
   if (!exist && target_{{ item_name }}) {
     for (int j = 0; j < number_of_{{ container_name }}; j++) {
-      if (strncmp({{ project_name }}[j].name, old_{{ container_name }}, MAX_LENGTH) == 0) {
+      if (strncmp({{ cluster_name }}[j].name, old_{{ container_name }}, MAX_LENGTH) == 0) {
         exist = 0;
-        {{ linked_list_name }}* curNode = {{ project_name }}[j].list;
+        {{ node_type }}* curNode = {{ cluster_name }}[j].list;
         while (curNode) {
           if (strncmp({{ item_name }}_name, curNode->{{ item_name }}->{{ item_name }}_name, MAX_LENGTH) == 0) {
             exist = 1;
@@ -138,19 +138,19 @@ return NULL;
     }
 
     if (exist) {
-      {{ container_name }}_remove({{ project_name }}, number_of_{{ container_name }}, old_{{ container_name }}, {{ item_name }}_name);
+      {{ container_name }}_remove({{ cluster_name }}, number_of_{{ container_name }}, old_{{ container_name }}, {{ item_name }}_name);
     }
 
     strcpy(target_{{ item_name }}->{{ container_name }}, new_{{ container_name }});
 
     if (exist) {
-      {{ linked_list_name }}* newNode = ({{ linked_list_name }}*)(malloc(sizeof({{ linked_list_name }})));
+      {{ node_type }}* newNode = ({{ node_type }}*)(malloc(sizeof({{ node_type }})));
       newNode->{{ item_name }} = target_{{ item_name }};
       for (int j = 0; j < number_of_{{ container_name }}; j++) {
-        if (strncmp({{ project_name }}[j].name, new_{{ container_name }}, MAX_LENGTH) == 0) {
+        if (strncmp({{ cluster_name }}[j].name, new_{{ container_name }}, MAX_LENGTH) == 0) {
           // add node into this {{ container_name }}
-          {{ linked_list_name }}* preNode = NULL;
-          {{ linked_list_name }}* curNode = {{ project_name }}[j].list;
+          {{ node_type }}* preNode = NULL;
+          {{ node_type }}* curNode = {{ cluster_name }}[j].list;
           while (curNode && strncmp(newNode->{{ item_name }}->{{ item_name }}_name,
                                     curNode->{{ item_name }}->{{ item_name }}_name, MAX_LENGTH) > 0) {
             preNode = curNode;
@@ -161,7 +161,7 @@ return NULL;
           if (preNode != NULL) {
             preNode->next = newNode;
           } else {
-            {{ project_name }}[j].list = newNode;
+            {{ cluster_name }}[j].list = newNode;
           }
           break;
         }

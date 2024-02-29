@@ -1,7 +1,7 @@
 from .config import Config
 from magi.common.addon import hookimpl
 import os
-
+from pathlib import Path
 
 class PointersProjectEngine:
     def __init__(self):
@@ -16,3 +16,16 @@ class PointersProjectEngine:
             Config.__dict__,
             os.path.join(Directories.WORK_DIR)
         )
+
+    
+
+    @hookimpl
+    def generate(self):
+        from magi.managers.info_manager import Directories
+        from magi.utils.render import render_template
+        render_template(
+            os.path.join(Directories.SRC_PATH, "modules", "PointersProjectEngine", "templates", "test_list.yml.jinja"),
+            Config.__dict__,
+            os.path.join(Directories.WORK_DIR, "test_list.yml")
+        )
+        (Directories.OUTPUT_DIR/"solution"/".keep").touch()
