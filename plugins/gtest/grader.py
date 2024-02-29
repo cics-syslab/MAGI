@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from xml.dom import minidom
 
 import yaml
+import logging
 
 from magi.common import gradescope
 from magi.common.gradescope import TestCase
@@ -108,18 +109,17 @@ def grade_all(test_file_name: str) -> None:
 
         :param str test_file_name: The path to the yaml file describing the tests to execute.
     """
+    from magi.utils.code_runner import Popen
+    from magi.managers.info_manager import Directories
     # First, we're going to read in the test layout from the user defined YAML file
     with open(test_file_name, 'r') as file:
         tests = yaml.load(file, Loader=yaml.FullLoader)
 
-    from magi.managers.info_manager import Directories
-    import logging
 
     TEMP_DIR = Directories.WORK_DIR / "gtest_temp"
     os.makedirs(TEMP_DIR, exist_ok=True)
-    from magi.utils.code_runner import Popen
-    # TODO: seperate Make
-    Popen(["make"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=Directories.WORK_DIR.as_posix()).communicate()
+    
+    
     for test in tests['tests']:
         # define the output name for the gtest xml file, as gtest can only export in xml, no python API yet
         xml_name = test['file'] + "_" + test['class'] + "_" + test['name'] + ".xml"
@@ -167,6 +167,3 @@ def grade_all(test_file_name: str) -> None:
             TestManager.add_test(test_case)
 
 
-def grade():
-    from .config import Config
-    grade_all(Config.test_list_file)
