@@ -52,10 +52,12 @@ def update_pages():
                 addon_name = file.split(".")[0][2:]
                 if addon_name != SettingManager.BaseSettings.enabled_module:
                     os.remove(os.path.join("webui", "pages", file))
+                    AddonManager.update_enabled_module()
             elif file.startswith("2_"):
                 addon_name = file.split(".")[0][2:]
                 if addon_name not in SettingManager.BaseSettings.enabled_plugins:
                     os.remove(os.path.join("webui", "pages", file))
+                    AddonManager.update_enabled_plugins()
         # otherwise, the pages will be updated too quickly and streamlit will not be able to keep up
         sleep(0.1)
         for addon in [AddonManager.enabled_module] + AddonManager.enabled_plugins:

@@ -25,12 +25,18 @@ st.markdown(
 st.write(os.getcwd())
 
 AddonManager = session_state.AddonManager
-
+SettingManager = session_state.SettingManager
 st.write("## Addons")
 
-st.write("### Modules")
+st.write("### Available Modules")
 for addon in AddonManager.available_modules:
     st.write(addon.name)
-st.write("### Plugins")
+st.write("### Available Plugins")
 for plugin in AddonManager.available_plugins:
     st.write(plugin.name)
+
+st.write("## Settings")
+
+st.write("### Base Settings")
+st.write(SettingManager.BaseSettings)
+
