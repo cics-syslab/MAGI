@@ -76,7 +76,7 @@ def generate_autograder(output_dir: str | Path) -> None:
         os.makedirs(output_source_dir / empty_dir, exist_ok=True)
         Path.touch(output_source_dir / empty_dir / '.gitkeep', exist_ok=True)
 
-    clone_dirs = ['magi', 'settings', 'workdir']
+    clone_dirs = ['magi', 'settings', 'workdir', 'scripts']
     for clone_dir in clone_dirs:
         shutil.copytree(Directories.SRC_PATH / clone_dir, output_source_dir / clone_dir)
 
