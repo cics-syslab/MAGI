@@ -13,7 +13,6 @@ class CompileMethod(str, Enum):
 @SettingManager.register
 @dataclass
 class Config:
-    # TODO: select with a dropdown
     compile_method: CompileMethod = field(default=CompileMethod.STUDENT_MAKE,metadata={"help": "The method to use for compiling the code",
                                                                                        "half_width": True})
     
