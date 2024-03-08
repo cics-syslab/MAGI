@@ -1,0 +1,2 @@
+# Minimal Plugin Example
+
