@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 LABEL authors="calvinchai"
-
+# TODO: Optimize this
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 RUN apt update

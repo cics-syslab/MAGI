@@ -11,7 +11,7 @@ app_path = Path(__file__).resolve().parent.parent
 
 
 def check_directory():
-    optional_dirs = ['logs', 'workdir', 'settings', 'modules', 'plugins']
+    optional_dirs = ['logs', 'workdir', 'settings', 'modules', 'plugins', 'output']
 
     for d in optional_dirs:
         if not app_path.joinpath(d).exists():
