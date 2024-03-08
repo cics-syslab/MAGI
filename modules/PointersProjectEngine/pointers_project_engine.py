@@ -1,7 +1,10 @@
-from .config import Config
-from magi.common.addon import hookimpl
 import os
 from pathlib import Path
+
+from magi.common.addon import hookimpl
+
+from .config import Config
+
 
 class PointersProjectEngine:
     def __init__(self):
@@ -17,8 +20,6 @@ class PointersProjectEngine:
             os.path.join(Directories.WORK_DIR)
         )
 
-    
-
     @hookimpl
     def generate(self):
         from magi.managers.info_manager import Directories
@@ -28,4 +29,4 @@ class PointersProjectEngine:
             Config.__dict__,
             os.path.join(Directories.WORK_DIR, "test_list.yml")
         )
-        (Directories.OUTPUT_DIR/"solution"/".keep").touch()
+        (Directories.OUTPUT_DIR / "solution" / ".keep").touch()

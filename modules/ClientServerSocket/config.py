@@ -12,7 +12,6 @@ class Config:
                 "example, 'oprand operator oprand' will show students that the question will be in the format "
                 "'number + number' or 'number - number' etc."})
     testcase_visible: bool = field(default=False, metadata={
-
         "help": "If the test cases should be visible to students. If not, they will only be visible after the due date."})
     magic_str: str = field(default="cs230", metadata={"half_width": True,
                                                       "help": "The magic string that each message starts with."})
