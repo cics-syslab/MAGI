@@ -4,8 +4,8 @@ import logging
 import os
 import os.path as op
 import shutil
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 logging = logging.getLogger("Grader")
 

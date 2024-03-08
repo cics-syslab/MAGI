@@ -17,5 +17,3 @@ class gtest:
     def before_generating(self):
         from magi.managers.info_manager import Directories
         shutil.copy(Config.test_list, Directories.WORK_DIR / "test_list.yml")
-
-        

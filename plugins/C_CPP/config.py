@@ -13,14 +13,15 @@ class CompileMethod(str, Enum):
 @SettingManager.register
 @dataclass
 class Config:
-    compile_method: CompileMethod = field(default=CompileMethod.STUDENT_MAKE,metadata={"help": "The method to use for compiling the code",
-                                                                                       "half_width": True})
-    
+    compile_method: CompileMethod = field(default=CompileMethod.STUDENT_MAKE,
+                                          metadata={"help": "The method to use for compiling the code",
+                                                    "half_width": True})
+
     exec_name: str = field(default="a.out", metadata={"help": "The name of the output executable when using CMAKE",
-                                                        "half_width": True})
+                                                      "half_width": True})
     provide_student_makefile: bool = field(default=False,
                                            metadata={"help": "Provide students with a Makefile in starter code"})
     makefile: str = field(default="plugins/C_CPP/Makefile",
                           metadata={"excluded_from_ui": True,
                                     "file_editor": "plugins/C_CPP/Makefile"})
-    ensure_dirs: list[str] = field(default_factory=lambda: ["include", "src", "test", "obj","lib"])
+    ensure_dirs: list[str] = field(default_factory=lambda: ["include", "src", "test", "obj", "lib"])

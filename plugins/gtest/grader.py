@@ -1,11 +1,11 @@
 #!/usr/bin/python3
+import logging
 import os
 import subprocess
 from dataclasses import dataclass
 from xml.dom import minidom
 
 import yaml
-import logging
 
 from magi.common import gradescope
 from magi.common.gradescope import TestCase
@@ -115,11 +115,9 @@ def grade_all(test_file_name: str) -> None:
     with open(test_file_name, 'r') as file:
         tests = yaml.load(file, Loader=yaml.FullLoader)
 
-
     TEMP_DIR = Directories.WORK_DIR / "gtest_temp"
     os.makedirs(TEMP_DIR, exist_ok=True)
-    
-    
+
     for test in tests['tests']:
         # define the output name for the gtest xml file, as gtest can only export in xml, no python API yet
         xml_name = test['file'] + "_" + test['class'] + "_" + test['name'] + ".xml"
@@ -165,5 +163,3 @@ def grade_all(test_file_name: str) -> None:
             else:
                 test_case.pass_test(xml_test_case.failed_msg)
             TestManager.add_test(test_case)
-
-

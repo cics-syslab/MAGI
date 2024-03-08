@@ -1,9 +1,7 @@
 import logging
-import os
 import os.path as op
 from dataclasses import dataclass, field
 from pathlib import Path
-import subprocess
 from typing import Optional, List
 
 from magi.utils.singleton import overwrite_singleton

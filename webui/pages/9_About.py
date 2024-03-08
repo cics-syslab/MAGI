@@ -2,9 +2,8 @@ import os
 import sys
 
 import streamlit as st
-from streamlit import session_state
-
 from functions.session import init_session
+from streamlit import session_state
 
 init_session()
 
@@ -39,4 +38,3 @@ st.write("## Settings")
 
 st.write("### Base Settings")
 st.write(SettingManager.BaseSettings)
-

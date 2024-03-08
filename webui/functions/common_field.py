@@ -35,7 +35,6 @@ def create_ui_for_dataclass(dataclass_obj):
         if field.metadata.get("excluded_from_ui", False):
             continue
 
-
         if field.metadata.get("half_width", False):
             if not columns:
                 columns = st.columns(2)
@@ -76,8 +75,6 @@ def create_ui_for_dataclass(dataclass_obj):
 
     # Return the inputs dictionary
     return inputs
-
-
 
 
 def create_ui_for_basic_field(field, dataclass_obj, container=st):
@@ -127,8 +124,7 @@ def create_selector_for_enum_field(field, dataclass_obj, container=st):
     field_value_index = 0
     if field_value in field.type:
         field_value_index = list(field.type).index(field_value)
-    
-    
+
     field_id = id(field)
     field_help = field.metadata.get("help")
     extra_ui_args = field.metadata.get("ui_args", {})
@@ -144,6 +140,7 @@ def create_selector_for_enum_field(field, dataclass_obj, container=st):
         help=field_help,
         **extra_ui_args
     )
+
 
 def create_ui_for_dataclass_list(parent_dataclass, parent_field_name, field_id, list_object, dataclass_cls):
     if not list_object:

@@ -1,6 +1,5 @@
 import os
 import random
-import shlex
 import subprocess
 import sys
 from time import sleep
@@ -8,13 +7,13 @@ from time import sleep
 from magi.common.gradescope import Result, Visibility
 from magi.managers import TestManager
 from magi.managers.info_manager import Directories
-from magi.utils.serialization import load_dataclass_from_file
 from magi.utils import code_runner
+from magi.utils.serialization import load_dataclass_from_file
 from .config import Config
 
 
 def compile_student_code():
-    pass 
+    pass
     # cmd = shlex.split('gcc client.c -o client')
     # with subprocess.Popen(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE, cwd=Directories.WORK_DIR) as gcc:
     #     out, err = gcc.communicate()
@@ -22,7 +21,6 @@ def compile_student_code():
 
 
 def run_test(port, rounds, points_for_hello=0, points_for_goodbye=0, points_per_test=3):
-
     server = subprocess.Popen([sys.executable, "server.py", "--port", str(port), "--rounds", str(rounds),
                                "--points-for-hello", str(points_for_hello), "--points-for-goodbye",
                                str(points_for_goodbye), "--points-per-test", str(points_per_test), "--json",

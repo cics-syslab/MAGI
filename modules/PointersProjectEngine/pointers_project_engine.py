@@ -1,8 +1,6 @@
 import os
-from pathlib import Path
 
 from magi.common.addon import hookimpl
-
 from .config import Config
 
 

@@ -2,6 +2,7 @@ import os
 import shutil
 import subprocess
 import sys
+
 import jinja2
 
 from magi.common.addon import hookimpl
