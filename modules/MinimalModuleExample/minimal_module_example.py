@@ -12,7 +12,7 @@ class MinimalModuleExample:
         testcase = TestManager.new_test()
         from magi.managers.info_manager import Directories
         testcase.max_score = 1
-        with open(Directories.output_dir / self.config.submittig_file, "r") as f:
+        with open(Directories.OUTPUT_DIR / self.config.submitting_file, "r") as f:
             content = f.read()
 
         if content == self.config.content:

@@ -7,4 +7,4 @@ from magi.managers import SettingManager
 @dataclass
 class Config:
     content: str = "Hello World!"
-    submittig_file: str = "output.txt"
+    submitting_file: str = "output.txt"

@@ -1,4 +1,5 @@
 from magi.common.addon import hookimpl
+
 from .config import Config
 
 
@@ -13,7 +14,7 @@ class MinimalPluginExample:
         # testcase = TestCase()
         from magi.managers.info_manager import Directories
         testcase.max_score = 1
-        with open(Directories.WORK_DIR / self.config.submittig_file, "r") as f:
+        with open(Directories.WORK_DIR / self.config.submitting_file, "r") as f:
             content = f.read()
 
         if content == self.config.content:
