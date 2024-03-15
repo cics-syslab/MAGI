@@ -81,15 +81,15 @@ int main(int argc, char **argv)
         printf("%s", message);
         //printf("message: %s", message);
         status = send(socket_c, message, strlen(message), 0);
-        char *recv_mess = (char *)malloc(200);
+        char *recv_mess = (char *)malloc(4096);
         int rounds = 0;
-        char question[256];
-        char answer[256];
+        char question[4096];
+        char answer[4096];
 
         while ((strstr(flag, "BYE")) == NULL)
         {
-                memset(recv_mess, '\0', 200);
-                status = recv(socket_c, recv_mess, 200, 0);
+                memset(recv_mess, '\0', 4096);
+                status = recv(socket_c, recv_mess, 4096, 0);
 
                 if (status < 0)
                 {
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
                         exit(1);
                 }
 
-                memset(ret_str, '\0', 200);
+                memset(ret_str, '\0', 4096);
                 memset(flag, '\0', 70);
                 sprintf(flag, "%s", recv_mess);
                 ++rounds;
