@@ -28,5 +28,7 @@ check_addons_setup() {
     done
 }
 
+apt-get update && apt-get install -y build-essential
+
 check_addons_setup
 echo "Add-ons setup complete"
