@@ -12,5 +12,5 @@ else
   echo "$current_dir is already in PYTHONPATH for the current session."
 fi
 
-# Run your Python script
-python3 -m streamlit run webui/Hello.py 
+
+python3 -m streamlit run webui/Hello.py
