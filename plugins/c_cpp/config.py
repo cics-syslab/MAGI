@@ -21,7 +21,7 @@ class Config:
                                                       "half_width": True})
     provide_student_makefile: bool = field(default=False,
                                            metadata={"help": "Provide students with a Makefile in starter code"})
-    makefile: str = field(default="plugins/C_CPP/Makefile",
+    makefile: str = field(default="plugins/c_cpp/Makefile",
                           metadata={"excluded_from_ui": True,
-                                    "file_editor": "plugins/C_CPP/Makefile"})
+                                    "file_editor": "plugins/c_cpp/Makefile"})
     ensure_dirs: list[str] = field(default_factory=lambda: ["include", "src", "test", "obj", "lib"])

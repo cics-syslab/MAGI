@@ -7,7 +7,7 @@ from magi.utils.code_runner import run
 from .config import Config, CompileMethod
 
 
-class C_CPP:
+class c_cpp:
     @hookimpl
     def before_grading(self):
         from magi.managers.info_manager import Directories
