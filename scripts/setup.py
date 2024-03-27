@@ -42,8 +42,8 @@ def check_addons_setup():
 
 def setup():
     check_directory()
-    check_addons_setup()
-    print("MAGI setup complete")
+    # check_addons_setup()
+    # print("MAGI setup complete")
 
 
 if __name__ == "__main__":

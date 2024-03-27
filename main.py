@@ -1,5 +1,5 @@
 import argparse
-
+from scripts.setup import setup
 
 def main():
     parser = argparse.ArgumentParser()
@@ -28,4 +28,5 @@ def main():
 
 
 if __name__ == '__main__':
+    setup()
     main()

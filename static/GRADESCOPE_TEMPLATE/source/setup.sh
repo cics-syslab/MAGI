@@ -35,4 +35,5 @@ else
 fi
 
 cd /autograder/source
+./setup.sh
 python3 scripts/setup.py
