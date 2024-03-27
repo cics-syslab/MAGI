@@ -1,8 +1,6 @@
 import os
-import sys
 
-magi_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(magi_directory)
+from directory import magi_path
 from magi.utils.render import render_templates
 
 
@@ -12,7 +10,7 @@ def create_addon(addon_type, addon_name):
     try:
         # Create the base directory for the addon
         os.makedirs(base_path)
-        render_templates(os.path.join(magi_directory, 'static', 'ADDON_TEMPLATE'), {
+        render_templates(os.path.join(magi_path, 'static', 'ADDON_TEMPLATE'), {
             'addon_type': addon_type,
             'addon_name': addon_name,
         }, base_path)
@@ -42,7 +40,10 @@ def main():
             return
 
     create_addon(addon_type, addon_name)
-
+    print(f"Addon {addon_name} created successfully.")
+    print("Please refer to the documentation for further steps.")
+    print("Happy coding!")
+    
 
 if __name__ == "__main__":
     main()
