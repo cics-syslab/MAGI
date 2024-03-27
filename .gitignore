@@ -9,7 +9,7 @@
 output/
 logs/
 settings/
-# workdir/
+workdir/
 scratch/
 
 # Ignore dynamic pages
