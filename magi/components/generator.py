@@ -8,49 +8,9 @@ from pathlib import Path
 
 from magi.managers import SettingManager
 from magi.managers.info_manager import Directories
+from magi.utils.file_utils import make_zip, reset_dir
 
 logging = logging.getLogger("Generator")
-
-
-# def create_output_dir(output_parent_dir: str) -> str:
-#     """
-#     Create the output directory for the project files, and return the path to it.
-#     To avoid overwriting the existing output directory when the directory existed,
-#     the output directory will be named with the current date and time.
-#
-#     : param output_parent_dir: The parent directory to create the output directory in.
-#     : return: The path to the output directory.
-#     """
-#     if not output_parent_dir:
-#         raise Exception("No output directory provided")
-#
-#     output_dir = op.join(output_parent_dir, SettingManager.BaseSettings.project_name)
-#     if os.path.isdir(output_dir):
-#         logging.warning(f'Output directory {output_dir} already exists, will be renamed with current date and time.')
-#         output_dir = output_dir + "-" + datetime.datetime.now().strftime('%y%m%d%H%M%S')
-#
-#     logging.critical(f'Files will be produced to: {output_dir}')
-#
-#     return output_dir
-
-
-def make_zip(target_dir: str | Path, zip_file_name: str) -> None:
-    """
-    Pack the directory into a zip file in its parent directory.
-
-    : param target_dir: The directory to the autograder directory.
-    : param zip_file_name: The name of the zip file to create.
-    : return: None
-    """
-    if not target_dir:
-        raise Exception("No directory provided to make zip file")
-    if not op.isdir(target_dir):
-        raise NotADirectoryError()
-    if not isinstance(target_dir, Path):
-        target_dir = Path(target_dir)
-    shutil.make_archive(str(target_dir.parent / zip_file_name), 'zip', target_dir)
-
-    logging.info(f'{target_dir} packed to {op.join(target_dir.parent, f"{zip_file_name}.zip")}')
 
 
 def generate_autograder(output_dir: str | Path) -> None:
@@ -98,35 +58,17 @@ def generate_autograder(output_dir: str | Path) -> None:
     logging.info(f'Autograder successfully generated to {output_dir}')
 
 
-def reset_dir(dir_path: Path) -> None:
-    for file in dir_path.iterdir():
-        if file.name == ".gitkeep":
-            continue
-
-        if file.is_file():
-            file.unlink()
-        else:
-            shutil.rmtree(file)
-
-
 def reset_output_dir() -> None:
     """
     Reset the output directory to its initial state.
 
     : return: None
     """
-    from magi.managers import InfoManager
-    output_dir = InfoManager.Directories.OUTPUT_DIR
+    output_dir = Directories.OUTPUT_DIR
     reset_dir(output_dir)
     logging.info(f'Output directory {output_dir} reset.')
     for subdir in ["source", "solution", "dist", "misc"]:
-        os.makedirs(op.join(output_dir, subdir), exist_ok=True)
-
-
-def reset_workdir() -> None:
-    from magi.managers import InfoManager
-    workdir = InfoManager.Directories.WORK_DIR
-    reset_dir(workdir)
+        os.makedirs(output_dir/subdir, exist_ok=True)
 
 
 def generate_documentation(file_path: str | Path) -> None:
@@ -169,7 +111,7 @@ def generate_output(output_dir: str = None) -> None:
     SettingManager.save_settings()
 
     reset_output_dir()
-    reset_workdir()
+    reset_dir(Directories.WORK_DIR)
     output_dir = Path(output_dir)
     AddonManager.before_generating()
 

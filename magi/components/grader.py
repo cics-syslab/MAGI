@@ -7,6 +7,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
+from magi.utils import file_utils
+
 logging = logging.getLogger("Grader")
 
 
@@ -20,8 +22,7 @@ def remove_existing_submission_files(submission_files: list, workdir: str | Path
     for submission_file in submission_files:
         submission_file_path = op.join(workdir, submission_file)
 
-        if op.exists(submission_file_path):
-            os.remove(submission_file_path)
+        if file_utils.remove(submission_file_path):
             logging.debug(f"Removed existing file {submission_file_path} for grading")
 
 

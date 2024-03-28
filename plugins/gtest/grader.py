@@ -10,7 +10,7 @@ import yaml
 from magi.common import gradescope
 from magi.common.gradescope import TestCase
 from magi.managers import TestManager
-
+from magi.utils import file_utils
 
 @dataclass
 class XmlTestCase:
@@ -126,8 +126,9 @@ def grade_all(test_file_name: str) -> None:
         logging.debug(f"Running: {test['name']}")
 
         # In case we are running the autograder again, we want to remove any existing XML files which may be present
-        if os.path.exists(out_name):
-            os.remove(out_name)
+        # if os.path.exists(out_name):
+        #     os.remove(out_name)
+        file_utils.remove(out_name)
 
         # Run the individual gtest using the following console command (subprocess is how you can run system commands from python)
 

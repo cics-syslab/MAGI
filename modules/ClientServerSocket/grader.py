@@ -7,7 +7,7 @@ from time import sleep
 from magi.common.gradescope import Result, Visibility
 from magi.managers import TestManager
 from magi.managers.info_manager import Directories
-from magi.utils import code_runner
+from magi.utils import code_runner, file_utils
 from magi.utils.serialization import load_dataclass_from_file
 from .config import Config
 
@@ -48,10 +48,11 @@ def grade():
     #     return
 
     port = Config.port if Config.port != -1 else random.randint(10000, 20000)
-
     result_file_path = str(Directories.SRC_PATH / "modules" / "ClientServerSocket" / "results.json")
-    if os.path.exists(result_file_path):
-        os.remove(result_file_path)
+    
+    # if os.path.exists(result_file_path):
+    #     os.remove(result_file_path)
+    file_utils.remove(result_file_path)
 
     # Run basic test if configured
     if Config.basic_test:
@@ -83,4 +84,5 @@ def process_results(visibility: Visibility = Visibility.VISIBLE):
     for testcase in temp_result.tests:
         testcase.visibility = visibility
         TestManager.add_test(testcase)
-    os.remove(result_file_path)
+    # os.remove(result_file_path)
+    file_utils.remove(result_file_path)
