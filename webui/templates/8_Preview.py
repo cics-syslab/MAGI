@@ -127,22 +127,16 @@ def download_section(title, file_path, download_label,
             st_file_browser(content_dir, key=content_dir)
 
 
-def show_code_editor(file_path):
+def show_code_editor(file_path: str | os.PathLike[str]):
     """Display a code editor with the contents of the given file.
 
-    Args:
-        file_path (str): The path to the file to be displayed in the code editor.
+    :param file_path: The path to the file to be displayed in the code editor.
     """
     st.write("### Preview Documentation")
     with open(file_path, "r") as file:
         code_editor.code_editor(file.read(), lang="markdown")
 
 
-# download_section(
-#     title="Download All",
-#     file_path="output/all.zip",
-#     download_label="Download all files"
-# )
 def create_filtered_zip_in_memory(directory, allowed_extensions):
     memory_zip = io.BytesIO()
     with zipfile.ZipFile(memory_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
