@@ -57,15 +57,30 @@ enabled_module = None
 enabled_plugins = []
 
 
-def get_available_plugin_names():
+def get_available_plugin_names() -> List[str]:
+    """
+    Get the names of all available plugins
+
+    :return: A list of plugin names
+    """
     return list(plugin.name for plugin in available_plugins if not plugin.errored)
 
 
-def get_available_module_names():
+def get_available_module_names() -> List[str]:
+    """
+    Get the names of all available modules
+
+    :return: A list of module names
+    """
     return list(module.name for module in available_modules if not module.errored)
 
 
-def unload_addon(addon):
+def unload_addon(addon: Module | Plugin) -> None:
+    """
+    Unload an addon
+
+    :param addon: The addon to unload
+    """
     pm.unregister(addon.imported_object)
     addon.unload()
     from magi.managers import SettingManager
@@ -73,6 +88,11 @@ def unload_addon(addon):
 
 
 def update_enabled_module() -> Module | None:
+    """
+    Update the enabled module
+
+    :return: The updated enabled module or None if no module is enabled
+    """
     from magi.managers import SettingManager
     new_enabled_module_name = SettingManager.BaseSettings.enabled_module
 
@@ -107,6 +127,11 @@ def update_enabled_module() -> Module | None:
 
 
 def update_enabled_plugins() -> List[Plugin]:
+    """
+    Update the enabled plugins
+
+    :return: A list of enabled plugins
+    """
     from magi.managers import SettingManager
     new_enabled_plugin_names = SettingManager.BaseSettings.enabled_plugins
 
@@ -161,5 +186,5 @@ def grade():
         step()
 
 
-def generate_documentation():
+def generate_documentation() -> str:
     return pm.hook.generate_documentation()

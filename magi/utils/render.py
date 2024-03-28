@@ -1,11 +1,12 @@
 import logging
 import os
 import re
+from typing import Optional
 
 import jinja2
 
 
-def render_template(template_path, context, output_path=None, ):
+def render_template(template_path: str, context, output_path: Optional[str] = None) -> str:
     """
     Renders a template file using Jinja2 and writes the result to an output file.
 
@@ -24,7 +25,7 @@ def render_template(template_path, context, output_path=None, ):
     return output_path
 
 
-def render_templates(template_dir, context, output_dir=None, exclude=None, preserve_relative_path=True):
+def render_templates(template_dir:str, context, output_dir=None, exclude=None, preserve_relative_path=True) -> str:
     """
     Renders all template files in a directory using Jinja2 and writes the result to an output directory.
 
@@ -48,7 +49,8 @@ def render_templates(template_dir, context, output_dir=None, exclude=None, prese
                 if not preserve_relative_path:
                     output_path = os.path.join(output_dir, filename[:-6])
                 else:
-                    output_path = os.path.join(output_dir, rel_dirpath, filename[:-6])
+                    output_path = os.path.join(
+                        output_dir, rel_dirpath, filename[:-6])
                 if not os.path.exists(os.path.dirname(output_path)):
                     os.makedirs(os.path.dirname(output_path))
 
@@ -73,9 +75,10 @@ REGEX_PATTERNS = {
 }
 
 
-def process_distribution_version(input_str, version, keep_public=True) -> str:
+def process_distribution_version(input_str: str, version: str, keep_public: bool = True) -> str:
     if version not in BLOCK_TYPES:
-        raise ValueError("version_type should be either 'public' or 'private'.")
+        raise ValueError(
+            "version_type should be either 'public' or 'private'.")
 
     # Determine which version to remove
     removal_version = PRIVATE if version == PUBLIC else PUBLIC
@@ -124,7 +127,8 @@ def generate_distribution_version(file_path, output_file_path, version, keep_pub
     with open(file_path, 'r') as f:
         input_str = f.read()
 
-    processed_str = process_distribution_version(input_str, version, keep_public)
+    processed_str = process_distribution_version(
+        input_str, version, keep_public)
 
     # Ensure the directory of the output file exists
     os.makedirs(os.path.dirname(output_file_path), exist_ok=True)

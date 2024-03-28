@@ -81,12 +81,12 @@ def load_metadata(metadata_path: str) -> Metadata:
     :param metadata_path: the path to the metadata file
     :return:
     """
-    from magi.utils.serialization import load_dataclass_from_file
+    from magi.utils.serialization import deserialize
     if not op.isfile(metadata_path):
         logging.error(f"Metadata file {metadata_path} does not exist.")
         return Metadata()
     try:
-        return load_dataclass_from_file(Metadata, metadata_path)
+        return deserialize(Metadata, metadata_path)
     except Exception as e:
         logging.error(f"Error loading metadata file {metadata_path}: {e}", exc_info=True)
         return Metadata()

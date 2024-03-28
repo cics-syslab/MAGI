@@ -8,7 +8,7 @@ from magi.common.gradescope import Result, Visibility
 from magi.managers import TestManager
 from magi.managers.info_manager import Directories
 from magi.utils import code_runner, file_utils
-from magi.utils.serialization import load_dataclass_from_file
+from magi.utils.serialization import deserialize
 from .config import Config
 
 
@@ -80,7 +80,7 @@ def process_results(visibility: Visibility = Visibility.VISIBLE):
     if not os.path.exists(result_file_path):
         TestManager.fail_all("No result file was created.")
         return
-    temp_result = load_dataclass_from_file(Result, result_file_path)
+    temp_result = deserialize(Result, result_file_path)
     for testcase in temp_result.tests:
         testcase.visibility = visibility
         TestManager.add_test(testcase)

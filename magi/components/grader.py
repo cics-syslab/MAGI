@@ -12,7 +12,7 @@ from magi.utils import file_utils
 logging = logging.getLogger("Grader")
 
 
-def remove_existing_submission_files(submission_files: list, workdir: str | Path):
+def remove_existing_submission_files(submission_files: list, workdir: str | Path) -> None:
     """
     Remove existing submission files in the project files directory
 

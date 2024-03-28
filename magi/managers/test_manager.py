@@ -32,7 +32,14 @@ def reset():
     status = Status()
 
 
-def output_global_message(msg: str):
+def output_global_message(msg: str) -> None:
+    """
+    Appends the given message to the global output and logs it.
+
+    :param msg: The message to be appended to the global output.
+
+    :return: None
+    """
     if status.output:
         status.output += "\n"
 
@@ -47,7 +54,6 @@ def add_test(test_case: Optional[TestCase]) -> TestCase:
 
     :param test_case: The test case to add
     :return: The test case
-
     """
     if test_case is None:
         test_case = TestCase()
@@ -87,7 +93,7 @@ def output_result(result_path: Optional[str | Path] = None) -> None:
         from magi.managers import InfoManager
         result_path = InfoManager.Directories.RESULT_JSON_PATH
 
-    from magi.utils.serialization import dump_dataclass_to_file
+    from magi.utils.serialization import serialize
     result = Result()
     result.output += status.output
 
@@ -96,4 +102,4 @@ def output_result(result_path: Optional[str | Path] = None) -> None:
 
     if status.all_failed:
         result.score = 0
-    dump_dataclass_to_file(result, result_path)
+    serialize(result, result_path)

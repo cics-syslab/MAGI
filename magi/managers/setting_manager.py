@@ -6,7 +6,7 @@ import os.path as op
 from dataclasses import is_dataclass, dataclass
 
 from magi.common.base_settings import BaseSettings
-from magi.utils.serialization import dump_dataclass_to_file, load_dataclass_from_file
+from magi.utils.serialization import serialize, deserialize
 
 logging = logging.getLogger('SettingManager')
 
@@ -21,19 +21,19 @@ def load_or_create(filepath: str, cls):
     """
 
     try:
-        instance = load_dataclass_from_file(cls, filepath)
+        instance = deserialize(cls, filepath)
         logging.info(f"Setting file loaded from {filepath}: {instance}")
     except FileNotFoundError:
         logging.warning(f"Setting file not exists, created at {filepath}")
         instance = cls()
-        dump_dataclass_to_file(instance, filepath)
+        serialize(instance, filepath)
     except Exception as e:
         logging.error(f"Error loading setting file from {filepath}: {e}"
                       "created a new instance, the old file is renamed to "
                       f"{filepath}.old", exc_info=True)
         os.rename(filepath, filepath + ".old")
         instance = cls()
-        dump_dataclass_to_file(instance, filepath)
+        serialize(instance, filepath)
     return instance
 
 
@@ -82,15 +82,15 @@ def get_settings(addon_name: str):
 
 
 def save_settings() -> None:
-    dump_dataclass_to_file(BaseSettings, op.join("settings", "BaseSettings.json"))
+    serialize(BaseSettings, op.join("settings", "BaseSettings.json"))
     for name, instance in addon_settings.items():
-        dump_dataclass_to_file(instance, addon_settings_file[name])
+        serialize(instance, addon_settings_file[name])
 
 
 def save_settings_for(addon_name: str) -> None:
     if addon_name not in addon_settings.keys():
         raise ValueError(f"Addon {addon_name} not registered")
-    dump_dataclass_to_file(addon_settings[addon_name], addon_settings_file[addon_name])
+    serialize(addon_settings[addon_name], addon_settings_file[addon_name])
 
 
 def reload_settings_for(addon_name: str) -> None:

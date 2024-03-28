@@ -1,4 +1,4 @@
-def singleton(cls):
+def singleton(cls: type):
     """
     Decorator to ensure a class only allows one instance.
     """
@@ -12,7 +12,7 @@ def singleton(cls):
     return get_instance
 
 
-def overwrite_singleton(cls):
+def overwrite_singleton(cls: type):
     """
     Decorator to overwrite the class definition with a singleton instance.
     """
@@ -20,7 +20,7 @@ def overwrite_singleton(cls):
     return cls()
 
 
-def lazy_singleton(cls):
+def lazy_singleton(cls: type):
     """
     Decorator to create a lazily-initialized singleton of the given class.
 
@@ -78,77 +78,3 @@ def lazy_singleton(cls):
             return self._inner_instance(*args, **kwargs)
 
     return Wrapper()
-
-# class LazyInitSingletonBase:
-#     _instance = None
-#
-#     class SingletonInner:
-#         def __init__(self, child_instance):
-#             self.outer_instance = child_instance
-#             self.outer_instance.initialize(child_instance)
-#
-#     def initialize(self):
-#         raise NotImplementedError("Subclasses should implement this method")
-#
-#     @classmethod
-#     def _get_instance(cls):
-#         if cls._instance is None:
-#             cls._instance = cls.SingletonInner(cls)
-#         return cls._instance
-#
-#     def __getattr__(self, name):
-#         return getattr(self._get_instance().outer_instance, name)
-#
-#     def __setattr__(self, name, value):
-#         if name in ["_instance", "SingletonInner"]:
-#             super().__setattr__(name, value)
-#         else:
-#             setattr(self._get_instance().outer_instance, name, value)
-#
-#     def make_instance(self):
-#         return self._get_instance().outer_instance
-# def lazy_singleton(cls):
-#     class Wrapper:
-#         def __init__(self, *args, **kwargs):
-#             self._initialized = False
-#             self._init_args = args
-#             self._init_kwargs = kwargs
-#
-#         def __getattr__(self, name):
-#             if not self._initialized:
-#                 self._initialize()
-#             return getattr(self._inner_instance, name)
-#
-#         def __setattr__(self, key, value):
-#             if key in ["_initialized", "_init_args", "_init_kwargs", "_inner_instance"]:
-#                 super().__setattr__(key, value)
-#                 return
-#             if not self._initialized:
-#                 self._initialize()
-#             setattr(self._inner_instance, key, value)
-#
-#         def __delattr__(self, name):
-#             if not self._initialized:
-#                 self._initialize()
-#             delattr(self._inner_instance, name)
-#
-#         def __str__(self):
-#             if not self._initialized:
-#                 self._initialize()
-#             return str(self._inner_instance)
-#
-#         def __repr__(self):
-#             if not self._initialized:
-#                 self._initialize()
-#             return repr(self._inner_instance)
-#
-#         def __call__(self, *args, **kwargs):
-#             if not self._initialized:
-#                 self._initialize()
-#             return self._inner_instance(*args, **kwargs)
-#
-#         def _initialize(self):
-#             self._inner_instance = cls(*self._init_args, **self._init_kwargs)
-#             self._initialized = True
-#
-#     return Wrapper()

@@ -115,7 +115,7 @@ class Addon:
         logging.debug(f"Loaded addon {self.name} from {self.root_dir}")
         return self.loaded
 
-    def unload(self):
+    def unload(self) -> None:
         if not self.loaded:
             return
         logging.debug(f"Unloading addon {self.name} from {self.root_dir}")

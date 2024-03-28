@@ -1,12 +1,13 @@
 import json
 from dataclasses import asdict
 from enum import Enum
+from pathlib import Path
 
 import dacite
 from dacite import from_dict
 
 
-def dump_dataclass_to_file(instance, filepath):
+def serialize(instance: object, filepath: str | Path):
     """
     Dump the dataclass instance to the file
 
@@ -14,10 +15,11 @@ def dump_dataclass_to_file(instance, filepath):
     :param filepath: The path to the file
     :return: None
     """
-    json.dump(asdict(instance), open(filepath, "w+", encoding="utf-8"), indent=4)
+    json.dump(asdict(instance), open(
+        filepath, "w+", encoding="utf-8"), indent=4)
 
 
-def load_dataclass_from_file(cls, filepath):
+def deserialize(cls: type, filepath: str | Path):
     """
     Load the dataclass from the file
 
