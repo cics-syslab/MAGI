@@ -11,7 +11,11 @@ To successfully complete this module, students are required to develop a client 
 with a remote server and accurately solving questions received from the server. This involves understanding socket
 programming concepts, client-server architecture, and applying logical reasoning to solve the presented problems.
 
-## Key Learning Outcomes:
+## Dependency
+
+- [c_cpp](https://github.com/cics-syslab/MAGI/tree/main/plugins/c_cpp)
+
+## Key Learning Outcomes
 
 - Establishing a socket connection with a server.
 - Understanding and implementing the handshake protocol.
