@@ -20,8 +20,7 @@ VOLUME /app/webui/pages
 
 COPY . .
 
-RUN chmod +x /app/setup.sh
-RUN ./setup.sh
+RUN chmod +x /app/setup.sh && /app/setup.sh
 RUN python3 scripts/setup.py
 
 RUN chmod +x /app/run.sh
