@@ -31,19 +31,24 @@ For detailed documentation, please visit our [GitHub Wiki](https://github.com/ci
 The easiest way to get started with our application is by using our pre-built [Docker](https://www.docker.com/) image.
 
 ```bash
-docker run -d --name magi -p 8501:8501 -v ./settings:/app/settings ghcr.io/cics-syslab/magi:latest
+docker run -d --name magi --tmpfs /app/output,/app/workdir,/app/webui/pages -v ./settings:/app/settings -p 8501:8501 ghcr.io/cics-syslab/magi:latest
 ```
 
 ### Docker Compose
 
 ```yaml
 version: '3'
+
 services:
   magi:
     container_name: magi
     image: ghcr.io/cics-syslab/magi:latest
-    volume:
-      - ${pwd}/settings:/app/settings
+    tmpfs:
+      - /app/output
+      - /app/workdir
+      - /app/webui/pages
+    volumes:
+      - ./settings:/app/settings
     network_mode: bridge
     ports:
       - "8501:8501"
