@@ -43,7 +43,7 @@ def main():
     print(f"Addon {addon_name} created successfully.")
     print("Please refer to the documentation for further steps.")
     print("Happy coding!")
-    
+
 
 if __name__ == "__main__":
     main()

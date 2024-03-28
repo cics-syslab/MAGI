@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional, List
 
+from magi.utils.file_utils import magi_path
 from magi.utils.singleton import overwrite_singleton
 
 
@@ -17,7 +18,7 @@ class Env:
 @overwrite_singleton
 @dataclass
 class Directories:
-    SRC_PATH: Path = Path(__file__).parent.parent.parent.resolve()  # this is the path to the root of the magi, i.e.
+    SRC_PATH: Path = magi_path  # this is the path to the root of the magi, i.e.
     # MAGI folder, /autograder/source/
 
     TEMPLATE_DIR: Path = SRC_PATH / "static" / "GRADESCOPE_TEMPLATE"

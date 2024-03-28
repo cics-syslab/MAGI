@@ -2,8 +2,9 @@ import os
 import sys
 
 import streamlit as st
-from functions.session import init_session
 from streamlit import session_state
+
+from functions.session import init_session
 
 init_session()
 

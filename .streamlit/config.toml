@@ -1,6 +1,5 @@
 [logger]
-
-level = "debug"
+level = "info"
 
 [runner]
 fastReruns = false
@@ -10,5 +9,9 @@ magicEnabled = false
 [server]
 enableCORS = false
 enableXsrfProtection = false
-folderWatchBlacklist = ['logs', '.git']
-headless = false
+folderWatchBlacklist = ['logs', '.git', 'settings', 'workdir', 'output']
+headless = true
+address = "0.0.0.0"
+
+[browser]
+gatherUsageStats = false

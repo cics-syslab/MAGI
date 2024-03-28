@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import shutil
 import logging
 import os
+import shutil
 from os import path as op
 from pathlib import Path
 
@@ -41,10 +41,10 @@ white_list_filenames = {
 }
 
 # Get the absolute path of the MAGI directory
-magi_dir = Path(__file__).parent.parent.parent.resolve()
+magi_path = Path(__file__).parent.parent.parent.resolve()
 
 # Convert relative paths in the white list to absolute paths
-white_list_dirs = set(Path(item) if item[0] == '/' else magi_dir / item for item in white_list_dirs)
+white_list_dirs = set(Path(item) if item[0] == '/' else magi_path / item for item in white_list_dirs)
 
 
 def is_in_white_list(path: Path) -> bool:

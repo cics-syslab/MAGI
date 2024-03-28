@@ -1,20 +1,21 @@
+import logging
 import os
 from time import sleep
 
+import streamlit as st
 from jinja2 import Environment, PackageLoader, select_autoescape
-from streamlit import session_state
 
-env = Environment(
-    loader=PackageLoader("webui"),
-    autoescape=select_autoescape()
-)
-template = env.get_template("addon.jinja2")
+from magi.utils.file_utils import remove
+
+env = Environment(loader=PackageLoader("webui"),
+                  autoescape=select_autoescape())
+addon_page_template = env.get_template("addon.jinja2")
 
 
 def render_addon_page(addon):
     if addon is None:
         return
-    content = template.render(addon=addon)
+    content = addon_page_template.render(addon=addon)
     filepath = get_addon_page_path(addon)
     if not os.path.isfile(filepath):
         with open(filepath, "w+") as f:
@@ -34,38 +35,51 @@ def get_addon_page_path(addon):
     return filepath
 
 
-def update_pages():
-    update_addon_lock = session_state.update_addon_lock
-    SettingManager = session_state.SettingManager
-    AddonManager = session_state.AddonManager
-    InfoManager = session_state.InfoManager
-    with update_addon_lock:
-        print("Updating pages")
+def update_pages(use_session_state=True):
+    if use_session_state:
+        from streamlit import session_state
+        update_addon_lock = session_state.update_addon_lock
+        SettingManager = session_state.SettingManager
+        AddonManager = session_state.AddonManager
+        InfoManager = session_state.InfoManager
+    else:
+        from magi.managers import AddonManager, SettingManager, InfoManager
+        from contextlib import nullcontext
+        update_addon_lock = nullcontext()
 
-        files = os.listdir(InfoManager.Directories.SRC_PATH / "webui" / "pages")
-        # print("enabled module", AddonManager.enabled_module.name)
-        # print("enabled plugins", AddonManager.enabled_plugins)
-        # print("files", files)
+    pages_dir = InfoManager.Directories.SRC_PATH / "webui" / "pages"
+
+    with update_addon_lock:
+
+        if not os.path.exists(pages_dir):
+            logging.error("Pages directory does not exist")
+            st.error("Pages directory does not exist")
+            return
+
+        files = os.listdir(pages_dir)
 
         for file in files:
             if file.startswith("1_"):
                 addon_name = file.split(".")[0][2:]
                 if addon_name != SettingManager.BaseSettings.enabled_module:
-                    os.remove(os.path.join("webui", "pages", file))
+                    # os.remove(pages_dir/file)
+                    remove(pages_dir / file)
                     AddonManager.update_enabled_module()
             elif file.startswith("2_"):
                 addon_name = file.split(".")[0][2:]
                 if addon_name not in SettingManager.BaseSettings.enabled_plugins:
-                    os.remove(os.path.join("webui", "pages", file))
+                    # os.remove(pages_dir/file)
+                    remove(pages_dir / file)
                     AddonManager.update_enabled_plugins()
+
         # otherwise, the pages will be updated too quickly and streamlit will not be able to keep up
         sleep(0.1)
         for addon in [AddonManager.enabled_module] + AddonManager.enabled_plugins:
             if not addon:
-                print("encounter none in rendering addon pages")
+                logging.debug("encounter None in rendering addon pages")
                 continue
 
-            print("Rendering addon page: ", addon.name)
+            logging.debug("Rendering addon page: ", addon.name)
             render_addon_page(addon)
 
-        print("Pages updated")
+        logging.debug("Pages updated")

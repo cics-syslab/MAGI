@@ -13,5 +13,5 @@ if %errorlevel% neq 0 (
   echo %current_dir% is already in PYTHONPATH for the current session.
 )
 
-
+python3 webui/init.py
 streamlit run webui\Hello.py

@@ -82,13 +82,14 @@ These are just presets and their behavior can be found by invoking
 
 import argparse
 import json
-import select
 import socket
 import time
 from datetime import datetime
 from hashlib import sha256
 from os import makedirs
 from os import path as osp
+
+import select
 
 import QA
 

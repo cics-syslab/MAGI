@@ -12,6 +12,7 @@ from magi.common.gradescope import TestCase
 from magi.managers import TestManager
 from magi.utils import file_utils
 
+
 @dataclass
 class XmlTestCase:
     name: str

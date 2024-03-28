@@ -135,29 +135,6 @@ def update_enabled_plugins() -> List[Plugin]:
     return enabled_plugins
 
 
-# def run_attr_for_all(attr):
-#     all_addon = [get_enabled_module()] + get_enabled_plugins()
-#     rtn = []
-#     for addon in all_addon:
-#         if addon is None:
-#             continue
-#
-#         module = addon.imported_object
-#         if not module:
-#             continue
-#         func = getattr(module, attr, None)
-#         if func:
-#             logging.info(f"Running {attr} for {addon.name}")
-#             try:
-#                 rtn.append(func())
-#             except Exception as e:
-#                 logging.error(f"Error running {attr} for {addon.name}: {e}", exc_info=True)
-#
-#         else:
-#             logging.debug(f"Addon {addon.name} does not have {attr},skipped")
-#     return rtn
-
-
 def before_generating():
     pm.hook.before_generating()
 

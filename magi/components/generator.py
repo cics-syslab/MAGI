@@ -17,8 +17,8 @@ def generate_autograder(output_dir: str | Path) -> None:
     """
     Generate the autograder files for the project under the given output directory.
 
-    : param output_dir: The output directory to generate the autograder files under.
-    : return: None
+    :param output_dir: The output directory to generate the autograder files under.
+    :return: None
     """
     if output_dir is None:
         logging.error("No output directory provided")
@@ -68,7 +68,7 @@ def reset_output_dir() -> None:
     reset_dir(output_dir)
     logging.info(f'Output directory {output_dir} reset.')
     for subdir in ["source", "solution", "dist", "misc"]:
-        os.makedirs(output_dir/subdir, exist_ok=True)
+        os.makedirs(output_dir / subdir, exist_ok=True)
 
 
 def generate_documentation(file_path: str | Path) -> None:
@@ -77,8 +77,8 @@ def generate_documentation(file_path: str | Path) -> None:
 
     Iterates through all addons and calls their generate_documentation() method. If none of the addons have documentation, then no documentation is generated.
 
-    : param file_path: The path to the file to write the documentation to.
-    : return: None
+    :param file_path: The path to the file to write the documentation to.
+    :return: None
     """
     from magi.managers import AddonManager
     from magi.managers import SettingManager
@@ -100,8 +100,8 @@ def generate_output(output_dir: str = None) -> None:
     """
     Generate the all project files under the given output directory.
 
-    : param output_parent_dir: The parent directory to create the output directory in.
-    : return: None
+    :param output_parent_dir: The parent directory to create the output directory in.
+    :return: None
     """
     from magi.managers import AddonManager
     if output_dir is None:

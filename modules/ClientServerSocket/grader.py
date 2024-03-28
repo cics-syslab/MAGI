@@ -49,7 +49,7 @@ def grade():
 
     port = Config.port if Config.port != -1 else random.randint(10000, 20000)
     result_file_path = str(Directories.SRC_PATH / "modules" / "ClientServerSocket" / "results.json")
-    
+
     # if os.path.exists(result_file_path):
     #     os.remove(result_file_path)
     file_utils.remove(result_file_path)

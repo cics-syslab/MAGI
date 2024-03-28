@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  magi:
+    container_name: magi
+    image: ghcr.io/cics-syslab/magi:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+    tmpfs:
+      - /app/output
+      - /app/workdir
+      - /app/webui/pages
+    volumes:
+      - ./settings:/app/settings
+    network_mode: bridge
+    ports:
+      - "8501:8501"

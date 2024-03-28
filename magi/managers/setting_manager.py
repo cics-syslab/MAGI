@@ -1,9 +1,9 @@
+import atexit
 import inspect
 import logging
 import os
 import os.path as op
 from dataclasses import is_dataclass, dataclass
-import atexit
 
 from magi.common.base_settings import BaseSettings
 from magi.utils.serialization import dump_dataclass_to_file, load_dataclass_from_file
@@ -97,5 +97,6 @@ def reload_settings_for(addon_name: str) -> None:
     if addon_name not in addon_settings.keys():
         raise ValueError(f"Addon {addon_name} not registered")
     addon_settings[addon_name] = load_or_create(addon_settings_file[addon_name], addon_settings[addon_name].__class__)
+
 
 atexit.register(save_settings)
