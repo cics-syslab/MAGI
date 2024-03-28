@@ -18,8 +18,9 @@ VOLUME /app/workdir
 VOLUME /app/output
 VOLUME /app/webui/pages
 
-COPY ./ /app
+COPY . .
 
+RUN chmod +x /app/setup.sh
 RUN ./setup.sh
 RUN python3 scripts/setup.py
 
