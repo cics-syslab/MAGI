@@ -56,7 +56,7 @@ def is_in_white_list(path: Path) -> bool:
     """
     abs_path = path.resolve()
     for item in white_list_dirs:
-        if os.path.commonpath([item, abs_path]) == item:
+        if Path(os.path.commonpath([item, abs_path])) == item:
             return True
     if abs_path.is_file():
         for item in white_list_filenames:
