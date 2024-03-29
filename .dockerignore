@@ -21,11 +21,12 @@ docs/
 .git/
 .gitignore
 Dockerfile
+docker-compose.yaml
 
-modules/PointerProjectEngine/
 modules/ThreadingProjectEngine/
 modules/MinimalModuleExample/
 
 plugins/email_notice/
 plugins/MinimalPluginExample/
+
 
