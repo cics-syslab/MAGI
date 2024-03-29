@@ -1,0 +1,249 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 13,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 1,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 2,
+  "numTotalTests": 13,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1710449451167,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [],
+      "coverage": {},
+      "endTime": 1710449455392,
+      "message": "  \u001b[1m● \u001b[22mTest suite failed to run\n\n    TypeError: l1.isEmpty is not a function\n\n    \u001b[0m \u001b[90m 4 |\u001b[39m \u001b[36mlet\u001b[39m lst2\u001b[33m=\u001b[39mnode(\u001b[35m5\u001b[39m\u001b[33m,\u001b[39m node(\u001b[35m6\u001b[39m\u001b[33m,\u001b[39m node(\u001b[35m7\u001b[39m\u001b[33m,\u001b[39m empty())))\u001b[0m\n    \u001b[0m \u001b[90m 5 |\u001b[39m\u001b[0m\n    \u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 6 |\u001b[39m \u001b[36mconst\u001b[39m concat \u001b[33m=\u001b[39m (l1\u001b[33m,\u001b[39m l2) \u001b[33m=>\u001b[39m l1\u001b[33m.\u001b[39misEmpty() \u001b[33m?\u001b[39m \u001b[35m12\u001b[39m \u001b[33m:\u001b[39m node(l1\u001b[33m.\u001b[39mhead()\u001b[33m,\u001b[39m concat(l1\u001b[33m.\u001b[39mtail()\u001b[33m,\u001b[39m l2))\u001b[0m\n    \u001b[0m \u001b[90m   |\u001b[39m                               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n    \u001b[0m \u001b[90m 7 |\u001b[39m \u001b[36mconst\u001b[39m cat0 \u001b[33m=\u001b[39m lst \u001b[33m=>\u001b[39m concat(lst\u001b[33m,\u001b[39m empty())\u001b[33m;\u001b[39m\u001b[0m\n    \u001b[0m \u001b[90m 8 |\u001b[39m lst1 \u001b[33m=\u001b[39m concat(cat0(lst1)\u001b[33m,\u001b[39m lst2)\u001b[0m\n    \u001b[0m \u001b[90m 9 |\u001b[39m\u001b[0m\n\n      \u001b[2mat concat (\u001b[22m\u001b[0m\u001b[36mtest.js\u001b[39m\u001b[0m\u001b[2m:6:31)\u001b[22m\n      \u001b[2mat concat (\u001b[22m\u001b[0m\u001b[36mtest.js\u001b[39m\u001b[0m\u001b[2m:6:64)\u001b[22m\n      \u001b[2mat concat (\u001b[22m\u001b[0m\u001b[36mtest.js\u001b[39m\u001b[0m\u001b[2m:6:64)\u001b[22m\n      \u001b[2mat concat (\u001b[22m\u001b[0m\u001b[36mtest.js\u001b[39m\u001b[0m\u001b[2m:6:64)\u001b[22m\n      \u001b[2mat concat (\u001b[22m\u001b[0m\u001b[36mtest.js\u001b[39m\u001b[0m\u001b[2m:6:64)\u001b[22m\n      \u001b[2mat Object.<anonymous> (\u001b[22m\u001b[0m\u001b[36mtest.js\u001b[39m\u001b[0m\u001b[2m:8:8)\u001b[22m\n",
+      "name": "/home/bennett/school/220/03-lists/test.js",
+      "startTime": 1710449455392,
+      "status": "failed",
+      "summary": ""
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "tools"
+          ],
+          "duration": 7,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "tools create_list should work",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "create_list should work"
+        },
+        {
+          "ancestorTitles": [
+            "tests"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "tests everyNList should work",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "everyNList should work"
+        },
+        {
+          "ancestorTitles": [
+            "tests"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "tests everyNRev should work",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "everyNRev should work"
+        },
+        {
+          "ancestorTitles": [
+            "tests"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "tests everyNCond should work",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "everyNCond should work"
+        },
+        {
+          "ancestorTitles": [
+            "tests"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "tests nonNegativeProducts should work",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "nonNegativeProducts should work"
+        },
+        {
+          "ancestorTitles": [
+            "tests"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "tests negativeProducts should work",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "negativeProducts should work"
+        },
+        {
+          "ancestorTitles": [
+            "tests"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "tests squashList should work",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "squashList should work"
+        },
+        {
+          "ancestorTitles": [
+            "tests"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "tests composeList should work",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "composeList should work"
+        },
+        {
+          "ancestorTitles": [
+            "tests"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "tests composeFunctions should work",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "composeFunctions should work"
+        },
+        {
+          "ancestorTitles": [
+            "post"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "post everyNCond should return empty if cond = () => false",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "everyNCond should return empty if cond = () => false"
+        },
+        {
+          "ancestorTitles": [
+            "post"
+          ],
+          "duration": 1,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "post everyNCond should work if n > len",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "everyNCond should work if n > len"
+        },
+        {
+          "ancestorTitles": [
+            "post"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "post everyNCond should work with cond = () => true and good n",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "everyNCond should work with cond = () => true and good n"
+        },
+        {
+          "ancestorTitles": [
+            "post"
+          ],
+          "duration": 0,
+          "failureDetails": [],
+          "failureMessages": [],
+          "fullName": "post everyNCond should work with identical elements and n=1",
+          "invocations": 1,
+          "location": null,
+          "numPassingAsserts": 0,
+          "retryReasons": [],
+          "status": "passed",
+          "title": "everyNCond should work with identical elements and n=1"
+        }
+      ],
+      "endTime": 1710449455342,
+      "message": "",
+      "name": "/home/bennett/school/220/03-lists/src/lists.test.ts",
+      "startTime": 1710449451571,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false
+}
