@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit import session_state
+import logging
 
 from webui.functions.addons import update_pages
 from webui.functions.common_field import create_ui_for_dataclass
@@ -13,11 +14,11 @@ update_addon_lock = session_state.update_addon_lock
 st.markdown("# Base Settings")
 create_ui_for_dataclass(SettingManager.BaseSettings)
 
-st.markdown("*Submission files are temporarily disabled*")
+st.warning("*Submission files are temporarily disabled*")
 
 
 def update_enabled_module():
-    print(
+    logging.debug(
         f"Updating enabled module from {SettingManager.BaseSettings.enabled_module} to {session_state.enabled_module}")
     with st.spinner("Loading..."):
         with update_addon_lock:
@@ -25,7 +26,7 @@ def update_enabled_module():
             AddonManager.update_enabled_module()
             SettingManager.save_settings()
         update_pages()
-    print(f"Enabled module: {SettingManager.BaseSettings.enabled_module}")
+    logging.debug(f"Enabled module: {SettingManager.BaseSettings.enabled_module}")
 
 
 # selection for module
@@ -55,4 +56,4 @@ for plugin_name in AddonManager.get_available_plugin_names():
     st.toggle(plugin_name, plugin_name in SettingManager.BaseSettings.enabled_plugins, key=plugin_name,
               on_change=update_enabled_plugins, args=(plugin_name,))
 
-print("Base settings rendered")
+logging.debug("Base settings rendered")
