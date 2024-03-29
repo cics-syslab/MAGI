@@ -1,6 +1,6 @@
-name: C Compile
+name: C/C++ 
 version: 1.0
-author: Calvin
+author: Calvin Chai
 author_email: dev@kchai.me
 description: ""
 documentation: ""
