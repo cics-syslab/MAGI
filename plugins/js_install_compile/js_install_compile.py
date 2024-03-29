@@ -1,9 +1,8 @@
 import os
 import pluggy
 from magi.managers.info_manager import Directories
+from magi.common.addon import hookimpl
 from .config import Config
-
-hookimpl = pluggy.HookimplMarker("magi")
 
 def sys_exec(command):
     dir = os.getcwd()
