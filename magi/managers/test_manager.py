@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Optional
 
 from magi.common.gradescope import TestCase, Result
+from magi.utils.serialization import serialize
 
 logging = logging.getLogger("TestManager")
 
@@ -19,10 +20,16 @@ class Status:
         self.test_cases_by_name = {}
         self.anonymous_counter: int = 0
         self.all_failed: bool = False  # if True, the total score and Testcases will be zero
-
-
-status = Status()
-
+    
+    def reset(self):
+        self.score = 0
+        self.execution_time = 0
+        self.output = ""
+        self.extra_data = {}
+        self.test_cases = []
+        self.test_cases_by_name = {}
+        self.anonymous_counter = 0
+        self.all_failed = False
 
 def reset():
     """
@@ -93,13 +100,17 @@ def output_result(result_path: Optional[str | Path] = None) -> None:
         from magi.managers import InfoManager
         result_path = InfoManager.Directories.RESULT_JSON_PATH
 
-    from magi.utils.serialization import serialize
     result = Result()
     result.output += status.output
+
+    if not status.test_cases:
+        logging.warning("No test cases were added")
+        status.test_cases.append(TestCase(name="No test cases were executed", score=0, output=""))
 
     for test in status.test_cases:
         result.tests.append(test)
 
     if status.all_failed:
         result.score = 0
+
     serialize(result, result_path)

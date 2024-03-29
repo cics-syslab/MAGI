@@ -23,18 +23,22 @@ class TestCase:
     # tags: list = field(default_factory=list)
     # extra_data:str = ""
 
-    def fail_test(self, msg: str):
-        self.output += "\n" + msg
+    def fail(self, msg: str=""):
+        if msg:
+            self.output += "\n" + msg
         self.score = 0
         self.status = "failed"
 
-    def pass_test(self, msg: str):
-        self.output += "\n" + msg
+    def succ(self, msg: str=""):
+        if msg:
+            self.output += "\n" + msg
         self.score = self.max_score
         self.status = "passed"
 
     def add_output_msg(self, msg: str):
-        self.output += "\n" + msg
+        if self.output:
+            self.output += "\n"
+        self.output += msg
 
 
 @dataclass

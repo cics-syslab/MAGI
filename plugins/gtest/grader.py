@@ -10,7 +10,9 @@ import yaml
 from magi.common import gradescope
 from magi.common.gradescope import TestCase
 from magi.managers import TestManager
+from magi.managers.info_manager import Directories
 from magi.utils import file_utils
+from magi.utils.code_runner import Popen
 
 
 @dataclass
@@ -77,6 +79,8 @@ class XmlTestSuite:
         print("Errors:      " + str(self.errors))
         print("Disabled:    " + str(self.disabled))
 
+    def all_tests_passed(self):
+        return self.tests == self.tests - (self.failures + self.disabled + self.errors)
 
 def write_failed_test(fname: str, testname: str, points: str) -> None:
     """Generates a generic failure XML document which can be parsed in the same way that succeeding 
@@ -110,14 +114,13 @@ def grade_all(test_file_name: str) -> None:
 
         :param str test_file_name: The path to the yaml file describing the tests to execute.
     """
-    from magi.utils.code_runner import Popen
-    from magi.managers.info_manager import Directories
     # First, we're going to read in the test layout from the user defined YAML file
     with open(test_file_name, 'r') as file:
         tests = yaml.load(file, Loader=yaml.FullLoader)
 
     TEMP_DIR = Directories.WORK_DIR / "gtest_temp"
-    os.makedirs(TEMP_DIR, exist_ok=True)
+    file_utils.reset_dir(TEMP_DIR)
+    os.chmod(TEMP_DIR, 0o777)
 
     for test in tests['tests']:
         # define the output name for the gtest xml file, as gtest can only export in xml, no python API yet
@@ -127,41 +130,61 @@ def grade_all(test_file_name: str) -> None:
         logging.debug(f"Running: {test['name']}")
 
         # In case we are running the autograder again, we want to remove any existing XML files which may be present
-        # if os.path.exists(out_name):
-        #     os.remove(out_name)
         file_utils.remove(out_name)
 
         # Run the individual gtest using the following console command (subprocess is how you can run system commands from python)
+        out = ""
+        err = ""
 
         gtest_filter = test['class'] + "." + test['name']
         gtest_output = "xml:" + str(out_name)
-        try:
 
-            p = Popen(["./" + test['file'], f"--gtest_output={gtest_output}", f"--gtest_filter={gtest_filter}"],
-                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=Directories.WORK_DIR)
+        test_case = TestCase(name=gtest_filter, max_score=test['points'])
+        test_case.visibility = gradescope.Visibility.VISIBLE if 'visible' not in test or test[
+                'visible'] else gradescope.Visibility.AFTER_PUBLISHED
+        
+        try:
+            command = ["./" + test['file'], f"--gtest_output={gtest_output}", f"--gtest_filter={gtest_filter}"]
+            p = Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=Directories.WORK_DIR)
             # Get stdout and stderr
             out, err = p.communicate()
             # gtest outputs 0 if test succeeds, 1 otherwise, 124 if timeout
             logging.debug(f"Test {test['name']} returned {p.returncode}")
             if p.returncode != 0:
-                logging.warning(f"Test {test['name']} returned {p.returncode}")
+                logging.warning(f"Test {test['name']} returned {p.returncode} :{out}\n {err}")
+                
         except Exception as e:
             logging.error(f"Error running test {test['name']}: {e}", exc_info=True)
-
-        # If the xml fails to generate, the test fails to execute (possibly due to segfault)
+            test_case.fail(str(e))
+        
+        def fail_test():
+            message = ""
+            if out:
+                message += str(out) + "\n"
+            if err:
+                message += str(err)
+            test_case.fail(message)
+            TestManager.add_test(test_case)
+        
         if not os.path.exists(out_name):
-            logging.warning(f"Test {test['name']} failed to execute")
-            # Write a generic failed XML file so that we can treat it the same as other tests with one function
-            write_failed_test(out_name, test['name'], test['points'])
+            fail_test()
+            continue
+
         xml_test_suite = XmlTestSuite(str(out_name))
         xml_test_cases = xml_test_suite.gather_data()
 
-        for xml_test_case in xml_test_cases:
-            test_case = TestCase(name=xml_test_case.name, max_score=test['points'])
-            test_case.visibility = gradescope.Visibility.VISIBLE if 'visible' not in test or test[
-                'visible'] else gradescope.Visibility.AFTER_PUBLISHED
-            if xml_test_case.status == "error":
-                test_case.fail_test(xml_test_case.failed_msg)
-            else:
-                test_case.pass_test(xml_test_case.failed_msg)
-            TestManager.add_test(test_case)
+        if not xml_test_cases:
+            fail_test()
+            continue
+
+        xml_test_case = xml_test_cases[0]
+
+        if xml_test_suite.all_tests_passed():
+            test_case.succ()
+        else:
+            test_case.fail(xml_test_case.failed_msg)
+            
+        TestManager.add_test(test_case)
+        
+            
+                
