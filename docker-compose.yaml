@@ -10,7 +10,7 @@ services:
       network: host
     tmpfs:
       - /app/output
-      - /app/workdir
+      - /app/workdir:exec,mode=777
       - /app/webui/pages
     volumes:
       - ./settings:/app/settings
