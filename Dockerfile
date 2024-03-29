@@ -13,6 +13,7 @@ RUN pip install -r requirements.txt
 RUN useradd -ms /bin/bash student
 RUN chmod -R u-r /app
 
+
 VOLUME /app/settings
 VOLUME /app/workdir
 VOLUME /app/output
@@ -20,8 +21,7 @@ VOLUME /app/webui/pages
 
 COPY . .
 
-RUN chmod +x /app/setup.sh && /app/setup.sh
-RUN python3 scripts/setup.py
+RUN chmod +x /app/post_setup.sh && /app/post_setup.sh
 
 RUN chmod +x /app/run.sh
 ENTRYPOINT ["/app/run.sh"]

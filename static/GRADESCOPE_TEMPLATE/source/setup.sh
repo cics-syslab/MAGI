@@ -35,6 +35,5 @@ else
 fi
 
 cd /autograder/source
-chmod +x ./setup.sh
-./setup.sh
-python3 scripts/setup.py
+chmod +x ./post_setup.sh
+./post_setup.sh

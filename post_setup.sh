@@ -28,7 +28,9 @@ check_addons_setup() {
     done
 }
 
-apt-get update && apt-get install -y build-essential
+chmod -R 777 workdir
+
+apt-get update && apt-get install -y build-essential zip
 
 check_addons_setup
 echo "Add-ons setup complete"
