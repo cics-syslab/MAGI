@@ -40,7 +40,7 @@ def generate_autograder(output_dir: str | Path) -> None:
     for clone_dir in clone_dirs:
         shutil.copytree(Directories.SRC_PATH / clone_dir, output_source_dir / clone_dir)
 
-    clone_files = ['main.py']
+    clone_files = ['main.py', 'post_setup.sh']
     for clone_file in clone_files:
         shutil.copy(Directories.SRC_PATH / clone_file, output_source_dir)
 
