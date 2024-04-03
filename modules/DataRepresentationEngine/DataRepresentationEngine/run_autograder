@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+# cd ../../autograder/source
+# rm -rf src
+
+# Delete the src directory of the solution
+# rm -rf /autograder/source/src
+
+cd /autograder/source
+rm -rf src
+cp -r /autograder/submission/src .
+cp -r /autograder/submission/include .
+
+# Just in case, only should be stale in testing environments
+#rm -rf ../../autograder/results/results_parts
+
+# if cp -r `find /autograder/submission -maxdepth 2 -name 'src'` .; then
+#     echo "Found src dir in submission"
+# else
+#     echo "Couldn't find src directory in submission" | python3 /autograder/source/scripts/build_output.py > /autograder/results/results.json
+#     exit
+# fi
+
+# OK, lets go into the source directory and fire off make.
+# cd /autograder/source
+
+# echo "Where are we"
+# ls
+# echo "What is in the source?"
+# ls /autograder/source
+
+if make > /autograder/results/build.log 2>&1 ; then
+    echo "Build succeeded"
+else
+    echo "Build failed"
+    cat /autograder/results/build.log | python3 /autograder/source/scripts/build_output.py > /autograder/results/results.json
+    exit
+fi
+
+echo "Running test phase"
+python3 ./scripts/grader.py /autograder/source/test_list.yml
+
+#log_file ../../autograder/results/results.json
+
+
+#### 187 Below ####
+
+# Go into the directory containing the autograder source code
+# cd /autograder/source
+
+# Remove the `src` directory as we are going to copy the student
+# submission's `src` directory into our autograder directory.
+
+# Save the autograder tests
+# mv src/test test
+
+# Delete the solution directory
+# rm -rf src
+
+# Search for the student's `src` directory in the submission folder.
+# if cp -r `find /autograder/submission -maxdepth 2 -name 'src'` .; then
+#     echo "Found src dir in submission"
+# else
+#     echo "Couldn't find src directory in submission" | python3 /autograder/source/scripts/build_output.py > /autograder/results/results.json
+#     exit
+# fi
+
+# Remove student's tests
+# rm -rf src/test
+
+# Move the autograder tests into students src/test directory.
+# mv test src/
+
+# Build the student submission.
+# if ant -l /autograder/results/build.log build; then
+#     echo "Build succeeded"
+#     cat /autograder/results/build.log
+# else
+#     echo "Build failed"
+#     cat /autograder/results/build.log | python3 /autograder/source/scripts/build_output.py > /autograder/results/results.json
+#     exit
+# fi
+
+# Run the autograder and generate the results.
+# echo "Run grader"
+# java -cp "bin/:lib/*" test.RunTests > /autograder/results/results.json
+
+# print full results for instructor to see (can this be easier to read?)
+# echo "Full results:"
+# cat /autograder/results/results.json | python3 scripts/pretty_json.py

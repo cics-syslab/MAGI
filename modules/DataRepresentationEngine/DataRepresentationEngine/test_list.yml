@@ -1,0 +1,101 @@
+tests:
+  -
+    file: data_test
+    class: ProjectTests
+    name: Convert_to_base_2
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: Convert_to_base16
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: Convert_to_base5
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: Convert_to_base12
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: Convert_to_base9   
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: Convert0 
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: Convert1 
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: ConvertSame 
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: LeftShift1
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: LeftShift3
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: LeftShift1_overflow
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: LeftShift3_overflow
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: LeftShiftN_overflow
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: rightShift1_unsigned
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: rightShift5_unsigned
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: rightShift1_signed
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: rightShift5_signed
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: convert_to_int_unsigned
+    points: 5
+  -
+    file: data_test
+    class: ProjectTests
+    name: convert_to_int_signed
+    points: 5  
+  -
+    file: data_test
+    class: ProjectTests
+    name: test_all
+    points: 5    
