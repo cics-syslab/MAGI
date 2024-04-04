@@ -1,6 +1,12 @@
 import os
+import sys
+from pathlib import Path
 
-from directory import magi_path
+magi_path = Path(__file__).resolve().parent.parent
+
+if magi_path not in sys.path:
+    sys.path.append(str(magi_path))
+    
 from magi.utils.render import render_templates
 
 

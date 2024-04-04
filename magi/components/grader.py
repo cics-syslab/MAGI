@@ -72,7 +72,7 @@ def grade_submission() -> None:
     submission_files = SettingManager.BaseSettings.submission_files
     submission_dir = Directories.SUBMISSION_DIR
     os.makedirs(Directories.WORK_DIR, exist_ok=True)
-    subprocess.run(["chmod", "-R", "777", Directories.WORK_DIR])
+    
     # Remove existing submission files
     remove_existing_submission_files(submission_files, Directories.WORK_DIR)
 
@@ -85,12 +85,13 @@ def grade_submission() -> None:
             TestManager.fail_all()
             TestManager.output_result()
             return
-
+    
     if SettingManager.BaseSettings.allow_all_file:
         shutil.copytree(submission_dir, Directories.WORK_DIR, dirs_exist_ok=True)
     else:
         move_submission_files(submission_files, Directories.WORK_DIR, submission_dir)
     logging.debug("Finished moving submission files, starting grading")
+    subprocess.run(["chmod", "-R", "777", Directories.WORK_DIR])
     try:
         AddonManager.grade()
     except Exception as e:
