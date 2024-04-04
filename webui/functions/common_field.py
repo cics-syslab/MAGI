@@ -7,6 +7,8 @@ import streamlit as st
 from code_editor import code_editor
 from streamlit import session_state
 
+from magi.managers.info_manager import Directories
+import os
 
 def attribute_name_convention(field_info: Field) -> str:
     if field_info.metadata.get("display_name"):
@@ -16,6 +18,21 @@ def attribute_name_convention(field_info: Field) -> str:
 
 def update_data(data_object, field_name, field_id):
     setattr(data_object, field_name, st.session_state[field_id])
+
+def write_docs(addon_name, category):
+    # get base path
+    base = Directories.MODULES_DIR
+    if category == "plugins": base = Directories.PLUGINS_DIR
+
+    path = f"{base}/{addon_name}/README.md"
+    
+    # try to open the thing
+    # if README.md is here then write text
+    if (os.path.isfile(path)):
+        with open(path, "r") as fp:
+            st.markdown(fp.read())
+
+    # otherwise we do nothing
 
 
 def create_ui_for_dataclass(dataclass_obj):

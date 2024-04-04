@@ -2,7 +2,7 @@ import streamlit as st
 from streamlit import session_state
 
 
-from webui.functions.common_field import create_ui_for_dataclass
+from webui.functions.common_field import create_ui_for_dataclass, write_docs
 from webui.functions.session import init_session
 print("rendering {{ addon.name }}")
 init_session()
@@ -12,6 +12,7 @@ AddonManager = session_state.AddonManager
 st.write("# {{ addon.name }}")
 
 create_ui_for_dataclass(SettingManager.get_settings("{{ addon.name }}"))
+write_docs("{{ addon.name }}", "{{ addon.category }}")
 
 # Customize Field
 #if "{{ addon.name }}" in AddonManager._name_to_modules.keys() and getattr(AddonManager._name_to_modules["{{ addon.name }}"].imported_object, "webui", None):
