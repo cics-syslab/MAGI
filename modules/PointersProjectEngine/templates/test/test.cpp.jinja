@@ -136,7 +136,7 @@ TEST(ProjectTests, {{ container_name }}_add_first) {
   result = {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}");
   EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
   ASSERT_STREQ(({{ cluster_name }}[0].list)->{{ item_name }}->{{ item_name }}_name, "{{ item1 }}")
-      << "The first item in {{ container_name }} 'New' should be {{ item1 }}.";
+      << "The first item in {{ container_name }} 'container1' should be {{ item1 }}.";
 }
 
 TEST(ProjectTests, {{ container_name }}_add_none) {
@@ -150,100 +150,100 @@ TEST(ProjectTests, {{ container_name }}_add_multiple) {
   reset_{{ cluster_name }}();
   int result;
   result = {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}");
-  result = {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "Pen");
+  result = {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "item2");
   EXPECT_EQ(result, 1) << "The return value of {{ container_name }}_add should be 1";
-  ASSERT_STREQ(({{ cluster_name }}[0].list)->next->{{ item_name }}->{{ item_name }}_name, "Pen")
-      << "The second item in {{ container_name }} 'New' should be Pen.";
-  ASSERT_STREQ(({{ cluster_name }}[1].list)->{{ item_name }}->{{ item_name }}_name, "Pen")
-      << "The first item in {{ container_name }} 'Used' should be Pen.";
+  ASSERT_STREQ(({{ cluster_name }}[0].list)->next->{{ item_name }}->{{ item_name }}_name, "item2")
+      << "The second item in {{ container_name }} 'container1' should be item2.";
+  ASSERT_STREQ(({{ cluster_name }}[1].list)->{{ item_name }}->{{ item_name }}_name, "item2")
+      << "The first item in {{ container_name }} 'container2' should be item2.";
 }
 
 TEST(ProjectTests, {{ container_name }}_remove_second_item) {
   reset_{{ cluster_name }}();
   {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}");
-  {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "Pen");
-  {{ item_type }}* result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "New", "Pen");
+  {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "item2");
+  {{ item_type }}* result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "container1", "item2");
   EXPECT_TRUE(result_{{ item_name }} == &{{ item_name }}[1])
       << "The returned {{ item_name }} should be the second {{ item_name }} in the {{ item_name }} list.";
   ASSERT_STREQ(({{ cluster_name }}[0].list)->{{ item_name }}->{{ item_name }}_name, "{{ item1 }}")
-      << "The first item in {{ container_name }} 'New' should be {{ item1 }}.";
-  ASSERT_STREQ(({{ cluster_name }}[1].list)->{{ item_name }}->{{ item_name }}_name, "Pen")
-      << "The first item in {{ container_name }} 'Used' should be Pen.";
+      << "The first item in {{ container_name }} 'container1' should be {{ item1 }}.";
+  ASSERT_STREQ(({{ cluster_name }}[1].list)->{{ item_name }}->{{ item_name }}_name, "item2")
+      << "The first item in {{ container_name }} 'container2' should be item2.";
   EXPECT_TRUE(({{ cluster_name }}[0].list)->next == NULL)
-      << "The {{ container_name }} 'New' should have only one item";
+      << "The {{ container_name }} 'container1' should have only one item";
 }
 
 TEST(ProjectTests, {{ container_name }}_remove_none) {
   reset_{{ cluster_name }}();
   {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}");
-  {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "Pen");
-  {{ item_type }}* result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "New", "Pen");
-  result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "New", "Pen");
+  {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "item2");
+  {{ item_type }}* result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "container1", "item2");
+  result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "container1", "item2");
   EXPECT_TRUE(result_{{ item_name }} == NULL) << "The returned result should be NULL";
 }
 
 TEST(ProjectTests, {{ container_name }}_remove_first_item) {
   reset_{{ cluster_name }}();
   {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}");
-  {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "Pen");
-  {{ item_type }}* result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "Used", "Pen");
+  {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "item2");
+  {{ item_type }}* result_{{ item_name }} = {{ container_name }}_remove({{ cluster_name }}, 2, "container2", "item2");
   EXPECT_TRUE(result_{{ item_name }} == &{{ item_name }}[2])
       << "The returned {{ item_name }} should be the third {{ item_name }} in the {{ item_name }} list.";
   ASSERT_STREQ(({{ cluster_name }}[0].list)->{{ item_name }}->{{ item_name }}_name, "{{ item1 }}")
-      << "The first item in {{ container_name }} 'New' should be {{ item1 }}.";
-  ASSERT_STREQ(({{ cluster_name }}[0].list)->next->{{ item_name }}->{{ item_name }}_name, "Pen")
-      << "The second item in {{ container_name }} 'New' should be Pen.";
-  EXPECT_TRUE({{ cluster_name }}[1].list == NULL) << "The {{ container_name }} 'Used' should be empty";
+      << "The first item in {{ container_name }} 'container1' should be {{ item1 }}.";
+  ASSERT_STREQ(({{ cluster_name }}[0].list)->next->{{ item_name }}->{{ item_name }}_name, "item2")
+      << "The second item in {{ container_name }} 'container1' should be item2.";
+  EXPECT_TRUE({{ cluster_name }}[1].list == NULL) << "The {{ container_name }} 'container2' should be empty";
 }
 
 TEST(ProjectTests, Change_{{ item_name }}_not_included) {
   reset_{{ cluster_name }}();
   {{ item_type }}* result_{{ item_name }} =
-      {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "Laptop", "Used", "New");
+      {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "item3", "container2", "container1");
   EXPECT_TRUE(result_{{ item_name }} == &{{ item_name }}[3])
       << "The returned {{ item_name }} should be the forth {{ item_name }} in the {{ item_name }} list.";
-  ASSERT_STREQ({{ item_name }}[3].{{ container_name }}, "New")
-      << "The {{ container_name }} of Laptop should be changed to 'New'.";
+  ASSERT_STREQ({{ item_name }}[3].{{ container_name }}, "container1")
+      << "The {{ container_name }} of item3 should be changed to 'container1'.";
 }
 
 TEST(ProjectTests, Change_{{ item_name }}_with_incorrect_{{ container_name }}) {
   reset_{{ cluster_name }}();
   {{ item_type }}* result_{{ item_name }} =
-      {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}", "Used", "New");
+      {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}", "container2", "container1");
   EXPECT_TRUE(result_{{ item_name }} == NULL)
-      << "The returned result of changing {{ item1 }} from 'Used' to 'New' should be "
-         "NULL since there is no Used {{ item1 }}.";
+      << "The returned result of changing {{ item1 }} from 'container2' to 'container1' should be "
+         "NULL since there is no container2 {{ item1 }}.";
 
-  result_{{ item_name }} = {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "Laptop", "New", "Old");
+  result_{{ item_name }} = {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "item3", "container1", "Old");
   EXPECT_TRUE(result_{{ item_name }} == NULL)
-      << "The returned result of changing {{ item1 }} from 'Used' to 'Old' should be "
+      << "The returned result of changing {{ item1 }} from 'container2' to 'Old' should be "
          "NULL because there is no {{ container_name }} Old in the {{ cluster_name }}.";
 }
 
 TEST(ProjectTests, Change_{{ item_name }}_to_duplicate_{{ container_name }}) {
   reset_{{ cluster_name }}();
   {{ item_type }}* result_{{ item_name }} =
-      {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "Pen", "Used", "New");
+      {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "item2", "container2", "container1");
   EXPECT_TRUE(result_{{ item_name }} == NULL)
-      << "The returned result of changing Pen from 'Used' to 'New' should be "
-         "NULL since there is a New Pen exist in the list.";
-  ASSERT_STREQ({{ item_name }}[2].{{ container_name }}, "Used")
-      << "The {{ container_name }} of Used Pen should not be changed.";
+      << "The returned result of changing item2 from 'container2' to 'container1' should be "
+         "NULL since there is a container1 item2 exist in the list.";
+  ASSERT_STREQ({{ item_name }}[2].{{ container_name }}, "container2")
+      << "The {{ container_name }} of container2 item2 should not be changed.";
 }
 
 TEST(ProjectTests, Change_{{ item_name }}_included) {
   reset_{{ cluster_name }}();
   {{ container_name }}_add({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}");
   {{ item_type }}* result_{{ item_name }} =
-      {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}", "New", "Used");
+      {{ container_name }}_change({{ cluster_name }}, 2, {{ item_name }}, 4, "{{ item1 }}", "container1", "container2");
   EXPECT_TRUE(result_{{ item_name }} == &{{ item_name }}[0])
       << "The returned {{ item_name }} should be the first {{ item_name }} in the {{ item_name }} list.";
-  ASSERT_STREQ({{ item_name }}[0].{{ container_name }}, "Used")
-      << "The {{ container_name }} of {{ item1 }} should be changed to Used";
+  ASSERT_STREQ({{ item_name }}[0].{{ container_name }}, "container2")
+      << "The {{ container_name }} of {{ item1 }} should be changed to container2";
   ASSERT_STREQ(({{ cluster_name }}[1].list)->{{ item_name }}->{{ item_name }}_name, "{{ item1 }}")
       << "{{ item1 }} should be the first item of {{ cluster_name }}[1].";
   EXPECT_TRUE({{ cluster_name }}[0].list == NULL)
-      << "The {{ cluster_name }}[0].list should be NULL because the {{ container_name }} New has no "
+      << "The {{ cluster_name }}[0].list should be NULL because the {{ container_name }} container1 has no "
          "item.";
 }
 
@@ -260,29 +260,29 @@ int grader_add({{ container_type }} {{ cluster_name }}[], int number_of_categori
   int modified = 0;
   for (int i = 0; i < number_of_{{ item_name }}; i++) {
     if (strncmp({{ item_name }}[i].{{ item_name }}_name, {{ item_name }}_name, MAX_LEN) == 0) {
-      {{ node_type }}* newNode = ({{ node_type }}*)(malloc(sizeof({{ node_type }})));
-      newNode->{{ item_name }} = &{{ item_name }}[i];
+      {{ node_type }}* container1Node = ({{ node_type }}*)(malloc(sizeof({{ node_type }})));
+      container1Node->{{ item_name }} = &{{ item_name }}[i];
       for (int j = 0; j < number_of_categories; j++) {
-        if (strncmp({{ cluster_name }}[j].name, newNode->{{ item_name }}->{{ container_name }}, MAX_LEN) == 0) {
+        if (strncmp({{ cluster_name }}[j].name, container1Node->{{ item_name }}->{{ container_name }}, MAX_LEN) == 0) {
           // add node into this {{ container_name }}
           {{ node_type }}* preNode = NULL;
           {{ node_type }}* curNode = {{ cluster_name }}[j].list;
-          while (curNode && strncmp(newNode->{{ item_name }}->{{ item_name }}_name,
+          while (curNode && strncmp(container1Node->{{ item_name }}->{{ item_name }}_name,
                                     curNode->{{ item_name }}->{{ item_name }}_name, MAX_LEN) > 0) {
             preNode = curNode;
             curNode = curNode->next;
           }
 
-          if (curNode && strncmp(newNode->{{ item_name }}->{{ item_name }}_name,
+          if (curNode && strncmp(container1Node->{{ item_name }}->{{ item_name }}_name,
                                  curNode->{{ item_name }}->{{ item_name }}_name, MAX_LEN) == 0) {
             break;
           }
 
-          newNode->next = curNode;
+          container1Node->next = curNode;
           if (preNode != NULL) {
-            preNode->next = newNode;
+            preNode->next = container1Node;
           } else {
-            {{ cluster_name }}[j].list = newNode;
+            {{ cluster_name }}[j].list = container1Node;
           }
           modified = 1;
         }
