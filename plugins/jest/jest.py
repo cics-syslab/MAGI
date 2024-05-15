@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from xml.dom import minidom
 from subprocess import TimeoutExpired
 from magi.utils.code_runner import run
-# TODO: use this run instead
 
 import json
 import tomllib
@@ -20,32 +19,6 @@ from magi.managers.info_manager import Directories
 from magi.managers.addon_manager import enabled_module
 
 from .config import Config
-
-"""
-keep stuff in module
-copy over in before_genreation
-
-/autograder/MAGI/work_dir
-- package.json: module
-- .eslintrc: plugin
-- test_list.toml: module
-- installing node: other plugin
-
-grade(): plugin
-- check_coverage()
-  - symlink node_modules -> Directories.SUBMISSION
-  - allow read/write permission for user
-  - chmod -R +rwx node_modules
-  - run coverage on student stuff
-- check_linting()
-  - run eslint
-- check_assertions()
-  - remove student tests, replace with ours
-
-/autograder/submission
-"""
-
-
 
 # multiply with raw score to make out of 100
 SCALE_SCORE=100/(Config.assertions + Config.linting + Config.coverage)
@@ -64,9 +37,7 @@ def check_coverage():
 
     # try to run coverage
     try:
-        print("running npm run coverage")
-        # run(args=Config.coverage_exec.split(" "), shell=True, timeout=Config.coverage_timeout, cwd=Directories.WORK_DIR)
-        print(run(Config.coverage_exec.split(" "), timeout=Config.coverage_timeout, cwd=Directories.WORK_DIR))
+        run(Config.coverage_exec.split(" "), timeout=Config.coverage_timeout, cwd=Directories.WORK_DIR)
     except TimeoutExpired:
         fail_coverage("coverage timed out")
         return
@@ -167,7 +138,6 @@ def check_assertions():
 
     # try to run jest
     try:
-        print("running npm run test:json")
         run(Config.assertion_exec.split(" "), timeout=Config.assertion_timeout, cwd=Directories.WORK_DIR)
     except TimeoutExpired: 
         fail_assertions("tests timed out")
@@ -247,7 +217,6 @@ def check_assertions():
                 test_case.visibility = props["visibility"]
 
             TestManager.add_test(test_case)
-
 
 
 class jest:
