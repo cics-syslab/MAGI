@@ -13,8 +13,10 @@ def sys_exec(command):
 class js_install_compile:
 
     @hookimpl
-    def before_grading():
+    def before_grading(self):
+        print("GOT HEREEEEEEEEE")
         sys_exec(Config.install_exec)
+        print("tried to install??")
 
         if Config.typescript:
             sys_exec(Config.compile_exec)

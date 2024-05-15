@@ -1,184 +1,40 @@
 {
-    "output": "",
+    "output": "something",
     "visibility": "after_published",
     "stdout_visibility": "hidden",
     "extra_data": {},
     "tests": [
         {
-            "score": 4,
-            "max_score": 4,
+            "score": 12.5,
+            "max_score": 12.5,
             "visibility": "visible",
-            "output": "\n",
-            "name": "area_add_first",
+            "output": "Coverage Calculations:\n    Branch: 100.00% out of 50%\n    Function: 100.00% out of 100%\n    Statement: 100.00% out of 80%\n\nPercentage Met (min(1, coverage / requirement)):\n    Branch: 100.00%\n    Function: 100.00%\n    Statement: 100.00%\n\nCoverage Score (average of above): 100.00%",
+            "name": "coverage",
             "status": "passed"
         },
         {
-            "score": 4,
-            "max_score": 4,
+            "score": 2.5,
+            "max_score": 2.5,
             "visibility": "visible",
-            "output": "\n",
-            "name": "area_add_none",
+            "output": "",
+            "name": "linting",
+            "status": "passed"
+        },
+        {
+            "score": 56.666666666666664,
+            "max_score": 56.666666666666664,
+            "visibility": "visible",
+            "output": "",
+            "name": "returns a new image and does not modify the original one [PUBLIC]",
             "status": "passed"
         },
         {
             "score": 0,
-            "max_score": 4,
+            "max_score": 28.333333333333332,
             "visibility": "visible",
-            "output": "\n",
-            "name": "area_add_multiple",
+            "output": "",
+            "name": "works on a 1x10 image",
             "status": "failed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_remove_none",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\ntest/test.cpp:205\nExpected equality of these values:\n  animal[3].area\n    Which is: \"Container2\"\n  \"New\"\nThe area of Laptop should be changed to 'New'.",
-            "name": "Change_animal_not_included",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "Change_animal_with_incorrect_area",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\ntest/test.cpp:230\nExpected equality of these values:\n  animal[2].area\n    Which is: \"Container2\"\n  \"Used\"\nThe area of Used Pen should not be changed.",
-            "name": "Change_animal_to_duplicate_area",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\ntest/test.cpp:241\nExpected equality of these values:\n  animal[0].area\n    Which is: \"Container1\"\n  \"Used\"\nThe area of item1 should be changed to Used",
-            "name": "Change_animal_included",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_add_one_with_same_name",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_add_two_with_same_name",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_add_duplicate_animal",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_add_multiple_with_same_name",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_add_multiple_unique",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_remove_only_with_same_name",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_remove_not_exist",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_remove_duplicate",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_remove_multiple_with_same_name",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "area_remove_all",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "Change_animal_not_included_advance",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "Change_animal_with_incorrect_area_advance",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "Change_animal_to_duplicate_area_advance",
-            "status": "passed"
-        },
-        {
-            "score": 4,
-            "max_score": 4,
-            "visibility": "visible",
-            "output": "\n",
-            "name": "Change_animal_included_advance",
-            "status": "passed"
         }
     ],
     "score": null

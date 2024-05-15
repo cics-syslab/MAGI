@@ -1,4 +1,0 @@
-[test_name]
-name = "my test name"
-max_score = 4
-visibility = "after_published"
