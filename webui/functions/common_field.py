@@ -124,9 +124,7 @@ def create_ui_for_basic_field(field, dataclass_obj, container=st):
     }
 
     # Get the appropriate UI component and arguments for the field type
-    print(field.type, field)
     ui_component = ui_components.get(field.type)
-    print(ui_component)
     if ui_component:
         # Update the common args for the UI component
         ui_args = ui_component["args"].copy()
