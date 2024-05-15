@@ -21,8 +21,8 @@
             "status": "passed"
         },
         {
-            "score": 56.666666666666664,
-            "max_score": 56.666666666666664,
+            "score": 56.667,
+            "max_score": 56.667,
             "visibility": "visible",
             "output": "",
             "name": "returns a new image and does not modify the original one [PUBLIC]",
@@ -30,7 +30,7 @@
         },
         {
             "score": 0,
-            "max_score": 28.333333333333332,
+            "max_score": 28.333,
             "visibility": "visible",
             "output": "",
             "name": "works on a 1x10 image",

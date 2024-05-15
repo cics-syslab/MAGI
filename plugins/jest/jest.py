@@ -8,7 +8,7 @@ from subprocess import TimeoutExpired
 from magi.utils.code_runner import run
 
 import json
-import tomllib
+import toml
 from json import JSONDecodeError
 
 from magi.common import gradescope
@@ -27,9 +27,9 @@ SCALE_SCORE=100/(Config.assertions + Config.linting + Config.coverage)
 mk_test_failure=lambda maxscore,category,vis: lambda err: \
     TestManager.add_test(TestCase(score=0, max_score=maxscore, visibility=vis, output=err, name=category))
 
-fail_coverage=mk_test_failure(Config.coverage*SCALE_SCORE, "coverage", Visibility.VISIBLE)
-fail_linting=mk_test_failure(Config.linting*SCALE_SCORE, "linting", Visibility.VISIBLE)
-fail_assertions=mk_test_failure(Config.assertions*SCALE_SCORE, "assertions", Visibility.VISIBLE)
+fail_coverage=mk_test_failure(round(Config.coverage*SCALE_SCORE, 3), "coverage", Visibility.VISIBLE)
+fail_linting=mk_test_failure(round(Config.linting*SCALE_SCORE, 3), "linting", Visibility.VISIBLE)
+fail_assertions=mk_test_failure(round(Config.assertions*SCALE_SCORE, 3), "assertions", Visibility.VISIBLE)
 
 ### Check coverage
 # checks student's tests' coverage
@@ -84,7 +84,7 @@ def check_coverage():
     # TODO: use a template string from config for output
     TestManager.add_test(TestCase(
         score=final_score*Config.coverage*SCALE_SCORE,
-        max_score=Config.coverage*SCALE_SCORE,
+        max_score=round(Config.coverage*SCALE_SCORE, 3),
         visibility=Visibility.VISIBLE,
         name="coverage",
         status="passed",
@@ -119,7 +119,7 @@ def check_linting():
     else:
         TestManager.add_test(TestCase(
              score=Config.linting*SCALE_SCORE,
-             max_score=Config.linting*SCALE_SCORE,
+             max_score=round(Config.linting*SCALE_SCORE, 3),
              visibility=Visibility.VISIBLE,
              name="linting",
              status="passed"
@@ -169,8 +169,8 @@ def check_assertions():
 
     # read toml, it should be put there by the thing
     try:
-        with open(Directories.WORK_DIR / "test_list.toml", "rb") as toml_fp:
-            test_toml = tomllib.load(toml_fp)
+        with open(Directories.WORK_DIR / "test_list.toml", "r") as toml_fp:
+            test_toml = toml.load(toml_fp)
     except Exception as e:
         fail_assertions(f"couldn't find or couldn't parse test_list.toml\n{e}")
         return
@@ -209,8 +209,8 @@ def check_assertions():
 
             test_case = TestCase(
                 status=test["status"]=="passed" and "passed" or "failed",
-                score=test["status"]=="passed" and props["max_score"]*SCALE_ASSERTIONS or 0,
-                max_score=props["max_score"]*SCALE_ASSERTIONS,
+                score=test["status"]=="passed" and round(props["max_score"]*SCALE_ASSERTIONS, 3) or 0,
+                max_score=round(props["max_score"]*SCALE_ASSERTIONS, 3),
                 name=name,
             )
             if "visibility" in props:

@@ -8,3 +8,4 @@ streamlit_code_editor==0.1.10
 streamlit-file-browser==3.2.3
 numpy
 pyyaml
+toml

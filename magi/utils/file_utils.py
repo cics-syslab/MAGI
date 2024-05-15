@@ -81,6 +81,8 @@ def remove(path: Path | str, no_check=False) -> bool:
         logging.warning(f"Path {path} is not in white list and will not be removed.")
         return False
 
+    if path.is_symlink():
+        path.unlink()
     if path.is_file():
         path.unlink()
     elif path.is_dir():

@@ -17,6 +17,7 @@ scratch/
 webui/pages/
 
 mock/autograder/
-
+modules/*/into_work_dir/node_modules
+modules/*/into_work_dir/package-lock.json
 
 

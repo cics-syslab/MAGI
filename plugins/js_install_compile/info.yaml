@@ -1,6 +1,0 @@
-name: npm_i
-version: 1.0
-author: Bennett Gillig
-author_email: bennettgillig@gmail.com
-description: "Installs dependancies (and compiles typescript if necessary) from package.json in WORK_DIR before grading"
-documentation: ""
