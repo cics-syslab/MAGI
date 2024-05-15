@@ -9,6 +9,7 @@ from streamlit import session_state
 
 from magi.managers.info_manager import Directories
 import os
+from typing import cast
 
 def attribute_name_convention(field_info: Field) -> str:
     if field_info.metadata.get("display_name"):
@@ -93,6 +94,15 @@ def create_ui_for_dataclass(dataclass_obj):
     # Return the inputs dictionary
     return inputs
 
+# when destructuring floats if they're
+# convertable to integers, they become
+# integers, so we have to manually ensure
+# that they're floats as follows:
+def wrap_float(container, **args):
+    newargs = {**args}
+    del newargs["step"]
+    del newargs["value"]
+    container.number_input(step=args["step"]+0.0, value=args["value"]+0.0, **newargs)
 
 def create_ui_for_basic_field(field, dataclass_obj, container=st):
     # Extract common field properties
@@ -106,14 +116,17 @@ def create_ui_for_basic_field(field, dataclass_obj, container=st):
     # Define a dictionary to map field types to their respective UI components and properties
     ui_components = {
         int: {"component": container.number_input, "args": {"step": 1, "value": 0}},
-        float: {"component": container.number_input, "args": {"step": 0.1, "value": 0.0}},
+        # float: {"component": lambda **args: container.number_input(args, step=cast(float, args["step"]), value=cast(float, args["value"])), "args": {"step": 0.1, "value": 0.0}},
+        float: {"component": lambda **args: wrap_float(container, **args), "args": {"step": 0.1, "value": 0.0}},
         str: {"component": container.text_input if not field.metadata.get("text_area") else container.text_area,
               "args": {"value": ""}},
         bool: {"component": container.checkbox, "args": {"value": False}},
     }
 
     # Get the appropriate UI component and arguments for the field type
+    print(field.type, field)
     ui_component = ui_components.get(field.type)
+    print(ui_component)
     if ui_component:
         # Update the common args for the UI component
         ui_args = ui_component["args"].copy()
