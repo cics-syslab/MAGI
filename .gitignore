@@ -4,6 +4,8 @@
 **.DS_Store**
 **.vscode**
 **.pyc
+_build/
+shell.nix
 
 
 output/
@@ -15,6 +17,7 @@ scratch/
 webui/pages/
 
 mock/autograder/
-
+modules/*/into_work_dir/node_modules
+modules/*/into_work_dir/package-lock.json
 
 

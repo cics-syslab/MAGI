@@ -1,0 +1,7 @@
+[removeRed."returns a new image and does not modify the original one [PUBLIC]"]
+max_score = 4
+visibility = "visible"
+
+[imageMap."works on a 1x10 image"]
+max_score = 2
+visibility = "visible"

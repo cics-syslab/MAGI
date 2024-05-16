@@ -4,7 +4,7 @@ app_path=$(dirname "$(realpath "$0")")
 
 check_addons_setup() {
     local all_setup_files=()
-    for t in 'module' 'plugin'; do
+    for t in 'plugin' 'module'; do
         if [ ! -d "${app_path}/${t}s" ]; then
             continue
         fi

@@ -1,0 +1,6 @@
+name: ImageProcessing
+version: 1.0
+author: Bennett Gillig
+author_email: bgillig@umass.edu
+description: "Image processing autograder"
+documentation: "some documentation"
