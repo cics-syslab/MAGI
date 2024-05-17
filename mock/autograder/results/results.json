@@ -21,20 +21,180 @@
             "status": "passed"
         },
         {
-            "score": 56.667,
-            "max_score": 56.667,
-            "visibility": "visible",
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "public",
             "output": "",
             "name": "returns a new image and does not modify the original one [PUBLIC]",
             "status": "passed"
         },
         {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "removes red",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "does not change black image",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "public",
+            "output": "",
+            "name": "returns a new image and does not modify the original one [PUBLIC]",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "correctly swap colors",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "does not change black image",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "public",
+            "output": "",
+            "name": "correctly modifies a line [PUBLIC]",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "correctly modifies lineNo: 0",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "correctly modifies lineNo: height - 1",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "does not change anything if lineNo is too high",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "does not change anything if lineNo is too low",
+            "status": "passed"
+        },
+        {
             "score": 0,
-            "max_score": 28.333,
-            "visibility": "visible",
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "does not change anything if lineNo is in-bounds but not an integer",
+            "status": "failed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "does not modify other lines",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "public",
+            "output": "",
+            "name": "returns a new image and does not modify the original one [PUBLIC]",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "returns a similar image",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "returns a mapped image",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "works on a 10x1 image",
+            "status": "passed"
+        },
+        {
+            "score": 0,
+            "max_score": 3.864,
+            "visibility": "after_published",
             "output": "",
             "name": "works on a 1x10 image",
             "status": "failed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "works on a 1x1 image",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "public",
+            "output": "",
+            "name": "returns a new image and does not modify the original one [PUBLIC]",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "removes red",
+            "status": "passed"
+        },
+        {
+            "score": 3.864,
+            "max_score": 3.864,
+            "visibility": "after_published",
+            "output": "",
+            "name": "does not change black image",
+            "status": "passed"
         }
     ],
     "score": null

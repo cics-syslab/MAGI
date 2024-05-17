@@ -1,7 +1,76 @@
 [removeRed."returns a new image and does not modify the original one [PUBLIC]"]
-max_score = 4
-visibility = "visible"
+name = "returns a new image and does not modify the original one"
+max_score = 1
+visibility = "public"
+[removeRed."removes red"]
+max_score = 1
+visibility = "after_published"
+[removeRed."does not change black image"]
+max_score = 1
+visibility = "after_published"
 
+[flipColors."returns a new image and does not modify the original one [PUBLIC]"]
+name = "returns a new image and does not modify the original one"
+max_score = 1
+visibility = "public"
+[flipColors."correctly swap colors"]
+max_score = 1
+visibility = "after_published"
+[flipColors."does not change black image"]
+max_score = 1
+visibility = "after_published"
+
+[mapLine."correctly modifies a line [PUBLIC]"]
+name = "correctly modifies a line"
+max_score = 1
+visibility = "public"
+[mapLine."correctly modifies lineNo: 0"]
+max_score = 1
+visibility = "after_published"
+[mapLine."correctly modifies lineNo: height - 1"]
+max_score = 1
+visibility = "after_published"
+[mapLine."does not change anything if lineNo is too high"]
+max_score = 1
+visibility = "after_published"
+[mapLine."does not change anything if lineNo is too low"]
+max_score = 1
+visibility = "after_published"
+[mapLine."does not change anything if lineNo is in-bounds but not an integer"]
+max_score = 1
+visibility = "after_published"
+[mapLine."does not modify other lines"]
+max_score = 1
+visibility = "after_published"
+
+[imageMap."returns a new image and does not modify the original one [PUBLIC]"]
+name = "returns a new image and does not modify the original one"
+max_score = 1
+visibility = "public"
+[imageMap."returns a similar image"]
+max_score = 1
+visibility = "after_published"
+[imageMap."returns a mapped image"]
+max_score = 1
+visibility = "after_published"
+[imageMap."works on a 10x1 image"]
+max_score = 1
+visibility = "after_published"
 [imageMap."works on a 1x10 image"]
-max_score = 2
-visibility = "visible"
+max_score = 1
+visibility = "after_published"
+[imageMap."works on a 1x1 image"]
+max_score = 1
+visibility = "after_published"
+
+[mapToGB."returns a new image and does not modify the original one [PUBLIC]"]
+name = "returns a new image and does not modify the original one"
+max_score = 1
+visibility = "public"
+[mapToGB."removes red"]
+max_score = 1
+visibility = "after_published"
+[mapToGB."does not change black image"]
+max_score = 1
+visibility = "after_published"
+

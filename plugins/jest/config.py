@@ -5,8 +5,8 @@ from magi.managers.info_manager import Directories
 @SettingManager.register
 @dataclass
 class Config:
-    assertion_exec: str = field(default=f"node ./node_modules/jest/bin/jest.js --testPathPattern=.field(default=)/src --json --outputFile out.json", metadata={"help": "heyo"})
-    coverage_exec: str = field(default=f"node ./node_modules/jest/bin/jest.js --testPathPattern=.field(default=)/src --coverage", metadata={"help": "heyo"})
+    assertion_exec: str = field(default=f"node ./node_modules/jest/bin/jest.js --testPathPattern=./src --json --outputFile out.json", metadata={"help": "heyo"})
+    coverage_exec: str = field(default=f"node ./node_modules/jest/bin/jest.js --testPathPattern=./src --coverage", metadata={"help": "heyo"})
     linting_exec: str = field(default=f"node ./node_modules/eslint/bin/eslint.js --config .eslintrc --max-warnings 0 ./src", metadata={"help": "heyo"})
     linting: float = field(default=2.5, metadata={"help": "heyo"})
     assertions: float = field(default=85, metadata={"help": "heyo"})
